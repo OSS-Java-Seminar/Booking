@@ -3,8 +3,8 @@
 
 ## Table of Contents
 * [Description](https://github.com/OSS-Java-Seminar/Booking#description)
-* [Technologies] (#technologies)
-* [Team members] (#team-members)
+* [Technologies](https://github.com/OSS-Java-Seminar/Booking#technologies)
+* [Team members](https://github.com/OSS-Java-Seminar/Booking#team-members)
 
 
 ### Description:
