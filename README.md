@@ -2,7 +2,7 @@
 
 
 ## Table of Contents
-* [Description] (https://github.com/OSS-Java-Seminar/Booking#description)
+* [Description](https://github.com/OSS-Java-Seminar/Booking#description)
 * [Technologies] (#technologies)
 * [Team members] (#team-members)
 
