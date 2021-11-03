@@ -3,6 +3,7 @@
 
 ## Table of Contents
 * [Description](https://github.com/OSS-Java-Seminar/Booking#description)
+* [Database model](https://github.com/OSS-Java-Seminar/Booking#database-model)
 * [Technologies](https://github.com/OSS-Java-Seminar/Booking#technologies)
 * [Team members](https://github.com/OSS-Java-Seminar/Booking#team-members)
 
