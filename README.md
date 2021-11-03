@@ -44,6 +44,9 @@
 * He will rate multiple things (comfort, cleanness, etc.), the average grade will be counted into apartment's rating (required)
 * He can write a review up to 200 characters (optional)
 
+### Database model
+![Database model] (https://raw.githubusercontent.com/OSS-Java-Seminar/Booking/main/database%20model.jpeg?raw=true)
+
 ### Technologies:
 Java, Spring Boot, Bootstrap, Thymeleaf, SQL Database
 
