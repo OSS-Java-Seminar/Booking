@@ -19,13 +19,19 @@ public class Review {
 	
 	private int cleanessRating;
 	private int comfortRating;
-	//....Rating
+	private int locationRating;
+	private int hostRating;
+	private int valueForMoneyRating;
 	private float averageRating;
 	private String review;
 	
-	public Review(int cleanessRating, int comfortRating, float averageRating, String review) {
+	public Review(int cleanessRating, int comfortRating, int locationRating, int hostRating, int valueForMoneyRating, 
+			float averageRating, String review) {
 		this.cleanessRating = cleanessRating;
 		this.comfortRating = comfortRating;
+		this.setLocationRating(locationRating);
+		this.setHostRating(hostRating);
+		this.setValueForMoneyRating(valueForMoneyRating);
 		this.averageRating = averageRating;
 		this.review = review;
 	}
@@ -44,6 +50,30 @@ public class Review {
 
 	public void setComfortRating(int comfortRating) {
 		this.comfortRating = comfortRating;
+	}
+	
+	public int getLocationRating() {
+		return locationRating;
+	}
+
+	public void setLocationRating(int locationRating) {
+		this.locationRating = locationRating;
+	}
+
+	public int getHostRating() {
+		return hostRating;
+	}
+
+	public void setHostRating(int hostRating) {
+		this.hostRating = hostRating;
+	}
+
+	public int getValueForMoneyRating() {
+		return valueForMoneyRating;
+	}
+
+	public void setValueForMoneyRating(int valueForMoneyRating) {
+		this.valueForMoneyRating = valueForMoneyRating;
 	}
 
 	public float getAverageRating() {

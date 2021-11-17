@@ -15,6 +15,7 @@ public class User {
 	
 	@OneToMany
 	private List<Apartment> apartment;
+	
 	@OneToMany
 	private List<Reservation> reservation;
 	

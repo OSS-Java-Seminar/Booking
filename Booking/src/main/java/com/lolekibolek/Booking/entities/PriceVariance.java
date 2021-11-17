@@ -5,21 +5,26 @@ import java.util.UUID;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class PriceVariance {
 
 	@Id
 	private UUID id;
-	private UUID apartmentId;
+	
+	@ManyToOne
+	@JoinColumn (name = "id")
+	private Apartment apartment;
+	
 	private String name;
 	private Date startDate;
 	private Date endDate;
 	private int percentage;
 	
-	public PriceVariance(UUID id, UUID apartmentId, String name, Date startDate, Date endDate, int percentage) {
+	public PriceVariance(UUID id, String name, Date startDate, Date endDate, int percentage) {
 		this.id = id;
-		this.apartmentId = apartmentId;
 		this.name = name;
 		this.startDate = startDate;
 		this.endDate = endDate;
@@ -32,14 +37,6 @@ public class PriceVariance {
 
 	public void setId(UUID id) {
 		this.id = id;
-	}
-
-	public UUID getApartmentId() {
-		return apartmentId;
-	}
-
-	public void setApartmentId(UUID apartmentId) {
-		this.apartmentId = apartmentId;
 	}
 
 	public String getName() {
