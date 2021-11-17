@@ -46,7 +46,7 @@
 * He can write a review up to 200 characters (optional)
 
 ### Database model
- ![database model](https://github.com/OSS-Java-Seminar/Booking/blob/main/database%20model.jpeg?raw=true)
+ ![database model](https://github.com/OSS-Java-Seminar/Booking/blob/main/Database%20model/database%20model.jpeg?raw=true)
 
 ### Technologies:
 Java, Spring Boot, Bootstrap, Thymeleaf, SQL Database
