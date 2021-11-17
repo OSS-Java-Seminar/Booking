@@ -1,15 +1,23 @@
 package com.lolekibolek.Booking.entities;
 
+import java.util.List;
 import java.util.UUID;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 @Entity
 public class User {
 
 	@Id
 	private UUID id;
+	
+	@OneToMany
+	private List<Apartment> apartment;
+	@OneToMany
+	private List<Reservation> reservation;
+	
 	private String role;
 	private String firstName;
 	private String lastName;

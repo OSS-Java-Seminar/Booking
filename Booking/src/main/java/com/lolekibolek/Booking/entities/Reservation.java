@@ -4,24 +4,30 @@ import java.util.UUID;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Reservation {
 
 	@Id
 	private UUID id;
-	private UUID userId;
-	private UUID apartmentId;
+	
+	@ManyToOne
+	@JoinColumn (name = "id")
+	private User user;
+	
+	@ManyToOne
+	@JoinColumn (name = "id")
+	private Apartment apartment;
+	
 	private String checkInDate;
 	private String checkOutDate;
 	private float totalPrice;
 	private String status;
 	
-	public Reservation(UUID id, UUID userId, UUID apartmentId, String checkInDate, String checkOutDate,
-			float totalPrice, String status) {
+	public Reservation(UUID id, String checkInDate, String checkOutDate, float totalPrice, String status) {
 		this.id = id;
-		this.userId = userId;
-		this.apartmentId = apartmentId;
 		this.checkInDate = checkInDate;
 		this.checkOutDate = checkOutDate;
 		this.totalPrice = totalPrice;
@@ -34,22 +40,6 @@ public class Reservation {
 
 	public void setId(UUID id) {
 		this.id = id;
-	}
-
-	public UUID getUserId() {
-		return userId;
-	}
-
-	public void setUserId(UUID userId) {
-		this.userId = userId;
-	}
-
-	public UUID getApartmentId() {
-		return apartmentId;
-	}
-
-	public void setApartmentId(UUID apartmentId) {
-		this.apartmentId = apartmentId;
 	}
 
 	public String getCheckInDate() {
