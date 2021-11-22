@@ -24,6 +24,6 @@ public class PriceVariance {
 	private String name;
 	private Date startDate;
 	private Date endDate;
-	private int percentage;
+	private float newPrice;
 
 }
