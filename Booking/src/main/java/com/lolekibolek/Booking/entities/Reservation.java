@@ -24,14 +24,17 @@ public class Reservation {
 	private String checkInDate;
 	private String checkOutDate;
 	private float totalPrice;
-	private String status;
+	private String reservationStatus;
+	private String paymentStatus;
 	
-	public Reservation(UUID id, String checkInDate, String checkOutDate, float totalPrice, String status) {
+	public Reservation(UUID id, String checkInDate, String checkOutDate, float totalPrice, String reservationStatus, 
+			String paymentStatus) {
 		this.id = id;
 		this.checkInDate = checkInDate;
 		this.checkOutDate = checkOutDate;
 		this.totalPrice = totalPrice;
-		this.status = status;
+		this.reservationStatus = reservationStatus;
+		this.paymentStatus = paymentStatus;
 	}
 
 	public UUID getId() {
@@ -65,13 +68,21 @@ public class Reservation {
 	public void setTotalPrice(float totalPrice) {
 		this.totalPrice = totalPrice;
 	}
-
-	public String getStatus() {
-		return status;
+	
+	public String getReservationStatus() {
+		return reservationStatus;
 	}
 
-	public void setStatus(String status) {
-		this.status = status;
+	public void setReservationStatus(String reservationStatus) {
+		this.reservationStatus = reservationStatus;
+	}
+
+	public String getPaymentStatus() {
+		return paymentStatus;
+	}
+
+	public void setPaymentStatus(String paymentStatus) {
+		this.paymentStatus = paymentStatus;
 	}	
 	
 }
