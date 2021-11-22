@@ -1,6 +1,6 @@
-package com.lolekibolek.Booking.entities;
+package com.lolekibolek.Booking.persistence.entities;
 
-import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 import javax.persistence.Entity;
@@ -16,10 +16,10 @@ public class Apartment {
 	private UUID id;
 	
 	@OneToMany
-	private List<PriceVariance> priceVariance;
+	private Set<PriceVariance> priceVariances;
 	
 	@OneToMany
-	private List<Reservation> reservation;
+	private Set<Reservation> reservations;
 	
 	private String name;
 	
@@ -51,7 +51,7 @@ public class Apartment {
 	private boolean heating;
 	private boolean wifi;
 	
-	public Apartment(UUID id, List<PriceVariance> priceVariance, List<Reservation> reservation, String name, User owner,
+	public Apartment(UUID id, Set<PriceVariance> priceVariances, Set<Reservation> reservations, String name, User owner,
 			String country, String city, String address, float pricePerNight, int capacity, float size,
 			int bedroomNumber, String description, boolean petsAllowed, boolean smokingAllowed,
 			boolean disabledAccessible, boolean freeCancellation, boolean balcony, boolean kitchen, boolean parking,
@@ -59,8 +59,8 @@ public class Apartment {
 			boolean heating, boolean wifi) {
 		super();
 		this.id = id;
-		this.priceVariance = priceVariance;
-		this.reservation = reservation;
+		this.priceVariances = priceVariances;
+		this.reservations = reservations;
 		this.name = name;
 		this.owner = owner;
 		this.country = country;
@@ -93,17 +93,17 @@ public class Apartment {
 	public void setId(UUID id) {
 		this.id = id;
 	}
-	public List<PriceVariance> getPriceVariance() {
-		return priceVariance;
+	public Set<PriceVariance> getPriceVariances() {
+		return priceVariances;
 	}
-	public void setPriceVariance(List<PriceVariance> priceVariance) {
-		this.priceVariance = priceVariance;
+	public void setPriceVariance(Set<PriceVariance> priceVariances) {
+		this.priceVariances = priceVariances;
 	}
-	public List<Reservation> getReservation() {
-		return reservation;
+	public Set<Reservation> getReservation() {
+		return reservations;
 	}
-	public void setReservation(List<Reservation> reservation) {
-		this.reservation = reservation;
+	public void setReservation(Set<Reservation> reservations) {
+		this.reservations = reservations;
 	}
 	public String getName() {
 		return name;

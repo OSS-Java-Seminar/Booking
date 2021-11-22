@@ -1,4 +1,4 @@
-package com.lolekibolek.Booking.entities;
+package com.lolekibolek.Booking.persistence.entities;
 
 import java.util.UUID;
 

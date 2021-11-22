@@ -1,6 +1,6 @@
-package com.lolekibolek.Booking.entities;
+package com.lolekibolek.Booking.persistence.entities;
 
-import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 import javax.persistence.Entity;
@@ -14,10 +14,10 @@ public class User {
 	private UUID id;
 	
 	@OneToMany
-	private List<Apartment> apartment;
+	private Set<Apartment> apartments;
 	
 	@OneToMany
-	private List<Reservation> reservation;
+	private Set<Reservation> reservations;
 	
 	private String role;
 	private String firstName;
