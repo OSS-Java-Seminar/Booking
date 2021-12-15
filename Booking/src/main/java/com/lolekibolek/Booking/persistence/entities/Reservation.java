@@ -1,33 +1,54 @@
 package com.lolekibolek.Booking.persistence.entities;
 
+import java.sql.Date;
 import java.util.UUID;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 import lombok.Data;
 
+enum ReservationStatus {
+	  BOOKED,
+	  CHECKEDIN,
+	  CHECKEDOUT,
+	  CANCELED
+	}
+
 @Entity
 @Data
 public class Reservation {
 
 	@Id
-	private UUID id;
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	private int id;
 	
 	@ManyToOne
-	@JoinColumn (name = "id")
+	@JoinColumn (name = "user_id")
 	private User user;
 	
 	@ManyToOne
-	@JoinColumn (name = "id")
+	@JoinColumn (name = "apartment_id")
 	private Apartment apartment;
 	
-	private String checkInDate;
-	private String checkOutDate;
+	@Column(nullable = false)
+	private Date checkInDate;
+	
+	@Column(nullable = false)
+	private Date checkOutDate;
+	
+	@Column(nullable = false)
 	private float totalPrice;
-	private String reservationStatus;
-	private String paymentStatus;
+	
+	@Column(nullable = false)
+	@Enumerated(EnumType.ORDINAL)
+	private ReservationStatus reservationStatus;
 	
 }

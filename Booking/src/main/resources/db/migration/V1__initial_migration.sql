@@ -1,0 +1,79 @@
+CREATE TABLE [IF NOT EXISTS] Apartment(
+	id INT NOT NULL,
+	name VARCHAR(100) NOT NULL,
+	owner INT NOT NULL,
+	country VARCHAR(50) NOT NULL,
+	city VARCHAR(50) NOT NULL,
+	address VARCHAR(100) NOT NULL,
+	pricePerNight FLOAT NOT NULL,
+	capacity INT NOT NULL,
+	size INT NOT NULL,
+	bedroomNumber INT NOT NULL,
+	description VARCHAR(1500) NOT NULL,
+	petsAllowed BOOLEAN NOT NULL DEFAULT FALSE,
+	smokingAllowed BOOLEAN NOT NULL DEFAULT FALSE,
+	disabledAccessible BOOLEAN NOT NULL DEFAULT FALSE,
+	freeCancellation BOOLEAN NOT NULL DEFAULT FALSE,
+	balcony BOOLEAN NOT NULL DEFAULT FALSE,
+	kitchen BOOLEAN NOT NULL DEFAULT FALSE,
+	parking BOOLEAN NOT NULL DEFAULT FALSE,
+	seaView BOOLEAN NOT NULL DEFAULT FALSE,
+	pool BOOLEAN NOT NULL DEFAULT FALSE,
+	jacuzzi BOOLEAN NOT NULL DEFAULT FALSE,
+	iron BOOLEAN NOT NULL DEFAULT FALSE,
+	washingMachine BOOLEAN NOT NULL DEFAULT FALSE,
+	ac BOOLEAN NOT NULL DEFAULT FALSE,
+	heating BOOLEAN NOT NULL DEFAULT FALSE,
+	wifi BOOLEAN NOT NULL DEFAULT FALSE,
+	UNIQUE (id)
+);
+
+CREATE TABLE [IF NOT EXISTS] Review(
+	reservation INT NOT NULL,
+	cleanessRating INT NOT NULL,
+	comfortRating INT NOT NULL,
+	locationRating INT NOT NULL,
+	hostRating INT NOT NULL,
+	valueForMoneyRating INT NOT NULL,
+	averageRating FLOAT NOT NULL,
+	review VARCHAR(500)
+	UNIQUE (reservation)
+);
+
+
+CREATE TABLE [IF NOT EXISTS] User(
+	id INT NOT NULL,
+	role  ENUM ('owner','user'),
+	firstName VARCHAR(30) NOT NULL,
+	lastName VARCHAR(30) NOT NULL,
+	email VARCHAR(50) NOT NULL,
+	password VARCHAR(50) NOT NULL,
+	phone VARCHAR(30) NOT NULL,
+	safeQuestion VARCHAR(50) NOT NULL,
+	safeAnswer VARCHAR(20) NOT NULL,
+	CONSTRAINT UC_User UNIQUE (id,email)
+);
+
+
+CREATE TABLE [IF NOT EXISTS] Reservation(
+	id INT NOT NULL,
+	user INT NOT NULL,
+	apartment INT NOT NULL,
+	checkInDate DATE NOT NULL,
+	checkOutDate DATE NOT NULL,
+	totalPrice FLOAT NOT NULL,
+	role  ENUM ('booked','checkedin','checkedout','canceled')	
+	UNIQUE (id)
+);
+
+
+CREATE TABLE [IF NOT EXISTS] PriceVariance(
+	id INT NOT NULL,
+	apartment INT NOT NULL,
+	name VARCHAR(50) NOT NULL,
+	startDate DATE NOT NULL,
+	endDate DATE NOT NULL,
+	newPrice FLOAT NOT NULL,	
+	UNIQUE (id)
+);
+
