@@ -2,6 +2,7 @@ package com.lolekibolek.Booking.persistence.entities;
 
 import java.util.UUID;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,6 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import lombok.Data;
 
 @Entity
@@ -17,10 +20,12 @@ import lombok.Data;
 public class Review {
 
 	@Id
-	//private int reservationId = reservation.getId();
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	private int id;
 	
-	@OneToOne
-	@JoinColumn(name = "reservation_id")
+	@OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "reservation_id")
+	@Autowired
 	private Reservation reservation;
 	
 	@Column(nullable = false)

@@ -28,7 +28,7 @@ public class User {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int id;
 	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "owner")
 	private Set<Apartment> apartments;
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user")

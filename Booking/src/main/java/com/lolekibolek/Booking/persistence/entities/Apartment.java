@@ -33,7 +33,7 @@ public class Apartment {
 	private String name;
 	
 	@ManyToOne
-	@JoinColumn (name = "user_id")
+	@JoinColumn (name = "owner")
 	private User owner;
 	
 	@Column(length = 50, nullable = false)
