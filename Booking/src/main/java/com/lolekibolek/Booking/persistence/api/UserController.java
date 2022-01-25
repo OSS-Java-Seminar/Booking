@@ -1,13 +1,30 @@
 package com.lolekibolek.Booking.persistence.api;
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.lolekibolek.Booking.persistence.entities.User;
+import com.lolekibolek.Booking.persistence.services.UserService;
+
 import lombok.AllArgsConstructor;
 
-@RestController
+@Controller
 @RequestMapping("/user")
 @AllArgsConstructor
 public class UserController {
+	@Autowired
+	private UserService userService;
+	
+	@GetMapping()
+	public String getUser(Model model) {
+		return "user";
+	}
 
 }

@@ -26,6 +26,9 @@ public class UserService {
     }
     
     public User save(User newUser) {
+    	String mail = newUser.getEmail();
+    	String username[] = mail.split("@");
+    	//newUser.setUsername(username[0]); //username ce biti prvi dio maila (prije @)
     	return userRepository.save(newUser);
     }
 	
