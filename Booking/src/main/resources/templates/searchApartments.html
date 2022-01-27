@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.tymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Clients</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" 
+	integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" 
+	crossorigin="anonymous">
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand"> Booking </a>
+
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/user">Profile</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/help">Help</a>
+      </li>
+    </ul>
+    
+    <ul class="navbar-nav">
+    <li class="nav-item my-2 my-lg-0">
+        <a class="nav-link" href="/user" th:text = "${user.username}"></a>
+     </li>
+     <li class="nav-item">
+        <a class="nav-link" href="/logout">Logout</a>
+      </li>
+     </ul>
+</nav>
+
+<div style="border-radius: 25px; border: 1px solid #000000; padding: 20px; width: 250px; float:left; margin:50px;">
+	<table>
+		<form class="form-inline my-2 my-lg-0" th:object="${search}" th:action="@{/search}"  method="get">
+			<input type="hidden" id="city" name="city" th:attr="value = ${city}"/>
+			<input type="hidden" id="checkInDate" name="checkInDate" th:attr="value = ${checkInDate}"/>
+			<input type="hidden" id="checkOutDate" name="checkOutDate" th:attr="value = ${checkOutDate}"/>
+
+			<label for="maxPrice">MAX price per night</label>			
+			<input type="number" id="maxPrice" name="maxPrice" placeholder="100€" th:value="${maxPrice}"/><br><br>
+
+			<label for="minCapacity">Guest number</label>
+			<input type="number" id="minCapacity" name="minCapacity" placeholder="2" th:value="${minCapacity}"/><br><br>
+			
+			<label for="minBedroomNumber">Bedroom number</label>
+			<input type="number" id="minBedroomNumber" name="minBedroomNumber" placeholder="1" th:value="${minBedroomNumber}"/><br><br>
+			
+ 			<input type="checkbox" id="petsAllowed" name="petsAllowed" th:value="true" th:checked="${petsAllowed}"/>
+ 			<label for="petsAllowed">&nbsp;&nbsp;Pets allowed</label><br>
+ 			
+ 			
+ 			<input type="checkbox" id="smokingAllowed" name="smokingAllowed" th:value="true" th:checked="${smokingAllowed}" />
+ 			<label for="smokingAllowed">&nbsp;&nbsp;Smoking allowed</label><br>
+ 			
+ 			<input type="checkbox" id="disabledAccessible" name="disabledAccessible" th:value="true" th:checked="${disabledAccessible}" />
+ 			<label for="disabledAccessible">&nbsp;&nbsp;Disabled Accessible</label><br>
+ 			
+
+ 			<input type="checkbox" id="balcony" name="balcony" th:value="true" th:checked="${balcony}" />
+ 			<label for="balcony">&nbsp;&nbsp;Balcony</label><br>
+ 			 			
+ 			<input type="checkbox" id="kitchen" name="kitchen" th:value="true" th:checked="${kitchen}" />
+ 			<label for="kitchen">&nbsp;&nbsp;Kitchen</label><br>
+ 			
+ 			<input type="checkbox" id="parking" name="parking" th:value="true" th:checked="${parking}" />
+ 			<label for="parking">&nbsp;&nbsp;Parking</label><br>
+ 			
+ 			<input type="checkbox" id="seaView" name="seaView" th:value="true" th:checked="${seaView}" />
+ 			<label for="seaView">&nbsp;&nbsp;Sea view</label><br>
+ 			
+ 			<input type="checkbox" id="pool" name="pool" th:value="true" th:checked="${pool}" />
+ 			<label for="pool">&nbsp;&nbsp;Pool</label><br>
+ 			
+ 			<input type="checkbox" id="jacuzzi" name="jacuzzi" th:value="true" th:checked="${jacuzzi}" />
+ 			<label for="jacuzzi">&nbsp;&nbsp;Hot tub</label><br>
+ 			
+ 			<input type="checkbox" id="iron" name="iron" th:value="true" th:checked="${iron}" />
+ 			<label for="petsAllowed">&nbsp;&nbsp;Iron</label><br>
+ 			
+ 			<input type="checkbox" id="washingMachine" name="washingMachine" th:value="true" th:checked="${washingMachine}" />
+ 			<label for="washingMachine">&nbsp;&nbsp;Washing machine</label><br>
+ 			
+ 			<input type="checkbox" id="ac" name="ac" th:value="true" th:checked="${ac}" />
+ 			<label for="ac">&nbsp;&nbsp;A/C</label><br>
+ 			 			
+ 			<input type="checkbox" id="heating" name="heating" th:value="true" th:checked="${heating}" />
+ 			<label for="heating">&nbsp;&nbsp;Heating</label><br>
+ 			
+ 			<input type="checkbox" id="wifi" name="wifi" th:value="true" th:checked="${wifi}" />
+ 			<label for="wifi">&nbsp;&nbsp;WiFi</label><br><br>
+ 			
+ 			<button class="btn btn-outline-info my-2 my-sm-0" type="submit">Filter</button>			
+		</form>
+	</table>
+	</div>
+
+
+<div class = "container" style="float:left;">
+	<h2 style="margin:60px;">Apartments in <a th:text = "${city}"></a> available for your dates</h2>
+	<br><br>	
+	<div class = "container-fluid" style="border:solid; float:left; margin:20px;" th:each = "apartment: ${apartments}">
+		<img th:src="${apartment.picture}" style="height:200px; width:200px; float:left; margin:15px;"/>
+		<div class = "container-fluid" style="float:left; margin:20px; border:solid; width:800px; height:150px;">
+			<a th:text = "${apartment.name}">Ime</a>
+			<a th:text = "${apartment.city}">Grad</a>
+		</div>
+	</div>
+</div>
+
+
+</body>
+</html>

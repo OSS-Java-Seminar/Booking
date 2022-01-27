@@ -60,6 +60,9 @@ public class Apartment {
 	@Column(nullable = false, length = 1500)
 	private String description;
 	
+	@Column(nullable = false, length = 1500)
+	private String picture;
+	
 	@Column(nullable = false, columnDefinition = "boolean default false")
 	private boolean petsAllowed;
 	
@@ -68,9 +71,6 @@ public class Apartment {
 	
 	@Column(nullable = false, columnDefinition = "boolean default false")
 	private boolean disabledAccessible;
-	
-	@Column(nullable = false, columnDefinition = "boolean default false")
-	private boolean freeCancellation;
 	
 	@Column(nullable = false, columnDefinition = "boolean default false")
 	private boolean balcony;
@@ -205,6 +205,14 @@ public class Apartment {
 		return description;
 	}
 
+	public String getPicture() {
+		return picture;
+	}
+
+	public void setPicture(String picture) {
+		this.picture = picture;
+	}
+
 	public void setDescription(String description) {
 		this.description = description;
 	}
@@ -231,14 +239,6 @@ public class Apartment {
 
 	public void setDisabledAccessible(boolean disabledAccessible) {
 		this.disabledAccessible = disabledAccessible;
-	}
-
-	public boolean isFreeCancellation() {
-		return freeCancellation;
-	}
-
-	public void setFreeCancellation(boolean freeCancellation) {
-		this.freeCancellation = freeCancellation;
 	}
 
 	public boolean isBalcony() {
