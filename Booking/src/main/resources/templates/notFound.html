@@ -41,16 +41,8 @@
 </nav>
 
 	<div class = "container"><br><br><br>
-		<h1>Choose your destination</h1><br><br>
-		<h3 th:text = "${user.username}"></h3>
-		<h3 th:text = "${user.firstName}"></h3>
-		<h3 th:text = "${user.email}"></h3>
-		<form class="form-inline my-2 my-lg-0" th:object="${search}" th:action="@{/search}"  method="get">
-      <input class="form-control mr-sm-2" type="text" placeholder="City" aria-label="Search" name="city" id="city" th:value="${city}">
-      <input class="form-control mr-sm-2" type="date" aria-label="Search" name="checkInDate" id="checkInDate" th:value="${{checkInDate}}">
-      <input class="form-control mr-sm-2" type="date" aria-label="Search" name="checkOutDate" id="checkOutDate" th:value="${{checkOutDate}}">
-      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-    </form>
+		<h1>Sorry, we couldn't find any matches.</h1><br><br>
+		<button><a class="nav-link" href="/">Go to home page</a></button>
 	
 	</div>
 

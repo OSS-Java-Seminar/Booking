@@ -33,4 +33,9 @@ public class ApartmentController {
     public Apartment findById(int id) {
         return apartmentService.findById(id);
     }
+
+	public List<Apartment> findByCity(String city) {
+		// TODO Auto-generated method stub
+		return apartmentService.findByCity(city);
+	}
 }

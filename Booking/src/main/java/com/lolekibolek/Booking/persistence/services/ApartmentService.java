@@ -25,4 +25,9 @@ public class ApartmentService {
     public Apartment findById(int id) {
     	return apartmentRepository.findById(id);
     }
+
+	public List<Apartment> findByCity(String city) {
+		// TODO Auto-generated method stub
+		return apartmentRepository.findByCity(city);
+	}
 }
