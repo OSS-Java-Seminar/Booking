@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.tymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<title>Clients</title>
+<title>Reservations overview</title>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" 
 	integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" 
 	crossorigin="anonymous">
@@ -17,7 +17,10 @@
         <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="/user">Profile</a>
+        <a class="nav-link" href="/user">Availability</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/reviews">Guest Reviews</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="/help">Help</a>
@@ -34,7 +37,21 @@
      </ul>
 </nav>
 
-	sadrzaj
+
+	<div class = "container"><br><br><br>
+		<h1>Reservations overview</h1><br><br>
+		<h3> Today, <a th:text = "${#dates.format(#dates.createNow(), 'dd MMM yyyy')}"></a></h3>
+		<div class = "container-fluid" style="float:left; margin:20px; border:solid; width:800px; height:150px;" th:each = "reservation: ${reservations}" >
+			<a th:text = "${reservation.key.apartment.name}" style="font-size:200%" >Apartment name</a>
+			<br>
+			<a th:text = "${reservation.key.checkInDate}">check in date</a><br>
+			<a th:text = "${reservation.key.checkOutDate}">check out date</a>
+			<br>
+			<a th:text = "${reservation.value}">status</a>
+		</div>
+
+	</div>
+	
 
 </body>
 </html>
