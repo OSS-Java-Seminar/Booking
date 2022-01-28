@@ -98,6 +98,10 @@ public class Reservation {
 		return booked;
 	}
 
+	public Boolean getBooked() {
+		return booked;
+	}
+	
 	public void setBooked(Boolean booked) {
 		this.booked = booked;
 	}

@@ -57,18 +57,13 @@ public class MainController {
 			return "homeUser";
 		
 		List<Reservation> reservations = reservationRepository.findAll();
-		//List<Reservation> todaysReservations = new ArrayList<>();
-		//List<String> status = new ArrayList<>();
 		
 		Map<Reservation, String> todaysReservations = new HashMap<>();
 		
 		for (int i = 0; i < reservations.size(); i++) {
-			//if (checkIfToday(reservations.get(i), todaysReservations)) 
-				//todaysReservations.keySet().add(reservations.get(i));
 			checkIfToday(reservations.get(i), todaysReservations);
 		}
 		model.addAttribute("reservations", todaysReservations);
-		//model.addAttribute("status", status);
 		
 		return "homeOwner";
 	}
@@ -80,7 +75,6 @@ public class MainController {
 		try {
 			todayDate = dateFormatter.parse(dateFormatter.format(new Date() ));
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
