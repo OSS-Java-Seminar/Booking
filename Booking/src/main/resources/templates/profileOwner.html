@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.tymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<title>Home</title>
+<title>Profile page</title>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" 
 	integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" 
 	crossorigin="anonymous">
@@ -39,17 +39,11 @@
 
 
 	<div class = "container"><br><br><br>
-		<h1>Reservations overview</h1><br><br>
-		<h3> Today, <a th:text = "${#dates.format(#dates.createNow(), 'dd MMM yyyy')}"></a></h3>
-		<p style="text-align: right; width:90%" ><a href = "/reservations" > View all </a></p>
-		<div class = "container-fluid" style="float:left; margin:20px; border:solid; width:90%; height:150px;" th:each = "reservation: ${reservations}" >
-			<a th:text = "${reservation.key.apartment.name}" style="font-size:200%" >Apartment name</a>
-			<br>
-			<a th:text = "${reservation.key.checkInDate}">check in date</a><br>
-			<a th:text = "${reservation.key.checkOutDate}">check out date</a>
-			<br>
-			<a th:text = "${reservation.value}">status</a>
-		</div>
+		<h1>Welcome <a th:text = "${user.firstName}"></a>&nbsp;<a th:text = "${user.lastName}"></a>!</h1>
+		<br><br><br>
+		<h3>Would you consider traveling somewhere for a change? </h3>
+		<br><br>
+		<h4><a class="nav-link" href="/logout">Logout</a></h4>
 
 	</div>
 	

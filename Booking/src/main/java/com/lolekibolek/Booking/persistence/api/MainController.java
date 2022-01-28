@@ -105,6 +105,16 @@ public class MainController {
 		return "helpOwner";
 	}
 	
+	@GetMapping("profile")
+	public String profile(Model model) {
+		User currentUser = userRepository.findByUsername(getUser());
+		model.addAttribute("user", currentUser);
+		
+		if (currentUser.getRole().equals(false))
+			return "profileUser";
+		return "profileOwner";
+	}
+	
 	@DateTimeFormat(pattern="yyyy-MM-dd")
 	@GetMapping("search")
 	public String search(@RequestParam (value = "city") String city, 
