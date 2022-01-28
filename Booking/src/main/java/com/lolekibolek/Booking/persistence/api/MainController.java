@@ -90,8 +90,8 @@ public class MainController {
 		
 		List<Apartment> apartmentsInCity = apartmentRepository.findByCity(city);
 		List<Apartment> apartments = new ArrayList<>();
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		Date checkInDate = null;
 		Date checkOutDate = null;
 		try {

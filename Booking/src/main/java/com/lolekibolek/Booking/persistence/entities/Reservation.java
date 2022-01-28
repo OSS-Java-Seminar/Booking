@@ -1,6 +1,6 @@
 package com.lolekibolek.Booking.persistence.entities;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.UUID;
 
 import javax.persistence.CascadeType;
@@ -17,12 +17,6 @@ import javax.persistence.OneToOne;
 
 import lombok.Data;
 
-enum ReservationStatus {
-	  BOOKED,
-	  CHECKEDIN,
-	  CHECKEDOUT,
-	  CANCELED
-	}
 
 @Entity
 @Data
@@ -50,8 +44,7 @@ public class Reservation {
 	private float totalPrice;
 	
 	@Column(nullable = false)
-	@Enumerated(EnumType.ORDINAL)
-	private ReservationStatus reservationStatus;
+	private Boolean booked;
 
 	public int getId() {
 		return id;
@@ -101,12 +94,12 @@ public class Reservation {
 		this.totalPrice = totalPrice;
 	}
 
-	public ReservationStatus getReservationStatus() {
-		return reservationStatus;
+	public Boolean getBooked() {
+		return booked;
 	}
 
-	public void setReservationStatus(ReservationStatus reservationStatus) {
-		this.reservationStatus = reservationStatus;
+	public void setBooked(Boolean booked) {
+		this.booked = booked;
 	}
 	
 	

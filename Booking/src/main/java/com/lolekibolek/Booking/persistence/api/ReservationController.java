@@ -1,19 +1,48 @@
 package com.lolekibolek.Booking.persistence.api;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.lolekibolek.Booking.persistence.entities.Apartment;
 import com.lolekibolek.Booking.persistence.entities.Reservation;
+import com.lolekibolek.Booking.persistence.entities.User;
+import com.lolekibolek.Booking.persistence.repositories.ApartmentRepository;
+import com.lolekibolek.Booking.persistence.repositories.ReservationRepository;
+import com.lolekibolek.Booking.persistence.repositories.UserRepository;
 import com.lolekibolek.Booking.persistence.services.ApartmentService;
 import com.lolekibolek.Booking.persistence.services.ReservationService;
 
+import lombok.AllArgsConstructor;
+
+@Controller
+@RequestMapping("/reservations")
+@AllArgsConstructor
 public class ReservationController {
 
-private final ReservationService reservationService;
+	private final ReservationService reservationService;
 	
+	@Autowired
+	private UserRepository userRepository;
+	
+	@Autowired
+	private ApartmentRepository apartmentRepository;
+	
+	@Autowired
+	private ReservationRepository reservationRepository;
+		
 	@Autowired
 	ReservationController (ReservationService reservationServices) {
 		this.reservationService = reservationServices;
@@ -28,4 +57,74 @@ private final ReservationService reservationService;
     public Reservation findById(int id) {
         return reservationService.findById(id);
     }
+	
+	@PostMapping()
+    public String save(@RequestParam (value = "checkInDate") String checkInString, 
+			@RequestParam (value = "checkOutDate") String checkOutString,
+			@RequestParam (value = "apartmentId") int apartmentId, 
+			@RequestParam (value = "totalPrice") float totalPrice,
+			Model model) {
+		
+		User currentUser = userRepository.findByUsername(getUser());
+		model.addAttribute("user", currentUser);
+		
+		if (checkInString.isEmpty() || checkOutString.isEmpty()) {
+			model.addAttribute("error", "An error occurrred. Please try again. ");
+			return "badRequest";
+		}
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		Date checkInDate = null;
+		Date checkOutDate = null;
+		try {
+			checkInDate = sdf.parse(checkInString);
+			checkOutDate = sdf.parse(checkOutString);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		
+		Reservation reservation = new Reservation();
+		reservation.setApartment(apartmentRepository.findById(apartmentId));
+		reservation.setCheckInDate(checkInDate);
+		reservation.setCheckOutDate(checkOutDate);
+		reservation.setBooked(true);
+		reservation.setTotalPrice(totalPrice);
+		reservation.setUser(currentUser);
+		
+		if (checkIfAvailable(apartmentRepository.findById(apartmentId), checkInDate, checkOutDate))
+			reservationRepository.save(reservation);
+		else {
+			model.addAttribute("error", "Sorry, someone just booked your apartment. Please try again.");
+			return "badRequest";
+		}
+		
+		return "homeUser";
+    }
+	
+	public String getUser() {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		if (!(authentication instanceof AnonymousAuthenticationToken)) {
+		    String currentUserName = authentication.getName();
+		    return currentUserName;
+		}
+		return "Guest";
+	}
+	
+	private boolean checkIfAvailable(Apartment apartment, Date s1, Date e1) {
+		List<Reservation> allReservations = reservationRepository.findAll();
+		Boolean check = true;
+		
+		for (int i = 0; i < allReservations.size(); i++) {
+			if (allReservations.get(i).getApartment() == apartment) {
+				Date s2 = allReservations.get(i).getCheckInDate();
+				Date e2 = allReservations.get(i).getCheckOutDate();
+				if(s1.before(s2) && e1.after(s2) ||
+					       s1.before(e2) && e1.after(e2) ||
+					       s1.before(s2) && e1.after(e2) ||
+					       s1.after(s2) && e1.before(e2))
+					check = false;
+			}
+		}
+		return check;
+	}
 }

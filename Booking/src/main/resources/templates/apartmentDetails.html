@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.tymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Booking</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" 
+	integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" 
+	crossorigin="anonymous">
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand"> Booking </a>
+
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/user">Profile</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/help">Help</a>
+      </li>
+    </ul>
+    
+    <ul class="navbar-nav">
+    <li class="nav-item my-2 my-lg-0">
+        <a class="nav-link" href="/user" th:text = "${user.username}"></a>
+     </li>
+     <li class="nav-item">
+        <a class="nav-link" href="/logout">Logout</a>
+      </li>
+     </ul>
+</nav>
+
+	<img th:src="${apartment.picture}" style="height:500px; width:500px; float:left; margin:20px;" class="rounded float-left"/>
+	<div class="container" style="margin:30px; border:solid; float:left; width:800px;">
+		<table  class="table table-bordered"  style="width:800px;">
+			<tr>
+				<td  style="width:400px;">Name</td>
+				<td  style="width:400px;" th:text = "${apartment.name}"></td>
+			</tr>
+			<tr>
+				<td>Location</td>
+				<td><a th:text = "${apartment.address}"></a>, <a th:text = "${apartment.city}"></a>, <a th:text = "${apartment.country}"></a></td>
+			</tr>
+			<tr>
+				<td>Max. number of guests</td>
+				<td th:text = "${apartment.capacity}"></td>
+			</tr>
+			<tr>
+				<td>Description</td>
+				<td th:text = "${apartment.description}"></td>
+			</tr>
+			<tr>
+				<td>Check-in date</td>
+				<td th:text = "${checkInDate}"></td>
+			</tr>
+			<tr>
+				<td>Check-out date</td>
+				<td th:text = "${checkOutDate}"></td>
+			</tr>
+			<tr>
+				<td>Price per night</td>
+				<td th:text = "${apartment.pricePerNight}"><a> €</a></td>
+			</tr>
+			<tr>
+				<td><h3>Total price</h3></td>
+				<td><a>for </a><a th:text = "${numberOfNights}"></a> nights = <a th:text = "${totalPrice}"></a><a> €</a></td>
+			</tr>
+		</table>
+		<form class="form-inline my-2 my-lg-0" th:object="${search}" th:action="@{/reservations}"  method="post">
+				<input type="hidden" id="checkInDate" name="checkInDate" th:attr="value = ${checkInDate}"/>
+				<input type="hidden" id="checkOutDate" name="checkOutDate" th:attr="value = ${checkOutDate}"/>
+				<input type="hidden" id="apartmentId" name="apartmentId" th:attr="value = ${apartment.id}"/>
+				<input type="hidden" id="totalPrice" name="totalPrice" th:attr="value = ${totalPrice}"/>
+				<button class="btn btn-outline-info my-2 my-sm-0" type="submit">Book now</button>
+		</form>
+	</div>
+
+</body>
+</html>
