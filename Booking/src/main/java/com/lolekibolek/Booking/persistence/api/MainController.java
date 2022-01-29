@@ -6,7 +6,9 @@ import java.time.Duration;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,7 +55,64 @@ public class MainController {
 		
 		if (currentUser.getRole().equals(false))
 			return "homeUser";
+		
+		List<Reservation> reservations = reservationRepository.findAll();
+		
+		Map<Reservation, String> todaysReservations = new HashMap<>();
+		
+		for (int i = 0; i < reservations.size(); i++) {
+			checkIfToday(reservations.get(i), todaysReservations);
+		}
+		model.addAttribute("reservations", todaysReservations);
+		
 		return "homeOwner";
+	}
+	
+	private boolean checkIfToday(Reservation reservation, Map<Reservation, String> todaysReservations) {
+		Boolean check = true;
+		SimpleDateFormat dateFormatter = new SimpleDateFormat("dd-MM-yyyy");
+		Date todayDate = null;
+		try {
+			todayDate = dateFormatter.parse(dateFormatter.format(new Date() ));
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+
+		Date checkInDate = reservation.getCheckInDate();
+		Date checkOutDate = reservation.getCheckOutDate();
+		
+		if (checkInDate.equals(todayDate) && reservation.ifBooked().equals(true))
+			todaysReservations.put(reservation, "Arrival");
+		else if (checkInDate.before(todayDate) && checkOutDate.after(new Date()))
+			todaysReservations.put(reservation, "Stayover");
+		else if (checkInDate.equals(todayDate) && reservation.ifBooked().equals(false))
+			todaysReservations.put(reservation, "Cancelled");
+		else if (checkOutDate.equals(todayDate))
+			todaysReservations.put(reservation, "Due Out");
+		else
+			check = false;
+	
+		return check;
+	}
+
+	@GetMapping("help")
+	public String help(Model model) {
+		User currentUser = userRepository.findByUsername(getUser());
+		model.addAttribute("user", currentUser);
+		
+		if (currentUser.getRole().equals(false))
+			return "helpUser";
+		return "helpOwner";
+	}
+	
+	@GetMapping("profile")
+	public String profile(Model model) {
+		User currentUser = userRepository.findByUsername(getUser());
+		model.addAttribute("user", currentUser);
+		
+		if (currentUser.getRole().equals(false))
+			return "profileUser";
+		return "profileOwner";
 	}
 	
 	@DateTimeFormat(pattern="yyyy-MM-dd")

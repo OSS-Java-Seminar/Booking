@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.tymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Reservations</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" 
+	integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" 
+	crossorigin="anonymous">
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand"> Booking </a>
+
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/reservations">Availability</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/reviews">Guest Reviews</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/help">Help</a>
+      </li>
+    </ul>
+    
+    <ul class="navbar-nav">
+    <li class="nav-item my-2 my-lg-0">
+        <a class="nav-link" href="/profile" th:text = "${user.username}"></a>
+     </li>
+     <li class="nav-item">
+        <a class="nav-link" href="/logout">Logout</a>
+      </li>
+     </ul>
+</nav>
+
+<div class = "container-fluid" style="float:left; margin:20px; width:90%; " >
+	<h2 style="margin:60px;">All reservations</h2>
+	<br><br>	
+	<table class="table" style="border:solid; border-width:1px; border-radius:25px; float:left; margin:20px;">
+		
+		  <thead>
+		    <tr>
+		    	<form class="form-inline my-2 my-lg-0" th:object="${sort}" th:action="@{/reservations/sorted}"  method="get">
+					<th scope="col">Apartment&nbsp;&nbsp;
+	   					<button type="submit" class="btn btn-light" th:name="sort" th:value="nameAsc">
+	   						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-up-short" viewBox="0 0 16 16">
+	 							<path fill-rule="evenodd" d="M8 12a.5.5 0 0 0 .5-.5V5.707l2.146 2.147a.5.5 0 0 0 .708-.708l-3-3a.5.5 0 0 0-.708 0l-3 3a.5.5 0 1 0 .708.708L7.5 5.707V11.5a.5.5 0 0 0 .5.5z"/>
+							</svg>
+	   					</button>
+	   					<button type="submit" class="btn btn-light" th:name="sort" th:value="nameDesc">
+	   						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-down-short" viewBox="0 0 16 16">
+								<path fill-rule="evenodd" d="M8 4a.5.5 0 0 1 .5.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L7.5 10.293V4.5A.5.5 0 0 1 8 4z"/>
+						</svg>
+	   					</button>
+					</th>
+					<th scope="col">Check In&nbsp;&nbsp;
+	   					<button type="submit" class="btn btn-light" th:name="sort" th:value="checkInAsc">
+	   						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-up-short" viewBox="0 0 16 16">
+	 							<path fill-rule="evenodd" d="M8 12a.5.5 0 0 0 .5-.5V5.707l2.146 2.147a.5.5 0 0 0 .708-.708l-3-3a.5.5 0 0 0-.708 0l-3 3a.5.5 0 1 0 .708.708L7.5 5.707V11.5a.5.5 0 0 0 .5.5z"/>
+							</svg>
+	   					</button>
+	   					<button type="submit" class="btn btn-light" th:name="sort" th:value="checkInDesc">
+	   						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-down-short" viewBox="0 0 16 16">
+								<path fill-rule="evenodd" d="M8 4a.5.5 0 0 1 .5.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L7.5 10.293V4.5A.5.5 0 0 1 8 4z"/>
+						</svg>
+	   					</button>
+					</th>
+					<th scope="col">Check Out&nbsp;&nbsp;
+	   					<button type="submit" class="btn btn-light" th:name="sort" th:value="checkOutAsc">
+	   						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-up-short" viewBox="0 0 16 16">
+	 							<path fill-rule="evenodd" d="M8 12a.5.5 0 0 0 .5-.5V5.707l2.146 2.147a.5.5 0 0 0 .708-.708l-3-3a.5.5 0 0 0-.708 0l-3 3a.5.5 0 1 0 .708.708L7.5 5.707V11.5a.5.5 0 0 0 .5.5z"/>
+							</svg>
+	   					</button>
+	   					<button type="submit" class="btn btn-light" th:name="sort" th:value="checkOutDesc">
+	   						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-down-short" viewBox="0 0 16 16">
+								<path fill-rule="evenodd" d="M8 4a.5.5 0 0 1 .5.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L7.5 10.293V4.5A.5.5 0 0 1 8 4z"/>
+						</svg>
+	   					</button>
+					</th>
+					<th scope="col">Status&nbsp;&nbsp;
+	   					<button type="submit" class="btn btn-light" th:name="sort" th:value="bookedAsc">
+	   						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-up-short" viewBox="0 0 16 16">
+	 							<path fill-rule="evenodd" d="M8 12a.5.5 0 0 0 .5-.5V5.707l2.146 2.147a.5.5 0 0 0 .708-.708l-3-3a.5.5 0 0 0-.708 0l-3 3a.5.5 0 1 0 .708.708L7.5 5.707V11.5a.5.5 0 0 0 .5.5z"/>
+							</svg>
+	   					</button>
+	   					<button type="submit" class="btn btn-light"th:name="sort" th:value="bookedDesc">
+	   						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-down-short" viewBox="0 0 16 16">
+								<path fill-rule="evenodd" d="M8 4a.5.5 0 0 1 .5.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L7.5 10.293V4.5A.5.5 0 0 1 8 4z"/>
+						</svg>
+	   					</button>
+					</th>
+					<th scope="col">Total Price&nbsp;&nbsp;
+	   					<button type="submit" class="btn btn-light"th:name="sort" th:value="totalPriceAsc">
+	   						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-up-short" viewBox="0 0 16 16">
+	 							<path fill-rule="evenodd" d="M8 12a.5.5 0 0 0 .5-.5V5.707l2.146 2.147a.5.5 0 0 0 .708-.708l-3-3a.5.5 0 0 0-.708 0l-3 3a.5.5 0 1 0 .708.708L7.5 5.707V11.5a.5.5 0 0 0 .5.5z"/>
+							</svg>
+	   					</button>
+	   					<button type="submit" class="btn btn-light" th:name="sort" th:value="totalPriceDesc">
+	   						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-down-short" viewBox="0 0 16 16">
+								<path fill-rule="evenodd" d="M8 4a.5.5 0 0 1 .5.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L7.5 10.293V4.5A.5.5 0 0 1 8 4z"/>
+						</svg>
+	   					</button>
+					</th>
+					<th></th>
+				</form>
+		    </tr>
+		  </thead>
+		  
+		  <tbody>
+		    <tr th:each = "reservation: ${reservations}" >
+		      	<td th:text = "${reservation.apartment.name}" ></td>
+				<td th:text = "${reservation.checkInDate}" ></td>
+				<td th:text = "${reservation.checkOutDate}" ></td>
+				<td th:if = "${reservation.booked}"><p> booked </p></td>
+				<td th:unless="${reservation.booked}"><p> cancelled </p></td>
+				<td th:text = "${reservation.totalPrice}" >€ </td>
+				<td><a th:href="@{/reservations/{id}(id=${reservation.id})}"> details </a></td>
+		    </tr>
+		  </tbody>
+		  
+	</table>
+	
+
+</div>
+	
+
+	
+
+</body>
+</html>
