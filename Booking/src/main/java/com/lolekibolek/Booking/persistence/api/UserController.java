@@ -21,6 +21,7 @@ import com.lolekibolek.Booking.persistence.entities.User;
 import com.lolekibolek.Booking.persistence.repositories.ApartmentRepository;
 import com.lolekibolek.Booking.persistence.repositories.ReservationRepository;
 import com.lolekibolek.Booking.persistence.repositories.UserRepository;
+import com.lolekibolek.Booking.persistence.services.ReservationService;
 import com.lolekibolek.Booking.persistence.services.UserService;
 
 import lombok.AllArgsConstructor;
@@ -41,18 +42,19 @@ public class UserController {
 	@Autowired
 	private ReservationRepository reservationRepository;
 	
-	Tools tools = new Tools();
+	@Autowired
+	private ReservationService reservationService;
 	
 	@GetMapping()
 	public String profile(Model model) {
-		User currentUser = userRepository.findByUsername(tools.getUser());
+		User currentUser = userRepository.findByUsername(reservationService.getUser());
 		model.addAttribute("user", currentUser);
 		
 		if (currentUser.getRole().equals(false)) {
 			List<Reservation> allReservations = new ArrayList<>(currentUser.getReservations());
 			List<Reservation> futureReservations = new ArrayList<>();
 			List<Reservation> pastReservations = new ArrayList<>();
-			Date today = tools.getToday();
+			Date today = reservationService.getToday();
 			
 			for (int i = 0; i < allReservations.size(); i++) {
 				if (allReservations.get(i).getCheckInDate().after(today) || allReservations.get(i).getCheckInDate().equals(today))

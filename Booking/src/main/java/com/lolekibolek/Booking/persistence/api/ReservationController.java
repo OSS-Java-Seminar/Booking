@@ -2,6 +2,9 @@ package com.lolekibolek.Booking.persistence.api;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -52,26 +55,25 @@ public class ReservationController {
 	@Autowired
 	private ReservationRepository reservationRepository;
 	
-	Tools tools = new Tools();
 	
 	@GetMapping()
     public String findAll(Model model) {
-		List<Reservation> reservations = reservationRepository.findAll();
-		
-		User currentUser = userRepository.findByUsername(tools.getUser());
+		User currentUser = userRepository.findByUsername(reservationService.getUser());
 		model.addAttribute("user", currentUser);
+		
+		List<Reservation> reservations = reservationRepository.findAll();
+		//List<Reservation> reservations = reservationRepository.findAllById(currentUser.getId());
+		//Onda moras napravit boolean da vidis jel ta lista prazna ako nema nijednu
 		
 		model.addAttribute("reservations", reservations);
 		
-		if (currentUser.getRole().equals(false))
-			return "reservationsUser";
-        return "allReservationsOwner";
+        return "allReservations";
     }
 	
 	@GetMapping("/sorted")
 	public String sortAll(@RequestParam (defaultValue = "nameAsc") String sort,
 			Model model) {
-		User currentUser = userRepository.findByUsername(tools.getUser());
+		User currentUser = userRepository.findByUsername(reservationService.getUser());
 		model.addAttribute("user", currentUser);
 		
 		List<Reservation> sortedReservations = reservationRepository.findAll();
@@ -99,13 +101,13 @@ public class ReservationController {
 		
 		model.addAttribute("reservations", sortedReservations);
 		
-		return "allReservationsOwner";
+		return "allReservations";
 	}
 	
 	@GetMapping("/{reservationId}")
     public String details(@PathVariable Integer reservationId, Model model) {
 		System.out.println("lalalallaal");
-		User currentUser = userRepository.findByUsername(tools.getUser());
+		User currentUser = userRepository.findByUsername(reservationService.getUser());
 		model.addAttribute("user", currentUser);
 		User otherUser;
 		Boolean isOwner = currentUser.getRole();
@@ -142,7 +144,7 @@ public class ReservationController {
 			@RequestParam (value = "totalPrice") float totalPrice,
 			Model model) {
 		
-		User currentUser = userRepository.findByUsername(tools.getUser());
+		User currentUser = userRepository.findByUsername(reservationService.getUser());
 		model.addAttribute("user", currentUser);
 		
 		if (checkInString.isEmpty() || checkOutString.isEmpty()) {
@@ -168,7 +170,7 @@ public class ReservationController {
 		reservation.setTotalPrice(totalPrice);
 		reservation.setUser(currentUser);
 		
-		if (tools.checkIfAvailable(apartmentRepository.findById(apartmentId), checkInDate, checkOutDate))
+		if (reservationService.checkIfAvailable(apartmentRepository.findById(apartmentId), checkInDate, checkOutDate))
 			reservationRepository.save(reservation);
 		else {
 			model.addAttribute("error", "Sorry, someone just booked your apartment. Please try again.");
@@ -178,15 +180,5 @@ public class ReservationController {
 		return "homeUser";
     }
 
-    public String findById(@PathVariable int id, Model model ) {
-		User currentUser = userRepository.findByUsername(tools.getUser());
-		model.addAttribute("user", currentUser);
-		
-		Reservation reservation = reservationRepository.findById(id);
-		model.addAttribute("reservation", reservation);
-
-		
-        return "reservationOwner";
-	}
 
 }

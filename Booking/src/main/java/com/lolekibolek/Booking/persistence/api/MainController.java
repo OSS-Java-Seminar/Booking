@@ -31,6 +31,7 @@ import com.lolekibolek.Booking.persistence.entities.User;
 import com.lolekibolek.Booking.persistence.repositories.ApartmentRepository;
 import com.lolekibolek.Booking.persistence.repositories.ReservationRepository;
 import com.lolekibolek.Booking.persistence.repositories.UserRepository;
+import com.lolekibolek.Booking.persistence.services.ReservationService;
 
 import lombok.AllArgsConstructor;
 
@@ -47,12 +48,13 @@ public class MainController {
 	@Autowired
 	private ReservationRepository reservationRepository;
 	
-	Tools tools = new Tools();
+	@Autowired
+	private ReservationService reservationService;
 
 	//@PreAuthorize(roles = "OWNER")
 	@GetMapping()
 	public String home(Model model) {
-		User currentUser = userRepository.findByUsername(tools.getUser());
+		User currentUser = userRepository.findByUsername(reservationService.getUser());
 		model.addAttribute("user", currentUser);
 		
 		if (currentUser.getRole().equals(false))
@@ -63,48 +65,19 @@ public class MainController {
 		Map<Reservation, String> todaysReservations = new HashMap<>();
 		
 		for (int i = 0; i < reservations.size(); i++) {
-			checkIfToday(reservations.get(i), todaysReservations);
+			reservationService.checkIfToday(reservations.get(i), todaysReservations);
 		}
 		model.addAttribute("reservations", todaysReservations);
 		
 		return "homeOwner";
 	}
 	
-	private boolean checkIfToday(Reservation reservation, Map<Reservation, String> todaysReservations) {
-		Boolean check = true;
-		SimpleDateFormat dateFormatter = new SimpleDateFormat("dd-MM-yyyy");
-		Date todayDate = null;
-		try {
-			todayDate = dateFormatter.parse(dateFormatter.format(new Date() ));
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
-
-		Date checkInDate = reservation.getCheckInDate();
-		Date checkOutDate = reservation.getCheckOutDate();
-		
-		if (checkInDate.equals(todayDate) && reservation.ifBooked().equals(true))
-			todaysReservations.put(reservation, "Arrival");
-		else if (checkInDate.before(todayDate) && checkOutDate.after(new Date()))
-			todaysReservations.put(reservation, "Stayover");
-		else if (checkInDate.equals(todayDate) && reservation.ifBooked().equals(false))
-			todaysReservations.put(reservation, "Cancelled");
-		else if (checkOutDate.equals(todayDate))
-			todaysReservations.put(reservation, "Due Out");
-		else
-			check = false;
-	
-		return check;
-	}
-
 	@GetMapping("help")
 	public String help(Model model) {
-		User currentUser = userRepository.findByUsername(tools.getUser());
+		User currentUser = userRepository.findByUsername(reservationService.getUser());
 		model.addAttribute("user", currentUser);
-		
-		if (currentUser.getRole().equals(false))
-			return "helpUser";
-		return "helpOwner";
+
+		return "help";
 	}
 	
 	@DateTimeFormat(pattern="yyyy-MM-dd")
@@ -131,7 +104,7 @@ public class MainController {
 			@RequestParam (value = "wifi", required = false) Boolean wifi,
 			Model model) {
 		
-		User currentUser = userRepository.findByUsername(tools.getUser());
+		User currentUser = userRepository.findByUsername(reservationService.getUser());
 		model.addAttribute("user", currentUser);
 		
 		if (city.isEmpty() || checkInString.isEmpty() || checkOutString.isEmpty()) {
@@ -163,12 +136,13 @@ public class MainController {
 		}
 				
 		for (int j = 0; j < apartmentsInCity.size(); j++) {
-			if (tools.checkIfAvailable(apartmentsInCity.get(j), checkInDate, checkOutDate))
+			if (reservationService.checkIfAvailable(apartmentsInCity.get(j), checkInDate, checkOutDate))
 				apartments.add(apartmentsInCity.get(j));
 		}
 		
 		if (apartments.isEmpty())
 			return "notFound";
+		
 		model.addAttribute("apartments", apartments);
 		model.addAttribute("checkInDate", checkInString);
 		model.addAttribute("checkOutDate", checkOutString);

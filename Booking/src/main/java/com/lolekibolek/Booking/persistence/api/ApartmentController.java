@@ -24,6 +24,7 @@ import com.lolekibolek.Booking.persistence.repositories.ApartmentRepository;
 import com.lolekibolek.Booking.persistence.repositories.ReservationRepository;
 import com.lolekibolek.Booking.persistence.repositories.UserRepository;
 import com.lolekibolek.Booking.persistence.services.ApartmentService;
+import com.lolekibolek.Booking.persistence.services.ReservationService;
 
 import lombok.AllArgsConstructor;
 
@@ -43,7 +44,8 @@ public class ApartmentController {
 	@Autowired
 	private ReservationRepository reservationRepository;
 	
-	Tools tools = new Tools();
+	@Autowired
+	private ReservationService reservationService;
 	
 	@Autowired
 	ApartmentController (ApartmentService apartmentServices) {
@@ -64,7 +66,7 @@ public class ApartmentController {
     public String book(@RequestParam (value = "checkInDate") String checkInString,
     		@RequestParam (value = "checkOutDate") String checkOutString, @RequestParam (value = "apartmentId") int apartmentId,
     		Model model) {
-		User currentUser = userRepository.findByUsername(tools.getUser());
+		User currentUser = userRepository.findByUsername(reservationService.getUser());
 		model.addAttribute("user", currentUser);
 		model.addAttribute("checkInDate", checkInString);
 		model.addAttribute("checkOutDate", checkOutString);
