@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.tymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Profile</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" 
+	integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" 
+	crossorigin="anonymous">
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand"> Booking </a>
+
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/user">Profile</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/help">Help</a>
+      </li>
+    </ul>
+    
+    <ul class="navbar-nav">
+    <li class="nav-item my-2 my-lg-0">
+        <a class="nav-link" href="/profile" th:text = "${user.username}"></a>
+     </li>
+     <li class="nav-item">
+        <a class="nav-link" href="/logout">Logout</a>
+      </li>
+     </ul>
+</nav>
+
+<div style="padding: 20px; width: 250px; float:left; margin:50px;">
+	<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" fill="currentColor" class="bi bi-person" viewBox="0 0 16 16">
+		  <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"/>
+		</svg><br><br>
+	<ul class="list-group list-group-flush">
+		<li class="list-group-item"><a th:text = "${user.firstName}"></a></li>
+		<li class="list-group-item"><a th:text = "${user.LastName}"></a></li>
+		<li class="list-group-item"><a th:text = "${user.username}"></a></li>
+		<li class="list-group-item"><a th:text = "${user.email}"></a></li>
+		<li class="list-group-item"><a th:text = "${user.phone}"></a></li>
+		<li class="list-group-item"><button class = "btn btn-outline-info my-2 my-sm-0">Edit</button></li>
+	</ul>
+</div>
+<br>
+
+<h3>Upcoming bookings</h3>
+<div th:if="${hasFuture}">
+	<div class = "container" style = "overflow: auto; height:220px; border:solid; border-width:1px; border-radius:25px;">
+		<div class = "container-fluid" style="float:left; width:900px; margin:20px;" th:each = "reservation: ${user.reservations}">
+			<img th:src="${reservation.apartment.picture}" style="height:150px; width:150px; float:left; margin:15px;" class="rounded float-left"/>
+			<div th:with = "apartment=${reservation.apartment}">
+				<h3 th:text = "${apartment.name}"></h3>
+				<small class="text-muted"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-geo-alt" viewBox="0 0 16 16">
+					<path d="M12.166 8.94c-.524 1.062-1.234 2.12-1.96 3.07A31.493 31.493 0 0 1 8 14.58a31.481 31.481 0 0 1-2.206-2.57c-.726-.95-1.436-2.008-1.96-3.07C3.304 7.867 3 6.862 3 6a5 5 0 0 1 10 0c0 .862-.305 1.867-.834 2.94zM8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10z"/>
+					<path d="M8 8a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm0 1a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+					</svg>&nbsp
+				<a th:text = "${apartment.address}"></a>, <a th:text = "${apartment.city}"></a>, <a th:text = "${apartment.country}"></a></small><br>
+				<small class="text-muted"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar-check" viewBox="0 0 16 16">
+					  <path d="M10.854 7.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7.5 9.793l2.646-2.647a.5.5 0 0 1 .708 0z"/>
+					  <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"/>
+						</svg>&nbsp
+					<a th:text = "${reservation.checkInDate}"></a></small><br>
+				<small class="text-muted"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar-x" viewBox="0 0 16 16">
+					  <path d="M6.146 7.146a.5.5 0 0 1 .708 0L8 8.293l1.146-1.147a.5.5 0 1 1 .708.708L8.707 9l1.147 1.146a.5.5 0 0 1-.708.708L8 9.707l-1.146 1.147a.5.5 0 0 1-.708-.708L7.293 9 6.146 7.854a.5.5 0 0 1 0-.708z"/>
+					  <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"/>
+					</svg>&nbsp
+					<a th:text = "${reservation.checkOutDate}"></a></small><br>
+				<h5><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cash-coin" viewBox="0 0 16 16">
+				 	<path fill-rule="evenodd" d="M11 15a4 4 0 1 0 0-8 4 4 0 0 0 0 8zm5-4a5 5 0 1 1-10 0 5 5 0 0 1 10 0z"/>
+				  	<path d="M9.438 11.944c.047.596.518 1.06 1.363 1.116v.44h.375v-.443c.875-.061 1.386-.529 1.386-1.207 0-.618-.39-.936-1.09-1.1l-.296-.07v-1.2c.376.043.614.248.671.532h.658c-.047-.575-.54-1.024-1.329-1.073V8.5h-.375v.45c-.747.073-1.255.522-1.255 1.158 0 .562.378.92 1.007 1.066l.248.061v1.272c-.384-.058-.639-.27-.696-.563h-.668zm1.36-1.354c-.369-.085-.569-.26-.569-.522 0-.294.216-.514.572-.578v1.1h-.003zm.432.746c.449.104.655.272.655.569 0 .339-.257.571-.709.614v-1.195l.054.012z"/>
+				 	<path d="M1 0a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h4.083c.058-.344.145-.678.258-1H3a2 2 0 0 0-2-2V3a2 2 0 0 0 2-2h10a2 2 0 0 0 2 2v3.528c.38.34.717.728 1 1.154V1a1 1 0 0 0-1-1H1z"/>
+				  	<path d="M9.998 5.083 10 5a2 2 0 1 0-3.132 1.65 5.982 5.982 0 0 1 3.13-1.567z"/>
+					</svg>&nbsp
+					Total price <a th:text = "${reservation.totalPrice}"></a><a> €</a></h5>
+				<form class="form-inline my-2 my-lg-0" th:object="${search}" th:action="@{/reservations/details}"  method="get">
+					<input type="hidden" id="reservationId" name="reservationId" th:attr="value = ${reservation.id}"/>
+					<button class="btn btn-outline-info my-2 my-sm-0" type="submit">Details</button>	
+				</form>
+			</div>
+		</div>
+	</div><br><br>
+</div>
+<div th:unless="${hasFuture}">
+	<div class = "container" style = "border:solid; border-width:1px; border-radius:25px; width:800px;">
+	<br><h4>You don't have any upcoming bookings.</h4><br>
+	</div>
+</div>
+
+<h3>Past stays</h3>
+<div th:if="${hasPast}">
+	<div class = "container" style = "overflow: auto; height:220px; border:solid; border-width:1px; border-radius:25px;">
+		<div class = "container-fluid" style=" overflow: auto; float:left; width:900px; margin:20px;" th:each = "reservation: ${user.reservations}">
+			<img th:src="${reservation.apartment.picture}" style="height:150px; width:150px; float:left; margin:15px;" class="rounded float-left"/>
+			<div th:with = "apartment=${reservation.apartment}">
+				<h3 th:text = "${apartment.name}"></h3>
+				<small class="text-muted"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-geo-alt" viewBox="0 0 16 16">
+					<path d="M12.166 8.94c-.524 1.062-1.234 2.12-1.96 3.07A31.493 31.493 0 0 1 8 14.58a31.481 31.481 0 0 1-2.206-2.57c-.726-.95-1.436-2.008-1.96-3.07C3.304 7.867 3 6.862 3 6a5 5 0 0 1 10 0c0 .862-.305 1.867-.834 2.94zM8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10z"/>
+					<path d="M8 8a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm0 1a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+					</svg>&nbsp
+					<a th:text = "${apartment.address}"></a>, <a th:text = "${apartment.city}"></a>, <a th:text = "${apartment.country}"></a></small><br>
+				<h5><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cash-coin" viewBox="0 0 16 16">
+				 	<path fill-rule="evenodd" d="M11 15a4 4 0 1 0 0-8 4 4 0 0 0 0 8zm5-4a5 5 0 1 1-10 0 5 5 0 0 1 10 0z"/>
+				  	<path d="M9.438 11.944c.047.596.518 1.06 1.363 1.116v.44h.375v-.443c.875-.061 1.386-.529 1.386-1.207 0-.618-.39-.936-1.09-1.1l-.296-.07v-1.2c.376.043.614.248.671.532h.658c-.047-.575-.54-1.024-1.329-1.073V8.5h-.375v.45c-.747.073-1.255.522-1.255 1.158 0 .562.378.92 1.007 1.066l.248.061v1.272c-.384-.058-.639-.27-.696-.563h-.668zm1.36-1.354c-.369-.085-.569-.26-.569-.522 0-.294.216-.514.572-.578v1.1h-.003zm.432.746c.449.104.655.272.655.569 0 .339-.257.571-.709.614v-1.195l.054.012z"/>
+				 	<path d="M1 0a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h4.083c.058-.344.145-.678.258-1H3a2 2 0 0 0-2-2V3a2 2 0 0 0 2-2h10a2 2 0 0 0 2 2v3.528c.38.34.717.728 1 1.154V1a1 1 0 0 0-1-1H1z"/>
+				  	<path d="M9.998 5.083 10 5a2 2 0 1 0-3.132 1.65 5.982 5.982 0 0 1 3.13-1.567z"/>
+					</svg>&nbsp
+					Total price<a th:text = "${reservation.totalPrice}"></a><a> €</a></h5><br>
+				<form class="form-inline my-2 my-lg-0" th:object="${search}" th:action="@{/reservation/details}"  method="get">
+					<input type="hidden" id="reservationId" name="reservationId" th:attr="value = ${reservationId}"/>
+					<button class="btn btn-outline-info my-2 my-sm-0" type="submit">Write a review</button>	
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+<div th:unless="${hasPast}">
+	<div class = "container" style = "border:solid; border-width:1px; border-radius:25px; width:800px;">
+		<br><h4>You don't have any past stays.</h4><br>
+	</div>
+</div>
+
+</body>
+</html>

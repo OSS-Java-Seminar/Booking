@@ -46,11 +46,13 @@ public class MainController {
 	
 	@Autowired
 	private ReservationRepository reservationRepository;
+	
+	Tools tools = new Tools();
 
 	//@PreAuthorize(roles = "OWNER")
 	@GetMapping()
 	public String home(Model model) {
-		User currentUser = userRepository.findByUsername(getUser());
+		User currentUser = userRepository.findByUsername(tools.getUser());
 		model.addAttribute("user", currentUser);
 		
 		if (currentUser.getRole().equals(false))
@@ -97,22 +99,12 @@ public class MainController {
 
 	@GetMapping("help")
 	public String help(Model model) {
-		User currentUser = userRepository.findByUsername(getUser());
+		User currentUser = userRepository.findByUsername(tools.getUser());
 		model.addAttribute("user", currentUser);
 		
 		if (currentUser.getRole().equals(false))
 			return "helpUser";
 		return "helpOwner";
-	}
-	
-	@GetMapping("profile")
-	public String profile(Model model) {
-		User currentUser = userRepository.findByUsername(getUser());
-		model.addAttribute("user", currentUser);
-		
-		if (currentUser.getRole().equals(false))
-			return "profileUser";
-		return "profileOwner";
 	}
 	
 	@DateTimeFormat(pattern="yyyy-MM-dd")
@@ -139,7 +131,7 @@ public class MainController {
 			@RequestParam (value = "wifi", required = false) Boolean wifi,
 			Model model) {
 		
-		User currentUser = userRepository.findByUsername(getUser());
+		User currentUser = userRepository.findByUsername(tools.getUser());
 		model.addAttribute("user", currentUser);
 		
 		if (city.isEmpty() || checkInString.isEmpty() || checkOutString.isEmpty()) {
@@ -171,7 +163,7 @@ public class MainController {
 		}
 				
 		for (int j = 0; j < apartmentsInCity.size(); j++) {
-			if (checkIfAvailable(apartmentsInCity.get(j), checkInDate, checkOutDate))
+			if (tools.checkIfAvailable(apartmentsInCity.get(j), checkInDate, checkOutDate))
 				apartments.add(apartmentsInCity.get(j));
 		}
 		
@@ -196,33 +188,6 @@ public class MainController {
 		model.addAttribute("heating", heating);
 		model.addAttribute("wifi", wifi);
 		return "searchApartments";
-	}
-	
-	private boolean checkIfAvailable(Apartment apartment, Date s1, Date e1) {
-		List<Reservation> allReservations = reservationRepository.findAll();
-		Boolean check = true;
-		
-		for (int i = 0; i < allReservations.size(); i++) {
-			if (allReservations.get(i).getApartment() == apartment) {
-				Date s2 = allReservations.get(i).getCheckInDate();
-				Date e2 = allReservations.get(i).getCheckOutDate();
-				if(s1.before(s2) && e1.after(s2) ||
-					       s1.before(e2) && e1.after(e2) ||
-					       s1.before(s2) && e1.after(e2) ||
-					       s1.after(s2) && e1.before(e2))
-					check = false;
-			}
-		}
-		return check;
-	}
-
-	public String getUser() {
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		if (!(authentication instanceof AnonymousAuthenticationToken)) {
-		    String currentUserName = authentication.getName();
-		    return currentUserName;
-		}
-		return "Guest";
 	}
 	
 }

@@ -43,6 +43,8 @@ public class ApartmentController {
 	@Autowired
 	private ReservationRepository reservationRepository;
 	
+	Tools tools = new Tools();
+	
 	@Autowired
 	ApartmentController (ApartmentService apartmentServices) {
 		this.apartmentService = apartmentServices;
@@ -62,7 +64,7 @@ public class ApartmentController {
     public String book(@RequestParam (value = "checkInDate") String checkInString,
     		@RequestParam (value = "checkOutDate") String checkOutString, @RequestParam (value = "apartmentId") int apartmentId,
     		Model model) {
-		User currentUser = userRepository.findByUsername(getUser());
+		User currentUser = userRepository.findByUsername(tools.getUser());
 		model.addAttribute("user", currentUser);
 		model.addAttribute("checkInDate", checkInString);
 		model.addAttribute("checkOutDate", checkOutString);
@@ -98,14 +100,5 @@ public class ApartmentController {
 	public List<Apartment> findByCity(String city) {
 		// TODO Auto-generated method stub
 		return apartmentService.findByCity(city);
-	}
-	
-	public String getUser() {
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		if (!(authentication instanceof AnonymousAuthenticationToken)) {
-		    String currentUserName = authentication.getName();
-		    return currentUserName;
-		}
-		return "Guest";
 	}
 }

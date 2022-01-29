@@ -52,11 +52,13 @@ public class ReservationController {
 	@Autowired
 	private ReservationRepository reservationRepository;
 	
+	Tools tools = new Tools();
+	
 	@GetMapping()
     public String findAll(Model model) {
 		List<Reservation> reservations = reservationRepository.findAll();
 		
-		User currentUser = userRepository.findByUsername(getUser());
+		User currentUser = userRepository.findByUsername(tools.getUser());
 		model.addAttribute("user", currentUser);
 		
 		model.addAttribute("reservations", reservations);
@@ -69,7 +71,7 @@ public class ReservationController {
 	@GetMapping("/sorted")
 	public String sortAll(@RequestParam (defaultValue = "nameAsc") String sort,
 			Model model) {
-		User currentUser = userRepository.findByUsername(getUser());
+		User currentUser = userRepository.findByUsername(tools.getUser());
 		model.addAttribute("user", currentUser);
 		
 		List<Reservation> sortedReservations = reservationRepository.findAll();
@@ -105,6 +107,39 @@ public class ReservationController {
         return reservationService.findById(id);
     }
 	
+	@GetMapping("/details")
+    public String details(@RequestParam (value = "reservationId") Integer reservationId, Model model) {
+		System.out.println("lalalallaal");
+		User currentUser = userRepository.findByUsername(tools.getUser());
+		model.addAttribute("user", currentUser);
+		User otherUser;
+		Boolean isOwner = currentUser.getRole();
+		Reservation reservation = reservationRepository.getById(reservationId);
+		
+		if (isOwner)
+			otherUser = reservation.getUser();
+		else
+			otherUser = reservation.getApartment().getOwner();
+		model.addAttribute("currentUser", currentUser);
+		model.addAttribute("otherUser", otherUser);
+		model.addAttribute("reservation", reservation);
+		model.addAttribute("isOwner", isOwner);
+		
+		System.out.println(reservationId);
+		System.out.println(reservation);
+		
+        return "reservationDetails";
+    }
+	
+	@GetMapping("/cancel")
+    public String cancel(@RequestParam (value = "reservationId") Integer reservationId, Model model) {
+		Reservation reservation = reservationRepository.getById(reservationId);
+		reservation.setBooked(false);
+		reservationRepository.save(reservation);
+		
+        return "redirect:/user";
+    }
+	
 	@PostMapping()
     public String save(@RequestParam (value = "checkInDate") String checkInString, 
 			@RequestParam (value = "checkOutDate") String checkOutString,
@@ -112,7 +147,7 @@ public class ReservationController {
 			@RequestParam (value = "totalPrice") float totalPrice,
 			Model model) {
 		
-		User currentUser = userRepository.findByUsername(getUser());
+		User currentUser = userRepository.findByUsername(tools.getUser());
 		model.addAttribute("user", currentUser);
 		
 		if (checkInString.isEmpty() || checkOutString.isEmpty()) {
@@ -138,7 +173,7 @@ public class ReservationController {
 		reservation.setTotalPrice(totalPrice);
 		reservation.setUser(currentUser);
 		
-		if (checkIfAvailable(apartmentRepository.findById(apartmentId), checkInDate, checkOutDate))
+		if (tools.checkIfAvailable(apartmentRepository.findById(apartmentId), checkInDate, checkOutDate))
 			reservationRepository.save(reservation);
 		else {
 			model.addAttribute("error", "Sorry, someone just booked your apartment. Please try again.");
@@ -149,7 +184,7 @@ public class ReservationController {
     }
 
     public String findById(@PathVariable int id, Model model ) {
-		User currentUser = userRepository.findByUsername(getUser());
+		User currentUser = userRepository.findByUsername(tools.getUser());
 		model.addAttribute("user", currentUser);
 		
 		Reservation reservation = reservationRepository.findById(id);
@@ -158,31 +193,5 @@ public class ReservationController {
 		
         return "reservationOwner";
 	}
-	
-	public String getUser() {
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		if (!(authentication instanceof AnonymousAuthenticationToken)) {
-		    String currentUserName = authentication.getName();
-		    return currentUserName;
-		}
-		return "Guest";
-	}
 
-	private boolean checkIfAvailable(Apartment apartment, Date s1, Date e1) {
-		List<Reservation> allReservations = reservationRepository.findAll();
-		Boolean check = true;
-		
-		for (int i = 0; i < allReservations.size(); i++) {
-			if (allReservations.get(i).getApartment() == apartment) {
-				Date s2 = allReservations.get(i).getCheckInDate();
-				Date e2 = allReservations.get(i).getCheckOutDate();
-				if(s1.before(s2) && e1.after(s2) ||
-					       s1.before(e2) && e1.after(e2) ||
-					       s1.before(s2) && e1.after(e2) ||
-					       s1.after(s2) && e1.before(e2))
-					check = false;
-			}
-		}
-		return check;
-	}
 }
