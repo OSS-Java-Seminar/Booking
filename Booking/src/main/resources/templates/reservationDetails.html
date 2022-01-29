@@ -90,13 +90,13 @@
 				<td><h3><a th:text = "${reservation.totalPrice}"></a><a> €</a></h3></td>
 			</tr>
 		</table><br>
-		<span th:if = "${reservation.ifBooked()}">
+		<span th:if = "${reservation.booked}">
 			<form class="form-inline my-2 my-lg-0" th:object="${search}" th:action="@{/reservations/cancel}"  method="get">
 				<input type="hidden" id="reservationId" name="reservationId" th:attr="value = ${reservation.id}"/>
 				<button class="btn btn-outline-info my-2 my-sm-0" type="submit">Cancel Reservation</button>
 			</form>
 		</span>
-		<span th:unless = "${reservation.ifBooked()}">
+		<span th:unless = "${reservation.booked}">
 			<h5>Reservation is cancelled.</h5>
 		</span>
 	</div>

@@ -118,7 +118,7 @@
 				<td th:if = "${reservation.booked}"><p> booked </p></td>
 				<td th:unless="${reservation.booked}"><p> cancelled </p></td>
 				<td th:text = "${reservation.totalPrice}" >€ </td>
-				<td><a th:href="@{/reservations/{id}(id=${reservation.id})}"> details </a></td>
+				<td><a th:href="@{/reservations/{reservationId}(reservationId=${reservation.id})}"> details </a></td>
 		    </tr>
 		  </tbody>
 		  

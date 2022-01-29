@@ -102,13 +102,8 @@ public class ReservationController {
 		return "allReservationsOwner";
 	}
 	
-	@GetMapping("/{id}")
-    public Reservation findById(int id) {
-        return reservationService.findById(id);
-    }
-	
-	@GetMapping("/details")
-    public String details(@RequestParam (value = "reservationId") Integer reservationId, Model model) {
+	@GetMapping("/{reservationId}")
+    public String details(@PathVariable Integer reservationId, Model model) {
 		System.out.println("lalalallaal");
 		User currentUser = userRepository.findByUsername(tools.getUser());
 		model.addAttribute("user", currentUser);

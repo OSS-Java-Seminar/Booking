@@ -94,6 +94,10 @@ public class Reservation {
 		this.totalPrice = totalPrice;
 	}
 
+	public Boolean getBooked() {
+		return booked;
+	}
+	
 	public Boolean ifBooked() {
 		return booked;
 	}
