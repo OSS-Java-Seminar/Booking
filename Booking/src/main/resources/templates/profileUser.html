@@ -52,7 +52,7 @@
 <h3>Upcoming bookings</h3>
 <div th:if="${hasFuture}">
 	<div class = "container" style = "overflow: auto; height:220px; border:solid; border-width:1px; border-radius:25px;">
-		<div class = "container-fluid" style="float:left; width:900px; margin:20px;" th:each = "reservation: ${user.reservations}">
+		<div class = "container-fluid" style="float:left; width:900px; margin:20px;" th:each = "reservation: ${futureReservations}">
 			<img th:src="${reservation.apartment.picture}" style="height:150px; width:150px; float:left; margin:15px;" class="rounded float-left"/>
 			<div th:with = "apartment=${reservation.apartment}">
 				<h3 th:text = "${apartment.name}"></h3>
@@ -92,7 +92,7 @@
 <h3>Past stays</h3>
 <div th:if="${hasPast}">
 	<div class = "container" style = "overflow: auto; height:220px; border:solid; border-width:1px; border-radius:25px;">
-		<div class = "container-fluid" style=" overflow: auto; float:left; width:900px; margin:20px;" th:each = "reservation: ${user.reservations}">
+		<div class = "container-fluid" style=" overflow: auto; float:left; width:900px; margin:20px;" th:each = "reservation: ${pastReservations}">
 			<img th:src="${reservation.apartment.picture}" style="height:150px; width:150px; float:left; margin:15px;" class="rounded float-left"/>
 			<div th:with = "apartment=${reservation.apartment}">
 				<h3 th:text = "${apartment.name}"></h3>
