@@ -65,7 +65,7 @@ public class UserController {
 			
 			for (int i = 0; i < allReservations.size(); i++) {
 				if (allReservations.get(i).getCheckOutDate().isBefore(today) || allReservations.get(i).getCheckOutDate().equals(today)) {
-					if (allReservations.get(i).getCheckOutDate().plusMonths(3).isAfter(today))
+					if (allReservations.get(i).getCheckOutDate().plusMonths(3).isAfter(today) && allReservations.get(i).getBooked().equals(true))
 						pastReservations.add(allReservations.get(i));
 				}
 			}
