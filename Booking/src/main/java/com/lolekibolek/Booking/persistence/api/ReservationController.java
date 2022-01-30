@@ -134,9 +134,11 @@ public class ReservationController {
 		model.addAttribute("otherUser", otherUser);
 		model.addAttribute("reservation", reservation);
 		model.addAttribute("isOwner", isOwner);
-		
-		//botun add recenziju ako checkout.after today
-		
+
+
+		if (reservationService.checkIfBeforeToday(reservation))
+			model.addAttribute("review", true);
+		model.addAttribute("review", false);
 		
         return "reservationDetails";
     }

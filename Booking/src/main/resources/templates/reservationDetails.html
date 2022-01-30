@@ -99,6 +99,15 @@
 		<span th:unless = "${reservation.booked}">
 			<h5>Reservation is cancelled.</h5>
 		</span>
+		
+		<span th:if = "${review}">
+			<form class="form-inline my-2 my-lg-0" th:action="@{/reviews/{reservationId}(reservationId=${reservation.id})}"  method="get">
+				<button class="btn btn-outline-info my-2 my-sm-0" type="submit">Leave a review</button>
+			</form>
+		</span>
+		<span th:unless = "${review}">
+			<h5>You can leave a review after your stay is over.</h5>
+		</span>
 	</div>
 	
 </body>
