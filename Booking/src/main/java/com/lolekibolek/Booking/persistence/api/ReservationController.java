@@ -70,6 +70,11 @@ public class ReservationController {
 				byId.add(reservations.get(i));
 		}
 		
+		for (int i = 0; i < reservations.size(); i++) {
+			if(currentUser.getId() == reservations.get(i).getApartment().getOwner().getId())
+				byId.add(reservations.get(i));
+		}
+		
 		if (byId.isEmpty()) {
 			model.addAttribute("status", "Please make a reservation first.");
 			return "notFound";
@@ -112,6 +117,11 @@ public class ReservationController {
 		List<Reservation> byId = new ArrayList<>();
 		for (int i = 0; i < sortedReservations.size(); i++) {
 			if(currentUser.getId() == sortedReservations.get(i).getUser().getId())
+				byId.add(sortedReservations.get(i));
+		}
+
+		for (int i = 0; i < sortedReservations.size(); i++) {
+			if(currentUser.getId() == sortedReservations.get(i).getApartment().getOwner().getId())
 				byId.add(sortedReservations.get(i));
 		}
 		
