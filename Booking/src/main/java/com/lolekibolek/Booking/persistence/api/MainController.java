@@ -2,13 +2,12 @@ package com.lolekibolek.Booking.persistence.api;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.Duration;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -132,22 +131,16 @@ public class MainController {
 			return "notFound";
 		}
 		
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		Date checkInDate = null;
-		Date checkOutDate = null;
-		try {
-			checkInDate = sdf.parse(checkInString);
-			checkOutDate = sdf.parse(checkOutString);
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+		LocalDate checkInDate = LocalDate.parse(checkInString, formatter);
+		LocalDate checkOutDate = LocalDate.parse(checkOutString, formatter);
 		
-		if (checkOutDate.compareTo(checkInDate) < 1) {
+		if (checkOutDate.isBefore(checkInDate) || checkOutDate.equals(checkInDate)) {
 			model.addAttribute("error", "Check-in date must be before check-out date. ");
 			return "badRequest";
 		}
 		
-		if (checkInDate.before(new Date())) {
+		if (checkInDate.isBefore(LocalDate.now())) {
 			model.addAttribute("error", "Can not make a reservation for past dates. ");
 			return "badRequest";
 		}

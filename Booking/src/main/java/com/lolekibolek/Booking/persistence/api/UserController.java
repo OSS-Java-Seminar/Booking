@@ -1,7 +1,7 @@
 package com.lolekibolek.Booking.persistence.api;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -54,15 +54,15 @@ public class UserController {
 			List<Reservation> allReservations = new ArrayList<>(currentUser.getReservations());
 			List<Reservation> futureReservations = new ArrayList<>();
 			List<Reservation> pastReservations = new ArrayList<>();
-			Date today = reservationService.getToday();
+			LocalDate today = LocalDate.now();
 			
 			for (int i = 0; i < allReservations.size(); i++) {
-				if (allReservations.get(i).getCheckInDate().after(today) || allReservations.get(i).getCheckInDate().equals(today))
+				if (allReservations.get(i).getCheckInDate().isAfter(today) || allReservations.get(i).getCheckInDate().equals(today))
 					futureReservations.add(allReservations.get(i));
 			}
 			
 			for (int i = 0; i < allReservations.size(); i++) {
-				if (allReservations.get(i).getCheckOutDate().before(today) || allReservations.get(i).getCheckOutDate().equals(today))
+				if (allReservations.get(i).getCheckOutDate().isBefore(today) || allReservations.get(i).getCheckOutDate().equals(today))
 					pastReservations.add(allReservations.get(i));
 			}
 			

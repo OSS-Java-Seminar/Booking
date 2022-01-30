@@ -1,6 +1,6 @@
 package com.lolekibolek.Booking.persistence.entities;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.UUID;
 
 import javax.persistence.CascadeType;
@@ -35,10 +35,10 @@ public class Reservation {
 	private Apartment apartment;
 	
 	@Column(nullable = false)
-	private Date checkInDate;
+	private LocalDate checkInDate;
 	
 	@Column(nullable = false)
-	private Date checkOutDate;
+	private LocalDate checkOutDate;
 	
 	@Column(nullable = false)
 	private float totalPrice;
@@ -70,19 +70,19 @@ public class Reservation {
 		this.apartment = apartment;
 	}
 
-	public Date getCheckInDate() {
+	public LocalDate getCheckInDate() {
 		return checkInDate;
 	}
 
-	public void setCheckInDate(Date checkInDate) {
+	public void setCheckInDate(LocalDate checkInDate) {
 		this.checkInDate = checkInDate;
 	}
 
-	public Date getCheckOutDate() {
+	public LocalDate getCheckOutDate() {
 		return checkOutDate;
 	}
 
-	public void setCheckOutDate(Date checkOutDate) {
+	public void setCheckOutDate(LocalDate checkOutDate) {
 		this.checkOutDate = checkOutDate;
 	}
 

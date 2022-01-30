@@ -2,6 +2,7 @@ package com.lolekibolek.Booking.persistence.services;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -35,19 +36,19 @@ public class ReservationService {
     	return reservationRepository.findById(id);
     }
     
-	public boolean checkIfAvailable(Apartment apartment, Date wantedCheckIn, Date wantedCheckOut) {
+	public boolean checkIfAvailable(Apartment apartment, LocalDate wantedCheckIn, LocalDate wantedCheckOut) {
 		List<Reservation> allReservations = reservationRepository.findAll();
 		Boolean check = true;
 		
 		for (int i = 0; i < allReservations.size(); i++) {
 			if (allReservations.get(i).getApartment() == apartment) {
-				Date checkIn = allReservations.get(i).getCheckInDate();
-				Date checkOut = allReservations.get(i).getCheckOutDate();
+				LocalDate checkIn = allReservations.get(i).getCheckInDate();
+				LocalDate checkOut = allReservations.get(i).getCheckOutDate();
 				
-				if(wantedCheckIn.before(checkIn) && wantedCheckOut.after(checkIn) ||
-						wantedCheckIn.before(checkOut) && wantedCheckOut.after(checkOut) ||
-						wantedCheckIn.before(checkIn) && wantedCheckOut.after(checkOut) ||
-						wantedCheckIn.after(checkIn) && wantedCheckOut.before(checkOut) ||
+				if(wantedCheckIn.isBefore(checkIn) && wantedCheckOut.isAfter(checkIn) ||
+						wantedCheckIn.isBefore(checkOut) && wantedCheckOut.isAfter(checkOut) ||
+						wantedCheckIn.isBefore(checkIn) && wantedCheckOut.isAfter(checkOut) ||
+						wantedCheckIn.isAfter(checkIn) && wantedCheckOut.isBefore(checkOut) ||
 						wantedCheckIn.equals(checkIn) || wantedCheckOut.equals(checkOut)
 						)
 					check = false;
@@ -71,20 +72,14 @@ public class ReservationService {
 	
 	public boolean checkIfToday(Reservation reservation, Map<Reservation, String> todaysReservations) {
 		Boolean check = true;
-		SimpleDateFormat dateFormatter = new SimpleDateFormat("dd-MM-yyyy");
-		Date todayDate = null;
-		try {
-			todayDate = dateFormatter.parse(dateFormatter.format(new Date() ));
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
-
-		Date checkInDate = reservation.getCheckInDate();
-		Date checkOutDate = reservation.getCheckOutDate();
+		LocalDate todayDate = LocalDate.now();
+		
+		LocalDate checkInDate = reservation.getCheckInDate();
+		LocalDate checkOutDate = reservation.getCheckOutDate();
 		
 		if (checkInDate.equals(todayDate) && reservation.ifBooked().equals(true))
 			todaysReservations.put(reservation, "Arrival");
-		else if (checkInDate.before(todayDate) && checkOutDate.after(new Date()) && reservation.ifBooked().equals(true))
+		else if (checkInDate.isBefore(todayDate) && checkOutDate.isAfter(todayDate) && reservation.ifBooked().equals(true))
 			todaysReservations.put(reservation, "Stayover");
 		else if (checkInDate.equals(todayDate) && reservation.ifBooked().equals(false))
 			todaysReservations.put(reservation, "Cancelled");
@@ -95,18 +90,5 @@ public class ReservationService {
 	
 		return check;
 	}
-
-	
-	@SuppressWarnings("deprecation")
-	public Date getToday() {
-		Date today = new Date();
-		today.setHours(0);
-		today.setMinutes(0);
-		today.setSeconds(0);
-		
-		return today;
-	}
-
-	
 	
 }

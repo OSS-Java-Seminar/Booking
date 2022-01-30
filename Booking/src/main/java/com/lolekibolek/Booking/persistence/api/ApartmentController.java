@@ -2,8 +2,9 @@ package com.lolekibolek.Booking.persistence.api;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
-import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -76,18 +77,11 @@ public class ApartmentController {
 			return "badRequest";
 		}
 		
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		Date checkInDate = null;
-		Date checkOutDate = null;
-		try {
-			checkInDate = sdf.parse(checkInString);
-			checkOutDate = sdf.parse(checkOutString);
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+		LocalDate checkInDate = LocalDate.parse(checkInString, formatter);
+		LocalDate checkOutDate = LocalDate.parse(checkOutString, formatter);
 		
-		long diffInMillies = Math.abs(checkOutDate.getTime() - checkInDate.getTime());
-	    int numberOfNights = (int) TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
+	    long numberOfNights = ChronoUnit.DAYS.between(checkInDate, checkOutDate);
 	    model.addAttribute("numberOfNights", numberOfNights);
 		
 		Apartment apartment = apartmentRepository.getById(apartmentId);
