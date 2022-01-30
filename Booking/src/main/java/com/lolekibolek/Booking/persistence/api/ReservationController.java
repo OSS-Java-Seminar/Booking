@@ -62,10 +62,17 @@ public class ReservationController {
 		model.addAttribute("user", currentUser);
 		
 		List<Reservation> reservations = reservationRepository.findAll();
-		//List<Reservation> reservations = reservationRepository.findAllById(currentUser.getId());
-		//Onda moras napravit boolean da vidis jel ta lista prazna ako nema nijednu
+		List<Reservation> byId = new ArrayList<>();
+		for (int i = 0; i < reservations.size(); i++) {
+			if(currentUser.getId() == reservations.get(i).getUser().getId())
+				byId.add(reservations.get(i));
+		}
+		if (byId.isEmpty()) {
+			model.addAttribute("status", "Please make a reservation first.");
+			return "notFound";
+		}
 		
-		model.addAttribute("reservations", reservations);
+		model.addAttribute("reservations", byId);
 		
         return "allReservations";
     }
@@ -99,7 +106,13 @@ public class ReservationController {
 		if(sort.equals("totalPriceDesc")) 
 			sortedReservations = reservationRepository.findAll(Sort.by(Sort.Direction.DESC, "totalPrice"));
 		
-		model.addAttribute("reservations", sortedReservations);
+		List<Reservation> byId = new ArrayList<>();
+		for (int i = 0; i < sortedReservations.size(); i++) {
+			if(currentUser.getId() == sortedReservations.get(i).getUser().getId())
+				byId.add(sortedReservations.get(i));
+		}
+		
+		model.addAttribute("reservations", byId);
 		
 		return "allReservations";
 	}
@@ -122,8 +135,8 @@ public class ReservationController {
 		model.addAttribute("reservation", reservation);
 		model.addAttribute("isOwner", isOwner);
 		
-		System.out.println(reservationId);
-		System.out.println(reservation);
+		//botun add recenziju ako checkout.after today
+		
 		
         return "reservationDetails";
     }

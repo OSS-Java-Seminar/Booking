@@ -140,8 +140,10 @@ public class MainController {
 				apartments.add(apartmentsInCity.get(j));
 		}
 		
-		if (apartments.isEmpty())
+		if (apartments.isEmpty()){
+			model.addAttribute("status", "No apartments found.");
 			return "notFound";
+		}
 		
 		model.addAttribute("apartments", apartments);
 		model.addAttribute("checkInDate", checkInString);
