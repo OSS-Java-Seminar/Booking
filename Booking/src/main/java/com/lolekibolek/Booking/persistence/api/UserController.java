@@ -58,18 +58,22 @@ public class UserController {
 			
 			for (int i = 0; i < allReservations.size(); i++) {
 				if (allReservations.get(i).getCheckInDate().isAfter(today) || allReservations.get(i).getCheckInDate().equals(today)) {
-					if (allReservations.get(i).getBooked().equals(true))
+					if (allReservations.get(i).getBooked().equals(true)) {
+						System.out.println("Check-in: " + allReservations.get(i).getCheckInDate());
+						System.out.println("Today " + LocalDate.now());
 						futureReservations.add(allReservations.get(i));
+					}
+						
 				}
 			}
 			
 			for (int i = 0; i < allReservations.size(); i++) {
 				if (allReservations.get(i).getCheckOutDate().isBefore(today) || allReservations.get(i).getCheckOutDate().equals(today)) {
-					if (allReservations.get(i).getCheckOutDate().plusMonths(3).isAfter(today))
+					if (allReservations.get(i).getCheckOutDate().plusMonths(3).isAfter(today) && allReservations.get(i).getBooked().equals(true))
 						pastReservations.add(allReservations.get(i));
 				}
 			}
-			
+						
 			Boolean hasPast = true;
 			Boolean hasFuture = true;
 			if (futureReservations.isEmpty())
@@ -78,8 +82,8 @@ public class UserController {
 				hasPast = false;
 			model.addAttribute("hasFuture", hasFuture);
 			model.addAttribute("hasPast", hasPast);
-			model.addAttribute(pastReservations);
-			model.addAttribute(futureReservations);
+			model.addAttribute("pastReservations", pastReservations);
+			model.addAttribute("futureReservations", futureReservations);
 			
 			return "profileUser";
 		}

@@ -122,7 +122,6 @@ public class ReservationController {
 	
 	@GetMapping("/{reservationId}")
     public String details(@PathVariable Integer reservationId, Model model) {
-		System.out.println("lalalallaal");
 		User currentUser = userRepository.findByUsername(reservationService.getUser());
 		model.addAttribute("user", currentUser);
 		User otherUser;
@@ -138,11 +137,6 @@ public class ReservationController {
 			if (reservation.getCheckInDate().isAfter(LocalDate.now().plusDays(2)))
 				canCancel = true;
 		}
-		
-		
-		System.out.println("Check-in: " + reservation.getCheckInDate());
-		System.out.println("Today " + LocalDate.now());
-		System.out.println(canCancel);
 		
 		if (isOwner)
 			otherUser = reservation.getUser();
