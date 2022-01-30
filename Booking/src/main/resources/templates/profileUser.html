@@ -109,6 +109,7 @@
 					</svg>&nbsp
 					Total price<a th:text = "${reservation.totalPrice}"></a><a> €</a></h5><br>
 				<form class="form-inline my-2 my-lg-0" th:object="${search}" th:action="@{/review/{reservationId}(reservationId=${reservation.id})}"  method="get">
+					<input type="hidden" id="reservationId" name="reservationId" th:attr="value = ${reservation.Id}"/> 
 					<button class="btn btn-outline-info my-2 my-sm-0" type="submit">Write a review</button>	
 				</form>
 			</div>

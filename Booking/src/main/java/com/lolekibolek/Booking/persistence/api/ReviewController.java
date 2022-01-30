@@ -56,11 +56,13 @@ public class ReviewController {
 	
 	@GetMapping("/{id}")
     public String findById(@PathVariable int id,
+    		@RequestParam (value = "reservationId") int reservationId,
     		Model model) {
 		User currentUser = userRepository.findByUsername(reservationService.getUser());
 		model.addAttribute("user", currentUser);
 		
 		ReviewDto reviewDto = new ReviewDto();
+		reviewDto.setReservationId(reservationId);
 		model.addAttribute("reviewDto", reviewDto);
 
         return "reviewDetails";
@@ -75,6 +77,7 @@ public class ReviewController {
 		
 		Review review = new Review();
 		
+		review.setReservation(reservationRepository.findById(reviewDto.getReservationId()));
 		review.setCleanessRating(reviewDto.getCleanessRating());
 		review.setComfortRating(reviewDto.getComfortRating());
 		review.setLocationRating(reviewDto.getLocationRating());

@@ -6,6 +6,18 @@ import javax.validation.constraints.NotNull;
 public class ReviewDto {
 
 	@NotNull
+    @NotEmpty  
+	private int reservationId;
+	
+	public int getReservationId() {
+		return reservationId;
+	}
+
+	public void setReservationId(int reservationId) {
+		this.reservationId = reservationId;
+	}
+
+	@NotNull
     @NotEmpty
     private int cleanessRating;
     
