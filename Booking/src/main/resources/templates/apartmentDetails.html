@@ -36,22 +36,51 @@
 
 	<img th:src="${apartment.picture}" style="height:500px; width:500px; float:left; margin:20px;" class="rounded float-left"/>
 	<div class="container" style="margin:30px; border:solid; float:left; width:800px;">
+	<h3 th:text = "${apartment.name}">Ime</h3><br>
 		<table  class="table table-bordered"  style="width:800px;">
 			<tr>
-				<td  style="width:400px;">Name</td>
-				<td  style="width:400px;" th:text = "${apartment.name}"></td>
-			</tr>
-			<tr>
-				<td>Location</td>
-				<td><a th:text = "${apartment.address}"></a>, <a th:text = "${apartment.city}"></a>, <a th:text = "${apartment.country}"></a></td>
+				<td  style="width:400px;">Location</td>
+				<td  style="width:400px;"><a th:text = "${apartment.address}"></a>, <a th:text = "${apartment.city}"></a>, <a th:text = "${apartment.country}"></a></td>
 			</tr>
 			<tr>
 				<td>Max. number of guests</td>
 				<td th:text = "${apartment.capacity}"></td>
 			</tr>
 			<tr>
+				<td>Size</td>
+				<td><a th:text = "${apartment.size}"></a><a> m2</a></td>
+			</tr>
+			<tr>
+				<td>Bedroom number</td>
+				<td th:text = "${apartment.bedroomNumber}"></td>
+			</tr>
+			<tr>
 				<td>Description</td>
 				<td th:text = "${apartment.description}"></td>
+			</tr>
+			<tr>
+				<td>Features</td>
+				<td>
+					<div th:if = "${apartment.petsAllowed}">
+						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check2" viewBox="0 0 16 16">
+						<path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/>
+						</svg>
+						<a> pets allowed</a><br>
+					</div>
+					<div th:if = "${apartment.smokingAllowed}">
+						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check2" viewBox="0 0 16 16">
+						<path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/>
+						</svg>
+						<a> smoking allowed</a><br>
+					</div>
+					<div th:if = "${apartment.disabledAccessible}">
+						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check2" viewBox="0 0 16 16">
+						<path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/>
+						</svg>
+						<a> disabled accessible</a><br>
+					</div>
+					
+				</td>
 			</tr>
 			<tr>
 				<td>Check-in date</td>

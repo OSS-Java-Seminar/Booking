@@ -5,6 +5,8 @@ import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -12,6 +14,7 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -85,9 +88,9 @@ public class MainController {
 	public String search(@RequestParam (value = "city") String city, 
 			@RequestParam (value = "checkInDate") String checkInString, 
 			@RequestParam (value = "checkOutDate") String checkOutString,
-			@RequestParam (value = "maxPrice", required = false) Integer maxPrice,
-			@RequestParam (value = "minBedroomNumber", required = false) Integer minBedroomNumber,
-			@RequestParam (value = "minCapacity", required = false) Integer minCapacity,
+			@RequestParam (value = "maxPrice", required = false) String maxPrice,
+			@RequestParam (value = "minBedroomNumber", required = false) String minBedroomNumber,
+			@RequestParam (value = "minCapacity", required = false) String minCapacity,
 			@RequestParam (value = "petsAllowed", required = false) Boolean petsAllowed,
 			@RequestParam (value = "smokingAllowed", required = false) Boolean smokingAllowed,
 			@RequestParam (value = "disabledAccessible", required = false) Boolean disabledAccessible,
@@ -102,6 +105,7 @@ public class MainController {
 			@RequestParam (value = "ac", required = false) Boolean ac,
 			@RequestParam (value = "heating", required = false) Boolean heating,
 			@RequestParam (value = "wifi", required = false) Boolean wifi,
+			@RequestParam (value = "sortBy", required = false) String sortBy,
 			Model model) {
 		
 		User currentUser = userRepository.findByUsername(reservationService.getUser());
@@ -113,7 +117,14 @@ public class MainController {
 		}
 		
 		List<Apartment> apartmentsInCity = apartmentRepository.findByCity(city);
-		List<Apartment> apartments = new ArrayList<>();
+		List<Apartment> filteredApartments = filterApartments(apartmentsInCity, maxPrice, minBedroomNumber, minCapacity, petsAllowed, 
+				smokingAllowed, disabledAccessible, balcony, kitchen,parking, seaView, pool, jacuzzi,
+				iron, washingMachine, ac, heating, wifi);
+		
+		if (filteredApartments.isEmpty()){
+			model.addAttribute("status", "Sorry, no apartments match your search.");
+			return "notFound";
+		}
 		
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		Date checkInDate = null;
@@ -134,15 +145,25 @@ public class MainController {
 			model.addAttribute("error", "Can not make a reservation for past dates. ");
 			return "badRequest";
 		}
+		
+		List<Apartment> apartments = new ArrayList<>();
 				
-		for (int j = 0; j < apartmentsInCity.size(); j++) {
-			if (reservationService.checkIfAvailable(apartmentsInCity.get(j), checkInDate, checkOutDate))
-				apartments.add(apartmentsInCity.get(j));
+		for (int j = 0; j < filteredApartments.size(); j++) {
+			if (reservationService.checkIfAvailable(filteredApartments.get(j), checkInDate, checkOutDate))
+				apartments.add(filteredApartments.get(j));
 		}
 		
 		if (apartments.isEmpty()){
-			model.addAttribute("status", "No apartments found.");
+			model.addAttribute("status", "Sorry, no apartments match your search.");
 			return "notFound";
+		}
+		
+		if (sortBy != null) {
+			if (sortBy.isEmpty() == false) {
+				if (sortBy.equals("PriceMin")) {
+					
+				}
+			}
 		}
 		
 		model.addAttribute("apartments", apartments);
@@ -164,6 +185,77 @@ public class MainController {
 		model.addAttribute("heating", heating);
 		model.addAttribute("wifi", wifi);
 		return "searchApartments";
+	}
+
+	private List<Apartment> filterApartments(List<Apartment> apartmentsInCity, String maxPrice,
+			String minBedroomNumber, String minCapacity, Boolean petsAllowed, Boolean smokingAllowed,
+			Boolean disabledAccessible, Boolean balcony, Boolean kitchen, Boolean parking, Boolean seaView,
+			Boolean pool, Boolean jacuzzi, Boolean iron, Boolean washingMachine, Boolean ac, Boolean heating,
+			Boolean wifi) {
+		List<Apartment> filteredApartments = new ArrayList<>();
+		Boolean maxPriceBool, minBedroomNumberBool, minCapacityBool;
+		
+		maxPriceBool = maxPrice == null ? false : true;
+		minBedroomNumberBool = minBedroomNumber == null ? false : true;
+		minCapacityBool= minCapacity == null ? false : true;
+		petsAllowed = petsAllowed == null ? false : true;
+		smokingAllowed = smokingAllowed == null ? false : true;
+		disabledAccessible = disabledAccessible == null ? false : true;
+		balcony = balcony == null ? false : true;
+		kitchen = kitchen == null ? false : true;
+		parking = parking == null ? false : true;
+		seaView = seaView == null ? false : true;
+		pool = pool == null ? false : true;
+		jacuzzi = jacuzzi == null ? false : true;
+		iron = iron == null ? false : true;
+		washingMachine = washingMachine == null ? false : true;
+		ac = ac == null ? false : true;
+		heating = heating == null ? false : true;
+		wifi = wifi == null ? false : true;
+				
+		for (int i = 0; i < apartmentsInCity.size(); i++) {
+			Boolean check = true;
+			if (petsAllowed == true && apartmentsInCity.get(i).isPetsAllowed() == false) check = false;
+			if (smokingAllowed == true && apartmentsInCity.get(i).isSmokingAllowed() == false) check = false;
+			if (disabledAccessible == true && apartmentsInCity.get(i).isDisabledAccessible() == false) check = false;
+			if (balcony == true && apartmentsInCity.get(i).isBalcony() == false) check = false;
+			if (kitchen == true && apartmentsInCity.get(i).isKitchen() == false) check = false;
+			if (parking == true && apartmentsInCity.get(i).isParking() == false) check = false;
+			if (seaView == true && apartmentsInCity.get(i).isSeaView() == false) check = false;
+			if (pool == true && apartmentsInCity.get(i).isPool() == false) check = false;
+			if (jacuzzi == true && apartmentsInCity.get(i).isJacuzzi() == false) check = false;
+			if (iron == true && apartmentsInCity.get(i).isIron() == false) check = false;
+			if (washingMachine == true && apartmentsInCity.get(i).isWashingMachine() == false) check = false;
+			if (ac == true && apartmentsInCity.get(i).isAc() == false) check = false;
+			if (heating == true && apartmentsInCity.get(i).isHeating() == false) check = false;
+			if (wifi == true && apartmentsInCity.get(i).isWifi() == false) check = false;
+			if (maxPriceBool == true) {
+				if(maxPrice.isEmpty() == false) {
+					int tmp = Integer.parseInt(maxPrice);
+					if (apartmentsInCity.get(i).getPricePerNight() > tmp)
+						check = false;
+				}
+			}
+			if (minBedroomNumberBool == true) {
+				if(minBedroomNumber.isEmpty() == false) {
+					int tmp = Integer.parseInt(minBedroomNumber);
+					if (apartmentsInCity.get(i).getBedroomNumber() < tmp)
+						check = false;
+				}
+			}
+			if (minCapacityBool == true) {
+				if(minCapacity.isEmpty() == false) {
+					int tmp = Integer.parseInt(minCapacity);
+					if (apartmentsInCity.get(i).getCapacity() < tmp)
+						check = false;
+				}
+			}
+			
+			if (check)
+				filteredApartments.add(apartmentsInCity.get(i));
+		}
+		
+		return filteredApartments;
 	}
 	
 }

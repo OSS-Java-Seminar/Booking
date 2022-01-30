@@ -41,6 +41,16 @@
 			<input type="hidden" id="checkInDate" name="checkInDate" th:attr="value = ${checkInDate}"/>
 			<input type="hidden" id="checkOutDate" name="checkOutDate" th:attr="value = ${checkOutDate}"/>
 
+			<h5>Sort by</h5>	
+				&nbsp;<input type="radio" id="PriceMax" name="sortBy" value="PriceMax"/>
+				&nbsp;<label for="PriceMax">Price max</label><br>
+				&nbsp;<input type="radio" id="PriceMin" name="sortBy" value="PriceMin"/>
+				&nbsp;<label for="PriceMin">Price min</label><br>
+				&nbsp;<input type="radio" id="Rating" name="sortBy" value="Rating"/>
+				&nbsp;<label for="Rating">Best rated</label><br>
+			<br>	
+			<h5>Filter by</h5>	
+			
 			<label for="maxPrice">MAX price per night</label>			
 			<input type="number" id="maxPrice" name="maxPrice" placeholder="100€" th:value="${maxPrice}"/><br><br>
 
