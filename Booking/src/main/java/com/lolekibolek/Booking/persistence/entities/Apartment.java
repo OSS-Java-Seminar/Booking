@@ -57,6 +57,60 @@ public class Apartment {
 	@Column(nullable = false)
 	private int bedroomNumber;
 	
+	@Column(nullable = false)
+	private Double rating = 0.0;
+	
+	public Apartment(int id, Set<PriceVariance> priceVariances, Set<Reservation> reservations, String name, User owner,
+			String country, String city, String address, float pricePerNight, int capacity, float size,
+			int bedroomNumber, Double rating, String description, String picture, boolean petsAllowed,
+			boolean smokingAllowed, boolean disabledAccessible, boolean balcony, boolean kitchen, boolean parking,
+			boolean seaView, boolean pool, boolean jacuzzi, boolean iron, boolean washingMachine, boolean ac,
+			boolean heating, boolean wifi) {
+		super();
+		this.id = id;
+		this.priceVariances = priceVariances;
+		this.reservations = reservations;
+		this.name = name;
+		this.owner = owner;
+		this.country = country;
+		this.city = city;
+		this.address = address;
+		this.pricePerNight = pricePerNight;
+		this.capacity = capacity;
+		this.size = size;
+		this.bedroomNumber = bedroomNumber;
+		this.rating = rating;
+		this.description = description;
+		this.picture = picture;
+		this.petsAllowed = petsAllowed;
+		this.smokingAllowed = smokingAllowed;
+		this.disabledAccessible = disabledAccessible;
+		this.balcony = balcony;
+		this.kitchen = kitchen;
+		this.parking = parking;
+		this.seaView = seaView;
+		this.pool = pool;
+		this.jacuzzi = jacuzzi;
+		this.iron = iron;
+		this.washingMachine = washingMachine;
+		this.ac = ac;
+		this.heating = heating;
+		this.wifi = wifi;
+	}
+
+	public Apartment() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public Double getRating() {
+		return rating;
+	}
+
+	public void setRating(Double rating) {
+		this.rating = rating;
+	}
+
 	@Column(nullable = false, length = 1500)
 	private String description;
 	
@@ -169,7 +223,7 @@ public class Apartment {
 		this.address = address;
 	}
 
-	public float getPricePerNight() {
+	public Float getPricePerNight() {
 		return pricePerNight;
 	}
 

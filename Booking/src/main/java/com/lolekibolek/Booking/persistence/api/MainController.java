@@ -6,11 +6,13 @@ import java.time.Duration;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +35,7 @@ import com.lolekibolek.Booking.persistence.entities.Reservation;
 import com.lolekibolek.Booking.persistence.entities.User;
 import com.lolekibolek.Booking.persistence.repositories.ApartmentRepository;
 import com.lolekibolek.Booking.persistence.repositories.ReservationRepository;
+import com.lolekibolek.Booking.persistence.repositories.ReviewRepository;
 import com.lolekibolek.Booking.persistence.repositories.UserRepository;
 import com.lolekibolek.Booking.persistence.services.ReservationService;
 
@@ -47,6 +50,9 @@ public class MainController {
 	
 	@Autowired
 	private ApartmentRepository apartmentRepository;
+	
+	@Autowired
+	private ReviewRepository reviewRepository;
 	
 	@Autowired
 	private ReservationRepository reservationRepository;
@@ -158,13 +164,7 @@ public class MainController {
 			return "notFound";
 		}
 		
-		if (sortBy != null) {
-			if (sortBy.isEmpty() == false) {
-				if (sortBy.equals("PriceMin")) {
-					
-				}
-			}
-		}
+		apartments = sortBy(apartments, sortBy);
 		
 		model.addAttribute("apartments", apartments);
 		model.addAttribute("checkInDate", checkInString);
@@ -185,6 +185,25 @@ public class MainController {
 		model.addAttribute("heating", heating);
 		model.addAttribute("wifi", wifi);
 		return "searchApartments";
+	}
+	
+	private List<Apartment> sortBy(List<Apartment> apartments, String sortBy) {
+		if (sortBy != null) {
+			if (sortBy.isEmpty() == false) {
+				if (sortBy.equals("PriceMin")) {
+					Collections.sort(apartments, (o1, o2) -> (o1.getPricePerNight().compareTo(o2.getPricePerNight())));
+				}
+				if (sortBy.equals("PriceMax")) {
+					Collections.sort(apartments, (o1, o2) -> (o1.getPricePerNight().compareTo(o2.getPricePerNight())));
+					Collections.reverse(apartments);
+				}
+				if (sortBy.equals("Rating")) {
+					Collections.sort(apartments, (o1, o2) -> (o1.getRating().compareTo(o2.getRating())));
+					Collections.reverse(apartments);
+				}
+			}
+		}
+		return apartments;
 	}
 
 	private List<Apartment> filterApartments(List<Apartment> apartmentsInCity, String maxPrice,
