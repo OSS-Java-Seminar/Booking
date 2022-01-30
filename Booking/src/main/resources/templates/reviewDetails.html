@@ -35,26 +35,88 @@
 </nav>
 
 
-<div class="container">
-    <form class="form-inline my-2 my-lg-0" th:object="${reviewDto}"   method="get">
-
-        <input type="radio" value=1 th:field= "*{cleanessRating}">
-        <label for="1">1</label>
-        <input type="radio" value=2 th:field= "*{cleanessRating}">
-        <label for="2">2</label>
-        <input type="radio" value=3 th:field= "*{cleanessRating}">
-        <label for="3">3</label>
-        <input type="radio" value=4 th:field= "*{cleanessRating}">
-        <label for="4">4</label>
-        <input type="radio" value=5 th:field= "*{cleanessRating}">        
-        <label for="5">5</label>
+<div class = "container-fluid" style="float:left; width:80%; margin:30px">
+<h3> Tell us about your stay!</h3><br>
+    <form class="form-check  my-2 my-lg-0" th:object="${reviewDto}" th:action="@{/review/save}" method="post">
+		<table  class="table">
+		<tr>
+			<td> How clean did you find the apartment? </td>
+	        <td><input type="radio" value=1 th:field= "*{cleanessRating}">
+	        	<label for="1">1</label></td>
+	        <td><input type="radio" value=2 th:field= "*{cleanessRating}">
+	        	<label for="2">2</label></td>
+	        <td><input type="radio" value=3 th:field= "*{cleanessRating}">
+	        	<label for="3">3</label></td>
+	        <td><input type="radio" value=4 th:field= "*{cleanessRating}">
+	        	<label for="4">4</label></td>
+	        <td><input type="radio" value=5 th:field= "*{cleanessRating}">        
+	        	<label for="5">5</label></td>
+        </tr>
+		
+		<tr>
+			<td> Did you enjoy the comfort of it? 
+	        <td><input type="radio" value=1 th:field= "*{comfortRating}">
+	       		<label for="1">1</label></td>
+	        <td><input type="radio" value=2 th:field= "*{comfortRating}">
+	        	<label for="2">2</label></td>
+	        <td><input type="radio" value=3 th:field= "*{comfortRating}">
+	        	<label for="3">3</label></td>
+	        <td><input type="radio" value=4 th:field= "*{comfortRating}">
+	        	<label for="4">4</label></td>
+	        <td><input type="radio" value=5 th:field= "*{comfortRating}">        
+	        	<label for="5">5</label></td>
+        </tr>
         
-        <input value="0" type="hidden" class="rating" data-glyphicon="0" 
-        name="reviewDto.comfortRating" th:attr="value = ${reviewDto.comfortRating}">
-
-        <button class="btn btn-primary" type="submit">Submit form</button>
-    </form>
-
+        <tr>
+			<td> What about the location? 
+	        <td><input type="radio" value=1 th:field= "*{locationRating}">
+	       		<label for="1">1</label></td>
+	        <td><input type="radio" value=2 th:field= "*{locationRating}">
+	        	<label for="2">2</label></td>
+	        <td><input type="radio" value=3 th:field= "*{locationRating}">
+	        	<label for="3">3</label></td>
+	        <td><input type="radio" value=4 th:field= "*{locationRating}">
+	        	<label for="4">4</label></td>
+	        <td><input type="radio" value=5 th:field= "*{locationRating}">        
+	        	<label for="5">5</label></td>
+        </tr>
+        
+        <tr>
+			<td> Were you happy with your host? 
+	        <td><input type="radio" value=1 th:field= "*{hostRating}">
+	       		<label for="1">1</label></td>
+	        <td><input type="radio" value=2 th:field= "*{hostRating}">
+	        	<label for="2">2</label></td>
+	        <td><input type="radio" value=3 th:field= "*{hostRating}">
+	        	<label for="3">3</label></td>
+	        <td><input type="radio" value=4 th:field= "*{hostRating}">
+	        	<label for="4">4</label></td>
+	        <td><input type="radio" value=5 th:field= "*{hostRating}">        
+	        	<label for="5">5</label></td>
+        </tr>
+        
+        <tr>
+			<td> Do you think you got what you paid for?
+	        <td><input type="radio" value=1 th:field= "*{valueForMoneyRating}">
+	       		<label for="1">1</label></td>
+	        <td><input type="radio" value=2 th:field= "*{valueForMoneyRating}">
+	        	<label for="2">2</label></td>
+	        <td><input type="radio" value=3 th:field= "*{valueForMoneyRating}">
+	        	<label for="3">3</label></td>
+	        <td><input type="radio" value=4 th:field= "*{valueForMoneyRating}">
+	        	<label for="4">4</label></td>
+	        <td><input type="radio" value=5 th:field= "*{valueForMoneyRating}">        
+	        	<label for="5">5</label></td>
+        </tr>
+        
+	</table>
+	<div class = "container-fluid" style="float:left; width:90%">
+	Do you want to leave a detailed review?<br>
+	​<textarea id="txtArea" rows="4" cols="160" input type="text" th:field= "*{review}">
+	</textarea><br>
+	<button class="btn btn-primary" type="submit">Submit</button>
+	</div>
+	</form>
 </div>
 
 
