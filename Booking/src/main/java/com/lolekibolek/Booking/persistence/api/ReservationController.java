@@ -129,14 +129,30 @@ public class ReservationController {
 		Boolean isOwner = currentUser.getRole();
 		Reservation reservation = reservationRepository.getById(reservationId);
 		
+		Boolean canCancel = false;
+		if (currentUser.getRole().equals(true)) {
+			if (reservation.getCheckInDate().isAfter(LocalDate.now()) || reservation.getCheckInDate().equals(LocalDate.now()))
+				canCancel = true;
+		}
+		if (currentUser.getRole().equals(false)) {
+			if (reservation.getCheckInDate().isAfter(LocalDate.now().plusDays(2)))
+				canCancel = true;
+		}
+		
+		
+		System.out.println("Check-in: " + reservation.getCheckInDate());
+		System.out.println("Today " + LocalDate.now());
+		System.out.println(canCancel);
+		
 		if (isOwner)
 			otherUser = reservation.getUser();
 		else
 			otherUser = reservation.getApartment().getOwner();
-		model.addAttribute("currentUser", currentUser);
+		model.addAttribute("user", currentUser);
 		model.addAttribute("otherUser", otherUser);
 		model.addAttribute("reservation", reservation);
 		model.addAttribute("isOwner", isOwner);
+		model.addAttribute("canCancel", canCancel);
 
         return "reservationDetails";
     }

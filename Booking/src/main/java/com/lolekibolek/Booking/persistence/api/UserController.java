@@ -57,13 +57,17 @@ public class UserController {
 			LocalDate today = LocalDate.now();
 			
 			for (int i = 0; i < allReservations.size(); i++) {
-				if (allReservations.get(i).getCheckInDate().isAfter(today) || allReservations.get(i).getCheckInDate().equals(today))
-					futureReservations.add(allReservations.get(i));
+				if (allReservations.get(i).getCheckInDate().isAfter(today) || allReservations.get(i).getCheckInDate().equals(today)) {
+					if (allReservations.get(i).getBooked().equals(true))
+						futureReservations.add(allReservations.get(i));
+				}
 			}
 			
 			for (int i = 0; i < allReservations.size(); i++) {
-				if (allReservations.get(i).getCheckOutDate().isBefore(today) || allReservations.get(i).getCheckOutDate().equals(today))
-					pastReservations.add(allReservations.get(i));
+				if (allReservations.get(i).getCheckOutDate().isBefore(today) || allReservations.get(i).getCheckOutDate().equals(today)) {
+					if (allReservations.get(i).getCheckOutDate().plusMonths(3).isAfter(today))
+						pastReservations.add(allReservations.get(i));
+				}
 			}
 			
 			Boolean hasPast = true;
