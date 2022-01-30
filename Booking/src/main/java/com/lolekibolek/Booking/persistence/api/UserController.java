@@ -17,9 +17,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.lolekibolek.Booking.persistence.entities.Reservation;
+import com.lolekibolek.Booking.persistence.entities.Review;
 import com.lolekibolek.Booking.persistence.entities.User;
 import com.lolekibolek.Booking.persistence.repositories.ApartmentRepository;
 import com.lolekibolek.Booking.persistence.repositories.ReservationRepository;
+import com.lolekibolek.Booking.persistence.repositories.ReviewRepository;
 import com.lolekibolek.Booking.persistence.repositories.UserRepository;
 import com.lolekibolek.Booking.persistence.services.ReservationService;
 import com.lolekibolek.Booking.persistence.services.UserService;
@@ -41,6 +43,9 @@ public class UserController {
 	
 	@Autowired
 	private ReservationRepository reservationRepository;
+	
+	@Autowired
+	private ReviewRepository reviewRepository;
 	
 	@Autowired
 	private ReservationService reservationService;
@@ -69,8 +74,11 @@ public class UserController {
 			
 			for (int i = 0; i < allReservations.size(); i++) {
 				if (allReservations.get(i).getCheckOutDate().isBefore(today) || allReservations.get(i).getCheckOutDate().equals(today)) {
-					if (allReservations.get(i).getCheckOutDate().plusMonths(3).isAfter(today) && allReservations.get(i).getBooked().equals(true))
-						pastReservations.add(allReservations.get(i));
+					if (allReservations.get(i).getCheckOutDate().plusMonths(3).isAfter(today) && allReservations.get(i).getBooked().equals(true)) {
+						Review review = reviewRepository.findByReservation_id(allReservations.get(i).getId());
+						if (review == null)
+							pastReservations.add(allReservations.get(i));
+					}
 				}
 			}
 						
