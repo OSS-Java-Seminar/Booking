@@ -95,25 +95,7 @@ public class ReservationService {
 	
 		return check;
 	}
-	
-	public boolean checkIfBeforeToday(Reservation reservation) {
-		Boolean check = true;
-		SimpleDateFormat dateFormatter = new SimpleDateFormat("dd-MM-yyyy");
-		Date todayDate = null;
-		try {
-			todayDate = dateFormatter.parse(dateFormatter.format(new Date() ));
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
-		Date checkOutDate = reservation.getCheckOutDate();
-		
-		
-		
-		System.out.println(todayDate);
-		System.out.println(checkOutDate);
-		
-		return check;
-	}
+
 	
 	@SuppressWarnings("deprecation")
 	public Date getToday() {
