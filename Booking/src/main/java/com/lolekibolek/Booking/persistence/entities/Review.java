@@ -48,5 +48,104 @@ public class Review {
 	
 	@Column(length = 500)
 	private String review;
+
+	public Review(int id, Reservation reservation, int cleanessRating, int comfortRating, int locationRating,
+			int hostRating, int valueForMoneyRating, float averageRating, String review) {
+		super();
+		this.id = id;
+		this.reservation = reservation;
+		this.cleanessRating = cleanessRating;
+		this.comfortRating = comfortRating;
+		this.locationRating = locationRating;
+		this.hostRating = hostRating;
+		this.valueForMoneyRating = valueForMoneyRating;
+		this.averageRating = averageRating;
+		this.review = review;
+	}
+
+	public Review() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public Reservation getReservation() {
+		return reservation;
+	}
+
+	public void setReservation(Reservation reservation) {
+		this.reservation = reservation;
+	}
+
+	public int getCleanessRating() {
+		return cleanessRating;
+	}
+
+	public void setCleanessRating(int cleanessRating) {
+		this.cleanessRating = cleanessRating;
+	}
+
+	public int getComfortRating() {
+		return comfortRating;
+	}
+
+	public void setComfortRating(int comfortRating) {
+		this.comfortRating = comfortRating;
+	}
+
+	public int getLocationRating() {
+		return locationRating;
+	}
+
+	public void setLocationRating(int locationRating) {
+		this.locationRating = locationRating;
+	}
+
+	public int getHostRating() {
+		return hostRating;
+	}
+
+	public void setHostRating(int hostRating) {
+		this.hostRating = hostRating;
+	}
+
+	public int getValueForMoneyRating() {
+		return valueForMoneyRating;
+	}
+
+	public void setValueForMoneyRating(int valueForMoneyRating) {
+		this.valueForMoneyRating = valueForMoneyRating;
+	}
+
+	public float getAverageRating() {
+		int rating = 0;
+		rating += this.cleanessRating;
+		rating += this.comfortRating;
+		rating += this.locationRating;
+		rating += this.hostRating;
+		rating += this.valueForMoneyRating;
+		this.averageRating = rating/5;
+		return averageRating;
+	}
+
+	public void setAverageRating(float averageRating) {
+		this.averageRating = averageRating;
+	}
+
+	public String getReview() {
+		return review;
+	}
+
+	public void setReview(String review) {
+		this.review = review;
+	}
+	
 	
 }

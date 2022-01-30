@@ -34,9 +34,28 @@
      </ul>
 </nav>
 
-<a th:text = "${reservation.id}"></a>
 
+<div class="container">
+    <form class="form-inline my-2 my-lg-0" th:object="${reviewDto}"   method="get">
 
+        <input type="radio" value=1 th:field= "*{cleanessRating}">
+        <label for="1">1</label>
+        <input type="radio" value=2 th:field= "*{cleanessRating}">
+        <label for="2">2</label>
+        <input type="radio" value=3 th:field= "*{cleanessRating}">
+        <label for="3">3</label>
+        <input type="radio" value=4 th:field= "*{cleanessRating}">
+        <label for="4">4</label>
+        <input type="radio" value=5 th:field= "*{cleanessRating}">        
+        <label for="5">5</label>
+        
+        <input value="0" type="hidden" class="rating" data-glyphicon="0" 
+        name="reviewDto.comfortRating" th:attr="value = ${reviewDto.comfortRating}">
+
+        <button class="btn btn-primary" type="submit">Submit form</button>
+    </form>
+
+</div>
 
 
 </body>
