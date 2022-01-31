@@ -34,7 +34,13 @@
      </ul>
 </nav>
 
-	<img th:src="${apartment.picture}" style="height:500px; width:500px; float:left; margin:20px;" class="rounded float-left"/>
+	<img th:src="${apartment.picture}" style="height:400px; width:500px; float:left; margin:20px;" class="rounded float-left"/>
+	
+	<div class="mapouter" style="margin:20px;"><div  th:inline="text" class="gmap_canvas"><iframe width="500" height="200" id="gmap_canvas" th:src="@{${'https://maps.google.com/maps?q=' + apartment.address + ','+ apartment.city + ',' + apartment.country + '&t=&z=13&ie=UTF8&iwloc=&output=embed'}}" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe>
+		<a href="https://putlocker-is.org">putlocker</a><br><style>.mapouter{position:relative;text-align:right;height:200px;width:500px;}</style><a href="https://www.embedgooglemap.net">embedgooglemap.net</a>
+		<style>.gmap_canvas {overflow:hidden;background:none!important;height:200px;width:500px;}</style></div>
+	</div>
+	
 	<div class="container" style="margin:30px; border:solid; float:left; width:800px;">
 	<h3 th:text = "${apartment.name}">Ime</h3><br>
 		<table  class="table table-bordered"  style="width:800px;">
@@ -147,30 +153,34 @@
 					</div>
 				</td>
 			</tr>
-			<tr>
-				<td>Check-in date</td>
-				<td th:text = "${checkInDate}"></td>
-			</tr>
-			<tr>
-				<td>Check-out date</td>
-				<td th:text = "${checkOutDate}"></td>
-			</tr>
-			<tr>
-				<td>Price per night</td>
-				<td th:text = "${apartment.pricePerNight}"><a> €</a></td>
-			</tr>
-			<tr>
-				<td><h3>Total price</h3></td>
-				<td><a>for </a><a th:text = "${numberOfNights}"></a> nights = <a th:text = "${totalPrice}"></a><a> €</a></td>
-			</tr>
-		</table>
-		<form class="form-inline my-2 my-lg-0" th:object="${search}" th:action="@{/reservations}"  method="post">
-				<input type="hidden" id="checkInDate" name="checkInDate" th:attr="value = ${checkInDate}"/>
-				<input type="hidden" id="checkOutDate" name="checkOutDate" th:attr="value = ${checkOutDate}"/>
-				<input type="hidden" id="apartmentId" name="apartmentId" th:attr="value = ${apartment.id}"/>
-				<input type="hidden" id="totalPrice" name="totalPrice" th:attr="value = ${totalPrice}"/>
-				<button class="btn btn-outline-info my-2 my-sm-0" type="submit">Book now</button>
-		</form>
+			<span th:unless = "${user.role}">
+					<tr>
+						<td>Check-in date</td>
+						<td th:text = "${checkInDate}"></td>
+					</tr>
+					<tr>
+						<td>Check-out date</td>
+						<td th:text = "${checkOutDate}"></td>
+					</tr>
+					<tr>
+						<td>Price per night</td>
+						<td th:text = "${apartment.pricePerNight}"><a> €</a></td>
+					</tr>
+					<tr>
+						<td><h3>Total price</h3></td>
+						<td><a>for </a><a th:text = "${numberOfNights}"></a> nights = <a th:text = "${totalPrice}"></a><a> €</a></td>
+					</tr>
+			</span>
+				</table>
+			<span th:unless = "${user.role}">
+				<form class="form-inline my-2 my-lg-0" th:object="${search}" th:action="@{/reservations}"  method="post">
+						<input type="hidden" id="checkInDate" name="checkInDate" th:attr="value = ${checkInDate}"/>
+						<input type="hidden" id="checkOutDate" name="checkOutDate" th:attr="value = ${checkOutDate}"/>
+						<input type="hidden" id="apartmentId" name="apartmentId" th:attr="value = ${apartment.id}"/>
+						<input type="hidden" id="totalPrice" name="totalPrice" th:attr="value = ${totalPrice}"/>
+						<button class="btn btn-outline-info my-2 my-sm-0" type="submit">Book now</button>
+				</form>
+			</span>
 	</div>
 
 </body>

@@ -67,10 +67,13 @@
 				<td th:text = "${apartment.country}" ></td>
 				<td th:text = "${apartment.pricePerNight}"><a>€ </a></td>
 				<td><form class="form-inline my-2 my-lg-0"  th:action="@{/apartments/details}"  method="get">
-				<button class = "btn btn-outline-info my-2 my-sm-0"> details </button></form></td>
+					<input type="hidden" id="apartmentId" name="apartmentId" th:value="${apartment.id}"/>
+					<button class = "btn btn-outline-info my-2 my-sm-0"> details </button>
+				</form></td>
 				<td><form class="form-inline my-2 my-lg-0" th:action="@{/apartments/update(id = ${apartment.id})}"  method="get">
-				<input type="hidden" id="id" name="id" th:value="${apartment.id}"/>
-				<button type="submit" class = "btn btn-outline-info my-2 my-sm-0"> edit </button></form></td>
+					<input type="hidden" id="id" name="id" th:value="${apartment.id}"/>
+					<button type="submit" class = "btn btn-outline-info my-2 my-sm-0"> edit </button>
+				</form></td>
 		    </tr>
 		  </tbody>
 		  

@@ -68,7 +68,6 @@ public class UserController {
 						System.out.println("Today " + LocalDate.now());
 						futureReservations.add(allReservations.get(i));
 					}
-						
 				}
 			}
 			
