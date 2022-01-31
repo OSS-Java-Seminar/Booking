@@ -44,7 +44,10 @@
 		<li class="list-group-item"><a th:text = "${user.username}"></a></li>
 		<li class="list-group-item"><a th:text = "${user.email}"></a></li>
 		<li class="list-group-item"><a th:text = "${user.phone}"></a></li>
-		<li class="list-group-item"><button class = "btn btn-outline-info my-2 my-sm-0">Edit</button></li>
+		<li class="list-group-item">
+			<form class="form-inline my-2 my-lg-0" th:action="@{/user/edit}"  method="get">
+					<button type="submit" class = "btn btn-outline-info my-2 my-sm-0"> Edit </button>
+				</form></li>
 	</ul>
 </div>
 <br>

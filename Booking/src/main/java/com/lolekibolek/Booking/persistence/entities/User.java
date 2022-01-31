@@ -13,6 +13,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.AssertTrue;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -157,6 +158,5 @@ public class User {
 	public void setSafeAnswer(String safeAnswer) {
 		this.safeAnswer = safeAnswer;
 	}
-
-
+	
 }

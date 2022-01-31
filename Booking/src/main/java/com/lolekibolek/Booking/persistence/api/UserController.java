@@ -12,10 +12,12 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.lolekibolek.Booking.persistence.entities.Apartment;
 import com.lolekibolek.Booking.persistence.entities.Reservation;
 import com.lolekibolek.Booking.persistence.entities.Review;
 import com.lolekibolek.Booking.persistence.entities.User;
@@ -97,5 +99,46 @@ public class UserController {
 		
 		return "profileOwner";
 	}
+	
+	@GetMapping("/edit") 
+	public String edit(Model model) {
+		User currentUser = userRepository.findByUsername(reservationService.getUser());
+		model.addAttribute("user", currentUser);
+		
+		return "editUser";
+	}
+	
+	@PostMapping("/saveChanges")
+	public String save(@ModelAttribute User user,
+			Model model) {
+		model.addAttribute("user", user);
+		
+		User saveUser;
+		System.out.print(user.getId());
+		if (userRepository.existsById(user.getId()))
+			saveUser = userRepository.findById(user.getId());
+		else
+			saveUser = new User();
+		System.out.print(saveUser.getId());
+		
+		saveUser.setId(user.getId());
+		saveUser.setUsername(user.getUsername());
+		saveUser.setPassword(user.getPassword());
+		saveUser.setRole(user.getRole());
+		saveUser.setFirstName(user.getFirstName());
+		saveUser.setLastName(user.getLastName());
+		saveUser.setEmail(user.getEmail());
+		saveUser.setPhone(user.getPhone());
+		saveUser.setSafeQuestion(user.getSafeQuestion());
+		saveUser.setSafeAnswer(user.getSafeAnswer());
+		
+		userRepository.save(saveUser);
+		
+		model.addAttribute("message", "Your changes have been saved! ");
+		return "success";
+	}
+	
+	
+	
 	
 }
