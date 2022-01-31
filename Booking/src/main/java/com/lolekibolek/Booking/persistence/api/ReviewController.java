@@ -64,8 +64,6 @@ public class ReviewController {
 		ReviewDto reviewDto = new ReviewDto();
 		reviewDto.setReservationId(reservationId);
 
-		System.out.println(reviewDto.getReservationId());
-
 		model.addAttribute("reviewDto", reviewDto);
 
         return "reviewDetails";
@@ -79,7 +77,7 @@ public class ReviewController {
 		model.addAttribute("user", currentUser);
 		
 		Review review = new Review();
-		System.out.println(reviewDto.getReservationId());
+		
 		review.setReservation(reservationRepository.findById(reviewDto.getReservationId()));
 		review.setCleanessRating(reviewDto.getCleanessRating());
 		review.setComfortRating(reviewDto.getComfortRating());

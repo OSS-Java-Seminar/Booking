@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.tymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Add new apartment</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" 
+	integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" 
+	crossorigin="anonymous">
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand"> Booking </a>
+
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <a class="nav-link" href="/">Home</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/reservations">Reservations</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/help">Help</a>
+      </li>
+    </ul>
+    
+    <ul class="navbar-nav">
+    <li class="nav-item my-2 my-lg-0">
+        <a class="nav-link" href="/user" th:text = "${user.username}"></a>
+     </li>
+     <li class="nav-item">
+        <a class="nav-link" href="/logout">Logout</a>
+      </li>
+     </ul>
+</nav>
+
+
+<div class = "container-fluid" style="float:left; width:80%; margin:30px">
+<h3> We will need some information about your new apartment </h3><br>
+    <form class="form-check  my-2 my-lg-0" th:object="${apartmentDto}" th:action="@{/apartments/save}" method="post">
+    	
+    	<div class="text-right" style="float:left; width:40%; margin:10px">
+	    	<label for="name">Input name of your apartment</label>&nbsp;&nbsp;&nbsp;&nbsp;
+				<input type="text" id="name" name="name" th:field="*{name}"/><br><br>
+	    	<label for="country">Address</label>&nbsp;&nbsp;&nbsp;&nbsp;
+				<input type="text" id="address" name="address" th:field="*{address}"/><br><br>
+	    	<label for="city">City</label>&nbsp;&nbsp;&nbsp;&nbsp;
+				<input type="text" id="city" name="city" th:field="*{city}"/><br><br>
+			<label for="country">Country</label>&nbsp;&nbsp;&nbsp;&nbsp;
+				<input type="text" id="country" name="country" placeholder="Hrvatska" th:field="*{country}"/><br><br>
+			<label for="pricePerNight">Price per night</label>&nbsp;&nbsp;&nbsp;&nbsp;		
+				<input type="number" id="pricePerNight" name="pricePerNight" placeholder="100" th:field="*{pricePerNight}"/><br><br>
+			<label for="capacity">Guest number</label>&nbsp;&nbsp;&nbsp;&nbsp;
+				<input type="number" id="capacity" name="capacity" placeholder="4" th:field="*{capacity}"/><br><br>
+			<label for="bedroomNumber">Bedroom number</label>&nbsp;&nbsp;&nbsp;&nbsp;
+				<input type="number" id="bedroomNumber" name="bedroomNumber" placeholder="2" th:field="*{bedroomNumber}"/><br><br>
+			<label for="size">Size of the apartment</label>&nbsp;&nbsp;&nbsp;&nbsp;
+				<input type="number" id="size" name="size" placeholder="50" th:field="*{size}"/><br><br>
+		</div>
+		<div class="text-left" style="float:right; width:40%; margin:10px">
+			<input type="checkbox" id="petsAllowed" name="petsAllowed" th:value="true" th:field="*{petsAllowed}" th:checked="${petsAllowed}"/>
+ 				<label for="petsAllowed">&nbsp;&nbsp;Pets allowed</label><br>
+			<input type="checkbox" id="smokingAllowed" name="smokingAllowed" th:value="true" th:field="*{smokingAllowed}" th:checked="${smokingAllowed}" />
+ 				<label for="smokingAllowed">&nbsp;&nbsp;Smoking allowed</label><br>
+ 			<input type="checkbox" id="disabledAccessible" name="disabledAccessible" th:value="true" th:field="*{disabledAccessible}" th:checked="${disabledAccessible}" />
+ 				<label for="disabledAccessible">&nbsp;&nbsp;Disabled Accessible</label><br>
+ 			<input type="checkbox" id="balcony" name="balcony" th:value="true" th:field="*{balcony}" th:checked="${balcony}" />
+ 				<label for="balcony">&nbsp;&nbsp;Balcony</label><br>			
+ 			<input type="checkbox" id="kitchen" name="kitchen" th:value="true" th:field="*{kitchen}" th:checked="${kitchen}" />
+ 				<label for="kitchen">&nbsp;&nbsp;Kitchen</label><br>
+ 			<input type="checkbox" id="parking" name="parking" th:value="true" th:field="*{parking}" th:checked="${parking}" />
+ 				<label for="parking">&nbsp;&nbsp;Parking</label><br>
+ 			<input type="checkbox" id="seaView" name="seaView" th:value="true" th:field="*{seaView}" th:checked="${seaView}" />
+ 				<label for="seaView">&nbsp;&nbsp;Sea view</label><br>
+ 			<input type="checkbox" id="pool" name="pool" th:value="true" th:field="*{pool}" th:checked="${pool}" />
+ 				<label for="pool">&nbsp;&nbsp;Pool</label><br>
+ 			<input type="checkbox" id="jacuzzi" name="jacuzzi" th:value="true" th:field="*{jacuzzi}" th:checked="${jacuzzi}" />
+ 				<label for="jacuzzi">&nbsp;&nbsp;Hot tub</label><br>
+ 			<input type="checkbox" id="iron" name="iron" th:value="true" th:field="*{iron}" th:checked="${iron}" />
+ 				<label for="petsAllowed">&nbsp;&nbsp;Iron</label><br>
+ 			<input type="checkbox" id="washingMachine" name="washingMachine" th:value="true" th:field="*{washingMachine}" th:checked="${washingMachine}" />
+ 				<label for="washingMachine">&nbsp;&nbsp;Washing machine</label><br>
+ 			<input type="checkbox" id="ac" name="ac" th:value="true" th:field="*{ac}" th:checked="${ac}" />
+ 				<label for="ac">&nbsp;&nbsp;A/C</label><br>
+ 			<input type="checkbox" id="heating" name="heating" th:value="true" th:field="*{heating}" th:checked="${heating}" />
+ 				<label for="heating">&nbsp;&nbsp;Heating</label><br>
+ 			<input type="checkbox" id="wifi" name="wifi" th:value="true" th:field="*{wifi}" th:checked="${wifi}" />
+ 				<label for="wifi">&nbsp;&nbsp;WiFi</label><br><br>
+	
+		</div>
+		
+	<div class = "container-fluid" style="float:left; width:90%">
+	<label for="description">Please write a few words about your apartment: </label>
+	​	<textarea id="txtArea" rows="3" cols="160" input type="text" th:field= "*{description}"></textarea><br>
+	<label for="picture">Please input a link of a picture of your apartment: </label>
+		​<textarea id="txtArea" rows="1" cols="160" input type="text" th:field= "*{picture}"></textarea><br>
+	<br>
+	<input type="hidden" id="id" name="id" value="${id}" th:field="*{id}">
+	<button class="btn btn-primary" type="submit">Submit</button>
+	</div>
+	</form>
+</div>
+
+
+</body>
+</html>

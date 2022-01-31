@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -15,11 +16,16 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.lolekibolek.Booking.persistence.dtos.ApartmentDto;
 import com.lolekibolek.Booking.persistence.entities.Apartment;
+import com.lolekibolek.Booking.persistence.entities.Reservation;
 import com.lolekibolek.Booking.persistence.entities.User;
 import com.lolekibolek.Booking.persistence.repositories.ApartmentRepository;
 import com.lolekibolek.Booking.persistence.repositories.ReservationRepository;
@@ -54,14 +60,69 @@ public class ApartmentController {
 	}
 	
 	@GetMapping
-    public List<Apartment> findAll() {
-        return apartmentService.findAll();
+    public String findAll(Model model) {
+		User currentUser = userRepository.findByUsername(reservationService.getUser());
+		model.addAttribute("user", currentUser);
+		
+		List<Apartment> apartments= apartmentRepository.findAll();
+		List<Apartment> byId = new ArrayList<>();
+		
+		for (int i = 0; i < apartments.size(); i++) {
+			if(currentUser.getId() == apartments.get(i).getOwner().getId())
+				byId.add(apartments.get(i));
+		}
+		
+		if (byId.isEmpty()) {
+			model.addAttribute("status", "Please add an apartment first.");
+			//?????'dodatttttttttt
+		}
+		
+		model.addAttribute("apartments", byId);
+		
+        return "allApartments";
     }
 	
 	@GetMapping("/{id}")
     public Apartment findById(int id) {
         return apartmentService.findById(id);
     }
+	
+	@GetMapping("/add") 
+	public String addNew(Model model) {
+		User currentUser = userRepository.findByUsername(reservationService.getUser());
+		model.addAttribute("user", currentUser);
+		
+		Apartment apartmentDto =  new Apartment();
+		model.addAttribute("apartmentDto", apartmentDto);
+		
+		return "newApartment";
+	}
+	
+	@GetMapping("/update") 
+	public String update(@RequestParam int id,
+			Model model) {
+		User currentUser = userRepository.findByUsername(reservationService.getUser());
+		model.addAttribute("user", currentUser);
+		
+		Apartment apartment = apartmentRepository.findById(id);
+		apartment.setId(id);
+		model.addAttribute("apartmentDto", apartment);
+		
+		return "newApartment";
+	}
+	
+	@PostMapping("/save")
+	public String saveApartment(@ModelAttribute Apartment apartmentDto,
+			Model model) {
+		User currentUser = userRepository.findByUsername(reservationService.getUser());
+		model.addAttribute("user", currentUser);
+		
+		apartmentDto.setOwner(currentUser);
+		apartmentRepository.save(apartmentDto);
+		
+		model.addAttribute("message", "Your apartment has been saved.");
+		return "success";
+	}
 	
 	@GetMapping("/details")
     public String book(@RequestParam (value = "checkInDate") String checkInString,
