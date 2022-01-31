@@ -7,6 +7,7 @@ import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,9 +26,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.lolekibolek.Booking.persistence.entities.Apartment;
 import com.lolekibolek.Booking.persistence.entities.Reservation;
+import com.lolekibolek.Booking.persistence.entities.Review;
 import com.lolekibolek.Booking.persistence.entities.User;
 import com.lolekibolek.Booking.persistence.repositories.ApartmentRepository;
 import com.lolekibolek.Booking.persistence.repositories.ReservationRepository;
+import com.lolekibolek.Booking.persistence.repositories.ReviewRepository;
 import com.lolekibolek.Booking.persistence.repositories.UserRepository;
 import com.lolekibolek.Booking.persistence.services.ApartmentService;
 import com.lolekibolek.Booking.persistence.services.ReservationService;
@@ -49,6 +52,9 @@ public class ApartmentController {
 	
 	@Autowired
 	private ReservationRepository reservationRepository;
+	
+	@Autowired
+	private ReviewRepository reviewRepository;
 	
 	@Autowired
 	private ReservationService reservationService;
@@ -163,6 +169,25 @@ public class ApartmentController {
 		model.addAttribute("user", currentUser);
 		Apartment apartment = apartmentRepository.getById(apartmentId);
 		model.addAttribute("apartment", apartment);
+		
+		Set<Reservation> temp = apartment.getReservations();
+		List<Reservation> reservations = new ArrayList<>(temp);
+		List<Review> reviews = new ArrayList<>();
+		if (reservations.isEmpty() == false) {
+			for (int i = 0; i < reservations.size(); i++) {
+				Review review = reviewRepository.findByReservation_id(reservations.get(i).getId());
+				if (review != null)
+					reviews.add(review);
+			}
+		}
+		
+		Boolean isReviews;
+		if (reviews.isEmpty())
+			isReviews = false;
+		else
+			isReviews = true;
+		model.addAttribute("reviews", reviews);
+		model.addAttribute("isReviews", isReviews);
 		
 		if (currentUser.getRole()) {
 			return "apartmentDetails";

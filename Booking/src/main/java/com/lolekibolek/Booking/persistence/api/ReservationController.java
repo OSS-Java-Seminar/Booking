@@ -203,8 +203,8 @@ public class ReservationController {
 			model.addAttribute("error", "Sorry, someone just booked your apartment. Please try again.");
 			return "badRequest";
 		}
-		
-		return "homeUser";
+		model.addAttribute("message", "Booking successful! Reservation details will be sent to your e-mail address.");
+		return "success";
     }
 
 
