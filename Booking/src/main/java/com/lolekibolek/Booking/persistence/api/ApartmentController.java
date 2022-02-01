@@ -100,8 +100,8 @@ public class ApartmentController {
 		User currentUser = reservationService.getUser();
 		model.addAttribute("user", currentUser);
 		
-		Apartment apartmentDto =  new Apartment();
-		model.addAttribute("apartmentDto", apartmentDto);
+		Apartment apartment =  new Apartment();
+		model.addAttribute("apartment", apartment);
 		
 		return "newApartment";
 	}
