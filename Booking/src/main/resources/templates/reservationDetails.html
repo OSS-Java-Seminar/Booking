@@ -94,7 +94,7 @@
 			<span th:if = "${reservation.booked}">
 				<form class="form-inline my-2 my-lg-0" th:object="${search}" th:action="@{/reservations/cancel}"  method="get">
 					<input type="hidden" id="reservationId" name="reservationId" th:attr="value = ${reservation.id}"/>
-					<button class="btn btn-outline-info my-2 my-sm-0" type="submit">Cancel Reservation</button>
+					<button class="btn btn-outline-danger my-2 my-sm-0" type="submit">Cancel Reservation</button>
 				</form>
 			</span>
 			<span th:unless = "${reservation.booked}">

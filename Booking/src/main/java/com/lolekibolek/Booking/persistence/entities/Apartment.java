@@ -12,6 +12,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 import lombok.Data;
 
@@ -29,6 +31,7 @@ public class Apartment {
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "apartment")
 	private Set<Reservation> reservations;
 	
+	@NotEmpty(message = "Apartment's name cannot be empty.")
 	@Column(length = 100, nullable = false)
 	private String name;
 	
@@ -36,12 +39,15 @@ public class Apartment {
 	@JoinColumn (name = "owner")
 	private User owner;
 	
+	@NotEmpty(message = "Country cannot be empty.")
 	@Column(length = 50, nullable = false)
 	private String country;
 	
+	@NotEmpty(message = "City cannot be empty.")
 	@Column(length = 50, nullable = false)
 	private String city;
 	
+	@NotEmpty(message = "Address cannot be empty.")
 	@Column(length = 100, nullable = false)
 	private String address;
 	

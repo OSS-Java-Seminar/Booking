@@ -14,6 +14,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.AssertTrue;
+import javax.validation.constraints.NotEmpty;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -39,21 +40,28 @@ public class User {
 	@Column(nullable = false)
 	private Boolean role;
 	
+	@Column(nullable = false)
+	private Boolean gender;
+	
+	@NotEmpty(message = "User's first name cannot be empty.")
 	@Column(nullable = false, length = 30)
 	private String firstName;
 	
+	@NotEmpty(message = "User's last name cannot be empty.")
 	@Column(nullable = false, length = 30)
 	private String lastName;
 	
+	@NotEmpty(message = "User's email cannot be empty.")
 	@Column(nullable = false, length = 50, unique = true)
 	private String email;
 	
+	@NotEmpty(message = "Username cannot be empty.")
 	@Column(nullable = false, length = 30, unique = true)
 	private String username;
 	
 	@Column(nullable = false, length = 50)
 	private String password;
-	
+
 	@Column(length = 30)
 	private String phone;
 	
@@ -62,6 +70,18 @@ public class User {
 	
 	@Column(length = 20)
 	private String safeAnswer;
+	
+	@NotEmpty(message = "Address cannot be empty.")
+	@Column(nullable = false, length = 50)
+	private String address;
+	
+	@NotEmpty(message = "City cannot be empty.")
+	@Column(nullable = false, length = 50)
+	private String city;
+	
+	@NotEmpty(message = "Country cannot be empty.")
+	@Column(nullable = false, length = 50)
+	private String country;
 
 	public int getId() {
 		return id;
@@ -158,5 +178,39 @@ public class User {
 	public void setSafeAnswer(String safeAnswer) {
 		this.safeAnswer = safeAnswer;
 	}
+
+	public Boolean getGender() {
+		return gender;
+	}
+
+	public void setGender(Boolean gender) {
+		this.gender = gender;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
+	}
+
+	public String getCountry() {
+		return country;
+	}
+
+	public void setCountry(String country) {
+		this.country = country;
+	}
+	
+	
 	
 }

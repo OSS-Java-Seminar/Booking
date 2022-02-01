@@ -10,12 +10,15 @@ import java.util.List;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -111,48 +114,55 @@ public class ApartmentController {
 		
 		Apartment apartment = apartmentRepository.findById(id);
 		apartment.setId(id);
-		model.addAttribute("apartmentDto", apartment);
+		model.addAttribute("apartment", apartment);
 		
 		return "newApartment";
 	}
 	
 	@PostMapping("/save")
-	public String saveApartment(@ModelAttribute Apartment apartmentDto,
+	public String saveApartment(@Valid@ModelAttribute("apartment") Apartment apartment, BindingResult result,
 			Model model) {
 		User currentUser = userRepository.findByUsername(reservationService.getUser());
 		model.addAttribute("user", currentUser);
+		
+		//model.addAttribute("apartment", apartment);
+		
+		if (result.hasErrors()) {
+            return "newApartment";
+        }
+		
 		Apartment saveApartment;
 		
-		if (apartmentRepository.existsById(apartmentDto.getId()))
-			saveApartment = apartmentRepository.findById(apartmentDto.getId());
+		if (apartmentRepository.existsById(apartment.getId()))
+			saveApartment = apartmentRepository.findById(apartment.getId());
 		else
 			saveApartment = new Apartment();
 		
 		saveApartment.setOwner(currentUser);
-		saveApartment.setName(apartmentDto.getName());
-		saveApartment.setCountry(apartmentDto.getCountry());
-		saveApartment.setCity(apartmentDto.getCity());
-		saveApartment.setAddress(apartmentDto.getAddress());
-		saveApartment.setPricePerNight(apartmentDto.getPricePerNight());
-		saveApartment.setCapacity(apartmentDto.getCapacity());
-		saveApartment.setSize(apartmentDto.getSize());
-		saveApartment.setBedroomNumber(apartmentDto.getBedroomNumber());
-		saveApartment.setDescription(apartmentDto.getDescription());
-		saveApartment.setPicture(apartmentDto.getPicture());
-		saveApartment.setPetsAllowed(apartmentDto.isPetsAllowed());
-		saveApartment.setSmokingAllowed(apartmentDto.isSmokingAllowed());
-		saveApartment.setDisabledAccessible(apartmentDto.isDisabledAccessible());
-		saveApartment.setBalcony(apartmentDto.isBalcony());
-		saveApartment.setKitchen(apartmentDto.isKitchen());
-		saveApartment.setParking(apartmentDto.isParking());
-		saveApartment.setSeaView(apartmentDto.isSeaView());
-		saveApartment.setPool(apartmentDto.isSeaView());
-		saveApartment.setJacuzzi(apartmentDto.isJacuzzi());
-		saveApartment.setIron(apartmentDto.isIron());
-		saveApartment.setWashingMachine(apartmentDto.isWashingMachine());
-		saveApartment.setAc(apartmentDto.isAc());
-		saveApartment.setHeating(apartmentDto.isHeating());
-		saveApartment.setWifi(apartmentDto.isWifi());
+		saveApartment.setName(apartment.getName());
+		saveApartment.setCountry(apartment.getCountry());
+		saveApartment.setCity(apartment.getCity());
+		saveApartment.setAddress(apartment.getAddress());
+		saveApartment.setPricePerNight(apartment.getPricePerNight());
+		saveApartment.setCapacity(apartment.getCapacity());
+		saveApartment.setSize(apartment.getSize());
+		saveApartment.setBedroomNumber(apartment.getBedroomNumber());
+		saveApartment.setDescription(apartment.getDescription());
+		saveApartment.setPicture(apartment.getPicture());
+		saveApartment.setPetsAllowed(apartment.isPetsAllowed());
+		saveApartment.setSmokingAllowed(apartment.isSmokingAllowed());
+		saveApartment.setDisabledAccessible(apartment.isDisabledAccessible());
+		saveApartment.setBalcony(apartment.isBalcony());
+		saveApartment.setKitchen(apartment.isKitchen());
+		saveApartment.setParking(apartment.isParking());
+		saveApartment.setSeaView(apartment.isSeaView());
+		saveApartment.setPool(apartment.isSeaView());
+		saveApartment.setJacuzzi(apartment.isJacuzzi());
+		saveApartment.setIron(apartment.isIron());
+		saveApartment.setWashingMachine(apartment.isWashingMachine());
+		saveApartment.setAc(apartment.isAc());
+		saveApartment.setHeating(apartment.isHeating());
+		saveApartment.setWifi(apartment.isWifi());
 		
 		apartmentRepository.save(saveApartment);
 		

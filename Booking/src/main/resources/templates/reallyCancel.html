@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.tymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Are you sure?</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" 
+	integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" 
+	crossorigin="anonymous">
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand"> Booking </a>
+
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <a class="nav-link" href="/">Home</a>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link" href="/reservations">Reservations <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/help">Help</a>
+      </li>
+    </ul>
+    
+    <ul class="navbar-nav">
+    <li class="nav-item my-2 my-lg-0">
+        <a class="nav-link" href="/user" th:text = "${user.username}"></a>
+     </li>
+     <li class="nav-item">
+        <a class="nav-link" href="/logout">Logout</a>
+      </li>
+     </ul>
+</nav>
+
+<div class="container-fluid" style=" width:50%; margin-top:100px; ">
+<h2>Do you really want to cancel?</h2>
+	<div class="container-fluid" style="width:80%; margin-top:100px; ">
+		<form class="form-inline my-2 my-lg-0" th:action="@{/reservations/reallyCancel}"  method="get">
+			<input type="hidden" id="reservationId" name="reservationId" th:attr="value = ${reservationId}"/>
+			<button class="btn btn-outline-info my-2 my-sm-0" style="font-size:24px;" type="submit">Proceed</button>
+		</form>
+		<br>
+		<form class="form-inline my-2 my-lg-0"  th:action="@{/reservations}"  method="get">
+			<button class="btn btn-outline-danger my-2 my-sm-0" style="display:right; font-size:18px;" type="submit">Cancel</button>
+		</form>
+	</div>
+</div>	
+
+</body>
+</html>

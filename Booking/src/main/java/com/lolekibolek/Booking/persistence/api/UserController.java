@@ -5,12 +5,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -109,9 +112,13 @@ public class UserController {
 	}
 	
 	@PostMapping("/saveChanges")
-	public String save(@ModelAttribute User user,
+	public String save(@Valid@ModelAttribute User user, BindingResult result,
 			Model model) {
 		model.addAttribute("user", user);
+		
+		if (result.hasErrors()) {
+            return "editUser";
+        }
 		
 		User saveUser;
 		System.out.print(user.getId());
@@ -123,14 +130,14 @@ public class UserController {
 		
 		saveUser.setId(user.getId());
 		saveUser.setUsername(user.getUsername());
-		saveUser.setPassword(user.getPassword());
-		saveUser.setRole(user.getRole());
+		saveUser.setGender(user.getGender());
 		saveUser.setFirstName(user.getFirstName());
 		saveUser.setLastName(user.getLastName());
 		saveUser.setEmail(user.getEmail());
 		saveUser.setPhone(user.getPhone());
-		saveUser.setSafeQuestion(user.getSafeQuestion());
-		saveUser.setSafeAnswer(user.getSafeAnswer());
+		saveUser.setAddress(user.getAddress());
+		saveUser.setCity(user.getCity());
+		saveUser.setCountry(user.getCountry());
 		
 		userRepository.save(saveUser);
 		

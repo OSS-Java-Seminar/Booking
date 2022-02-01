@@ -163,12 +163,22 @@ public class ReservationController {
 	
 	@GetMapping("/cancel")
     public String cancel(@RequestParam (value = "reservationId") Integer reservationId, Model model) {
+		User currentUser = userRepository.findByUsername(reservationService.getUser());
+		model.addAttribute("user", currentUser);
+		
+		model.addAttribute("reservationId", reservationId);
+        return "reallyCancel";
+    }
+	
+	
+	@GetMapping("/reallyCancel")
+	public String areYouSure(@RequestParam (value = "reservationId") Integer reservationId, Model model) {
 		Reservation reservation = reservationRepository.getById(reservationId);
 		reservation.setBooked(false);
 		reservationRepository.save(reservation);
-		
-        return "redirect:/user";
-    }
+
+		return "redirect:/reservations";
+	}
 	
 	@PostMapping()
     public String save(@RequestParam (value = "checkInDate") String checkInString, 

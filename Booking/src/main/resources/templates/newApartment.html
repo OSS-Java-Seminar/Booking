@@ -37,17 +37,21 @@
 
 <div class = "container-fluid" style="float:left; width:80%; margin:30px">
 <h3> We will need some information about your new apartment </h3><br>
-    <form class="form-check  my-2 my-lg-0" th:object="${apartmentDto}" th:action="@{/apartments/save}" method="post">
+    <form class="form-check  my-2 my-lg-0" th:object="${apartment}" th:action="@{/apartments/save}" method="post">
     	
     	<div class="text-right" style="float:left; width:40%; margin:10px">
 	    	<label for="name">Input name of your apartment</label>&nbsp;&nbsp;&nbsp;&nbsp;
-				<input type="text" id="name" name="name" th:field="*{name}"/><br><br>
+				<input type="text" id="name" name="name" th:field="*{name}"/>
+				<p th:if="${#fields.hasErrors('name')}" th:errorclass="error" th:errors="*{name}" style="color:red;" /><br><br>
 	    	<label for="country">Address</label>&nbsp;&nbsp;&nbsp;&nbsp;
-				<input type="text" id="address" name="address" th:field="*{address}"/><br><br>
+				<input type="text" id="address" name="address" th:field="*{address}"/>
+				<p th:if="${#fields.hasErrors('address')}" th:errorclass="error" th:errors="*{address}" style="color:red;" /><br><br>
 	    	<label for="city">City</label>&nbsp;&nbsp;&nbsp;&nbsp;
-				<input type="text" id="city" name="city" th:field="*{city}"/><br><br>
+				<input type="text" id="city" name="city" th:field="*{city}"/>
+				<p th:if="${#fields.hasErrors('city')}" th:errorclass="error" th:errors="*{city}" style="color:red;" /><br><br>
 			<label for="country">Country</label>&nbsp;&nbsp;&nbsp;&nbsp;
-				<input type="text" id="country" name="country" placeholder="Hrvatska" th:field="*{country}"/><br><br>
+				<input type="text" id="country" name="country" placeholder="Hrvatska" th:field="*{country}"/>
+				<p th:if="${#fields.hasErrors('country')}" th:errorclass="error" th:errors="*{country}" style="color:red;" /><br><br>
 			<label for="pricePerNight">Price per night</label>&nbsp;&nbsp;&nbsp;&nbsp;		
 				<input type="number" id="pricePerNight" name="pricePerNight" placeholder="100" th:field="*{pricePerNight}"/><br><br>
 			<label for="capacity">Guest number</label>&nbsp;&nbsp;&nbsp;&nbsp;
@@ -99,6 +103,12 @@
 	<button class="btn btn-outline-info my-2 my-sm-0" type="submit">Submit</button>
 	</div>
 	</form>
+	
+	<div class="container" style="display:inline-block; margin-left:1.5%; margin-top:0.5%">
+	<button class="btn btn-outline-danger my-2 my-sm-0"><a href= "/user" style="color: #fb3f00; text-decoration: none;" >Cancel</a></button>
+	</div>		
+
+	</div>
 </div>
 
 

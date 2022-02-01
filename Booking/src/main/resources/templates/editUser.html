@@ -44,46 +44,49 @@
 			<div class="form-group">
 			<label class="control-label" for="username">Username: </label>
 				<input type="text" class="form-control" id="username" name="username" th:field="*{username}"/>
-			</div>
-			<div class="form-group">
-			<label for="password"> Password: </label>
-				<input id="password" class="form-control" type="password" th:field="*{password}"/>
-			</div>
-			<div class="form-group">
-			<label class="control-label" for="confirmPassword"> Confirm password: </label>
-				<input id="password" class="form-control" type="password" th:field="*{password}"/>
-			</div>
-			<div class="form-group">
-			<label class="control-label" for="role"> User </label>
-                	<input type="radio" class="form-control" name="imgsel" value="false" checked="checked" th:field="*{role}"/>
-            <label class="control-label" for="role"> Owner </label>
-                	<input type="radio" class="form-control" name="imgsel" value="true" th:field="*{role}"/>
-            </div>
-        </div>
-        <div class="text-left" style="float:right; width:40%; margin:10px">
-            <div class="form-group">
-	    	<label class="control-label" for="firstName">First name: </label>
-				<input type="text" class="form-control" id="firstName" name="firstName" th:field="*{firstName}"/>
-			</div>
-			<div class="form-group">
-			<label class="control-label" for="lastName">Last name: </label>
-				<input type="text" class="form-control" id="lastName" name="lastName" th:field="*{lastName}"/>
+				<p th:if="${#fields.hasErrors('username')}" th:errorclass="error" th:errors="*{username}" style="color:red;" />
 			</div>
 			<div class="form-group">
 			<label class="control-label" for="email">E-mail: </label>
 				<input type="email" class="form-control" id="email" name="email" th:field="*{email}"/>
+				<p th:if="${#fields.hasErrors('email')}" th:errorclass="error" th:errors="*{email}" style="color:red;" />
 			</div>
+            <div class="form-group">
+	    	<label class="control-label" for="firstName">First name: </label>
+				<input type="text" class="form-control" id="firstName" name="firstName" th:field="*{firstName}"/>
+				<p th:if="${#fields.hasErrors('firstName')}" th:errorclass="error" th:errors="*{firstName}" style="color:red;" />
+			</div>
+			<div class="form-group">
+			<label class="control-label" for="lastName">Last name: </label>
+				<input type="text" class="form-control" id="lastName" name="lastName" th:field="*{lastName}"/>
+				<p th:if="${#fields.hasErrors('lastName')}" th:errorclass="error" th:errors="*{lastName}" style="color:red;" />
+			</div>
+			<div class="form-group">
+			<label class="control-label" for="role"> Female </label>
+                	<input type="radio" class="form-control" name="imgsel" value="false" checked="checked" th:field="*{gender}"/>
+            <label class="control-label" for="role"> Male </label>
+                	<input type="radio" class="form-control" name="imgsel" value="true" th:field="*{gender}"/>
+            </div>
+        </div>
+        <div class="text-left" style="float:right; width:40%; margin:10px;">
 			<div class="form-group">
 			<label class="control-label" for="phone">Phone number: </label>
 				<input type="tel" class="form-control" id="phone" name="phone" th:field="*{phone}"/>
 			</div>
 			<div class="form-group">
-			<label class="control-label" for="safeQuestion">Safe question: </label>
-				<input type="text" class="form-control" id="safeQuestion" name="safeQuestion" th:field="*{safeQuestion}"/>
+			<label class="control-label" for="safeQuestion">Address: </label>
+				<input type="text" class="form-control" id="address" name="address" th:field="*{address}"/>
+				<p th:if="${#fields.hasErrors('address')}" th:errorclass="error" th:errors="*{address}" style="color:red;" />
 			</div>
 			<div class="form-group">
-			<label class="control-label" for="safeAnswer">Safe answer: </label>
-				<input type="text" class="form-control" id="safeAnswer" name="safeAnswer" th:field="*{safeAnswer}"/>
+			<label class="control-label" for="safeQuestion">City: </label>
+				<input type="text" class="form-control" id="city" name="city" th:field="*{city}"/>
+				<p th:if="${#fields.hasErrors('city')}" th:errorclass="error" th:errors="*{city}" style="color:red;" />
+			</div>
+			<div class="form-group">
+			<label class="control-label" for="country">Country: </label>
+				<input type="text" class="form-control" id="country" name="country" th:field="*{country}"/>
+				<p th:if="${#fields.hasErrors('country')}" th:errorclass="error" th:errors="*{country}" style="color:red;" />
 			</div>
 		</div>
 		<br><br>
@@ -92,7 +95,11 @@
 			<button class="btn btn-outline-info my-2 my-sm-0" type="submit">Submit</button>
 		</div>
 	</form>
-</div>	</div>
+	<div class="container" style="display:inline-block; margin-left:1%; margin-top:0.5%">
+	<button class="btn btn-outline-danger my-2 my-sm-0"><a href= "/user" style="color: #fb3f00; text-decoration: none;" >Cancel</a></button>
+	</div>	
+</div>	
+</div>
 	
 </body>
 </html>
