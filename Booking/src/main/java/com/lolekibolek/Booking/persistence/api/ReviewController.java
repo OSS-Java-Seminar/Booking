@@ -70,8 +70,7 @@ public class ReviewController {
     }
 	
 	@PostMapping("/save")
-	public String saveReview(
-    		@ModelAttribute ReviewDto reviewDto,
+	public String saveReview(@ModelAttribute ReviewDto reviewDto,
     		Model model) {
 		User currentUser = userRepository.findByUsername(reservationService.getUser());
 		model.addAttribute("user", currentUser);

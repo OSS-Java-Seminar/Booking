@@ -34,21 +34,73 @@
      </ul>
 </nav>
 
+	<main role="main">
 
-	<div class = "container"><br><br><br>
-		<h1>Reservations overview</h1><br><br>
-		<h3> Today, <a th:text = "${#dates.format(#dates.createNow(), 'dd MMM yyyy')}"></a></h3>
-		<p style="text-align: right; width:90%" ><a href = "/reservations" > View all </a></p>
-		<div class = "container-fluid" style="float:left; margin:20px; border:solid; width:90%; height:150px;" th:each = "reservation: ${reservations}" >
-			<a th:text = "${reservation.key.apartment.name}" style="font-size:200%" >Apartment name</a>
+      <div class="jumbotron" style="background-color:#d6ebf5">
+        <div class="container">
+			<h1>Welcome <a th:text = "${user.firstName}">!</a></h1><br><br>
+			<h3> Here are your reservations for today, <a th:text = "${#dates.format(#dates.createNow(), 'dd MMM yyyy')}"></a></h3>
 			<br>
-			<a th:text = "${reservation.key.checkInDate}">check in date</a><br>
-			<a th:text = "${reservation.key.checkOutDate}">check out date</a>
-			<br>
-			<a th:text = "${reservation.value}">status</a>
+			<div class = "container"  th:each = "reservation: ${reservations}" >
+				<a th:text = "${reservation.key.apartment.name}" style="font-size:200%" >Apartment name</a>
+				<br>
+				<a th:text = "${reservation.key.checkInDate}">check in date</a><br>
+				<a th:text = "${reservation.key.checkOutDate}">check out date</a>
+				<br>
+				<a th:text = "${reservation.value}">status</a>
+			</div>
 		</div>
-
 	</div>
+	
+	 <div class="container">
+        <div class="row">
+          <div class="col-md-4">
+            <h3>Reservations</h3>
+            <p>Your travels all saved in one place! Check all your future and past travels with just one click. </p>
+            <p><a class="btn btn-outline-info my-2 my-sm-0" href="/reservations" role="button">Check your reservations &raquo;</a></p>
+          </div>
+          <div class="col-md-4">
+            <h3>Profile</h3>
+            <p>Check all your upcoming bookings and the ones that are waiting for your review!</p>
+            <p><a class="btn btn-outline-info my-2 my-sm-0" href="/user" role="button">Check your profile &raquo;</a></p>
+          </div>
+        </div>
+      </div>
+     
+      <br><br><br><br>		
+        <hr>
+	</main>
+
+
+
+<footer class="container">
+
+     <div class="container">
+      	<div class="row">
+      		<div class="col-md-2">
+      			<p><a  href="#" role="button">About Booking </a></p>
+      		</div>
+        	<div class="col-md-2">
+	      		<p><a  href="#" >Contact us </a></hp>
+	      	</div>
+	      	<div class="col-md-3">
+				<p><a  href="#" role="button">Terms and Conditions </a></p>
+			</div>
+			<div class="col-md-1">
+				<p><a  href="#" role="button">FAQ </a></p>
+			</div>
+			<div class="col-md-2">
+				<p><a  href="#" role="button">Become a partner </a></p>
+			</div>
+		</div>
+		<br>
+		<div class="col-md-18">
+	      	<p>All reservations must be cancelled at least 2 days prior.&nbsp; Reviews can be written up to 3 months after your stay.
+	    	<br> &copy; Ivana Zeljić, Kate Violić </p>
+      	</div>
+      </div>
+
+</footer>
 	
 
 </body>
