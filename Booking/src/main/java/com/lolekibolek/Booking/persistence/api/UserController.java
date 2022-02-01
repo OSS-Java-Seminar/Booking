@@ -57,7 +57,7 @@ public class UserController {
 	
 	@GetMapping()
 	public String profile(Model model) {
-		User currentUser = userRepository.findByUsername(reservationService.getUser());
+		User currentUser = reservationService.getUser();
 		model.addAttribute("user", currentUser);
 		
 		if (currentUser.getRole().equals(false)) {
@@ -105,7 +105,7 @@ public class UserController {
 	
 	@GetMapping("/edit") 
 	public String edit(Model model) {
-		User currentUser = userRepository.findByUsername(reservationService.getUser());
+		User currentUser = reservationService.getUser();
 		model.addAttribute("user", currentUser);
 		
 		return "editUser";

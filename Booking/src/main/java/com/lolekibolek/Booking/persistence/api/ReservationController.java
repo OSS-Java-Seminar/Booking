@@ -59,7 +59,7 @@ public class ReservationController {
 	
 	@GetMapping()
     public String findAll(Model model) {
-		User currentUser = userRepository.findByUsername(reservationService.getUser());
+		User currentUser = reservationService.getUser();
 		model.addAttribute("user", currentUser);
 		
 		List<Reservation> reservations = reservationRepository.findAll();
@@ -88,7 +88,7 @@ public class ReservationController {
 	@GetMapping("/sorted")
 	public String sortAll(@RequestParam (defaultValue = "nameAsc") String sort,
 			Model model) {
-		User currentUser = userRepository.findByUsername(reservationService.getUser());
+		User currentUser = reservationService.getUser();
 		model.addAttribute("user", currentUser);
 		
 		List<Reservation> sortedReservations = reservationRepository.findAll();
@@ -132,7 +132,7 @@ public class ReservationController {
 	
 	@GetMapping("/{reservationId}")
     public String details(@PathVariable Integer reservationId, Model model) {
-		User currentUser = userRepository.findByUsername(reservationService.getUser());
+		User currentUser = reservationService.getUser();
 		model.addAttribute("user", currentUser);
 		User otherUser;
 		Boolean isOwner = currentUser.getRole();
@@ -163,7 +163,7 @@ public class ReservationController {
 	
 	@GetMapping("/cancel")
     public String cancel(@RequestParam (value = "reservationId") Integer reservationId, Model model) {
-		User currentUser = userRepository.findByUsername(reservationService.getUser());
+		User currentUser = reservationService.getUser();
 		model.addAttribute("user", currentUser);
 		
 		model.addAttribute("reservationId", reservationId);
@@ -187,7 +187,7 @@ public class ReservationController {
 			@RequestParam (value = "totalPrice") float totalPrice,
 			Model model) {
 		
-		User currentUser = userRepository.findByUsername(reservationService.getUser());
+		User currentUser = reservationService.getUser();
 		model.addAttribute("user", currentUser);
 		
 		if (checkInString.isEmpty() || checkOutString.isEmpty()) {

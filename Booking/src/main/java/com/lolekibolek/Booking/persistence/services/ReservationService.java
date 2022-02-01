@@ -18,6 +18,7 @@ import com.lolekibolek.Booking.persistence.entities.Apartment;
 import com.lolekibolek.Booking.persistence.entities.Reservation;
 import com.lolekibolek.Booking.persistence.entities.User;
 import com.lolekibolek.Booking.persistence.repositories.ReservationRepository;
+import com.lolekibolek.Booking.persistence.repositories.UserRepository;
 
 import lombok.AllArgsConstructor;
 
@@ -27,6 +28,9 @@ public class ReservationService {
 	
 	@Autowired
 	private ReservationRepository reservationRepository;
+	
+	@Autowired
+	private UserRepository userRepository;
 	
     public List<Reservation> findAll() {
         return reservationRepository.findAll();
@@ -61,13 +65,14 @@ public class ReservationService {
 		return check;
 	}
 	
-	public String getUser() {
+	public User getUser() {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		if (!(authentication instanceof AnonymousAuthenticationToken)) {
-		    String currentUserName = authentication.getName();
-		    return currentUserName;
+		    String currentUserEmail = authentication.getName();
+		    User currentUser = userRepository.findByEmail(currentUserEmail);
+		    return currentUser;
 		}
-		return "Guest";
+		return null;
 	}
 	
 	public boolean checkIfToday(Reservation reservation, Map<Reservation, String> todaysReservations) {

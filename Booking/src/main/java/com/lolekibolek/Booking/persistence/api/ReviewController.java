@@ -58,7 +58,7 @@ public class ReviewController {
     public String findById(@PathVariable int id,
     		@RequestParam (value = "reservationId") int reservationId,
     		Model model) {
-		User currentUser = userRepository.findByUsername(reservationService.getUser());
+		User currentUser = reservationService.getUser();
 		model.addAttribute("user", currentUser);
 		
 		ReviewDto reviewDto = new ReviewDto();
@@ -73,7 +73,7 @@ public class ReviewController {
 	public String saveReview(
     		@ModelAttribute ReviewDto reviewDto,
     		Model model) {
-		User currentUser = userRepository.findByUsername(reservationService.getUser());
+		User currentUser = reservationService.getUser();
 		model.addAttribute("user", currentUser);
 		
 		Review review = new Review();

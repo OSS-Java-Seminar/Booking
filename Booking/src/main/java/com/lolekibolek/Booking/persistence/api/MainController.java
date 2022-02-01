@@ -59,10 +59,14 @@ public class MainController {
 	@Autowired
 	private ReservationService reservationService;
 
-	//@PreAuthorize(roles = "OWNER")
+	@GetMapping("/login")
+	public String login() {
+		return "login";
+	}
+	
 	@GetMapping()
 	public String home(Model model) {
-		User currentUser = userRepository.findByUsername(reservationService.getUser());
+		User currentUser = reservationService.getUser();
 		model.addAttribute("user", currentUser);
 		
 		if (currentUser.getRole().equals(false))
@@ -82,7 +86,7 @@ public class MainController {
 	
 	@GetMapping("help")
 	public String help(Model model) {
-		User currentUser = userRepository.findByUsername(reservationService.getUser());
+		User currentUser = reservationService.getUser();
 		model.addAttribute("user", currentUser);
 
 		return "help";
@@ -113,7 +117,7 @@ public class MainController {
 			@RequestParam (value = "sortBy", required = false) String sortBy,
 			Model model) {
 		
-		User currentUser = userRepository.findByUsername(reservationService.getUser());
+		User currentUser = reservationService.getUser();
 		model.addAttribute("user", currentUser);
 		
 		if (city.isEmpty() || checkInString.isEmpty() || checkOutString.isEmpty()) {

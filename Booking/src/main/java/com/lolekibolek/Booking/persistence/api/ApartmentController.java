@@ -69,7 +69,7 @@ public class ApartmentController {
 	
 	@GetMapping
     public String findAll(Model model) {
-		User currentUser = userRepository.findByUsername(reservationService.getUser());
+		User currentUser = reservationService.getUser();
 		model.addAttribute("user", currentUser);
 		
 		List<Apartment> apartments= apartmentRepository.findAll();
@@ -97,7 +97,7 @@ public class ApartmentController {
 	
 	@GetMapping("/add") 
 	public String addNew(Model model) {
-		User currentUser = userRepository.findByUsername(reservationService.getUser());
+		User currentUser = reservationService.getUser();
 		model.addAttribute("user", currentUser);
 		
 		Apartment apartmentDto =  new Apartment();
@@ -109,7 +109,7 @@ public class ApartmentController {
 	@GetMapping("/update") 
 	public String update(@RequestParam int id,
 			Model model) {
-		User currentUser = userRepository.findByUsername(reservationService.getUser());
+		User currentUser = reservationService.getUser();
 		model.addAttribute("user", currentUser);
 		
 		Apartment apartment = apartmentRepository.findById(id);
@@ -122,7 +122,7 @@ public class ApartmentController {
 	@PostMapping("/save")
 	public String saveApartment(@Valid@ModelAttribute("apartment") Apartment apartment, BindingResult result,
 			Model model) {
-		User currentUser = userRepository.findByUsername(reservationService.getUser());
+		User currentUser = reservationService.getUser();
 		model.addAttribute("user", currentUser);
 		
 		//model.addAttribute("apartment", apartment);
@@ -175,7 +175,7 @@ public class ApartmentController {
     		@RequestParam (value = "checkOutDate", required = false) String checkOutString, 
     		@RequestParam (value = "apartmentId") int apartmentId,
     		Model model) {
-		User currentUser = userRepository.findByUsername(reservationService.getUser());
+		User currentUser = reservationService.getUser();
 		model.addAttribute("user", currentUser);
 		Apartment apartment = apartmentRepository.getById(apartmentId);
 		model.addAttribute("apartment", apartment);

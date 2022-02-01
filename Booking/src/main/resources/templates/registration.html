@@ -11,22 +11,10 @@
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <a class="navbar-brand"> Booking </a>
-
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item">
-        <a class="nav-link" href="/">Home</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/reservations">Reservations</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/help">Help</a>
-      </li>
-    </ul>
     
     <ul class="navbar-nav">
      <li class="nav-item">
-        <a class="nav-link" href="/l">Log in</a>
+        <a class="nav-link" href="/login">Log in</a>
       </li>
      </ul>
 </nav>
@@ -39,12 +27,12 @@
 
             <div th:if="${param.success}">
                 <div class="alert alert-info">You've successfully registered
-                    to our awesome app!</div>
+                    to our site. Book now!</div>
             </div>
 
             <h1>Registration</h1><br>
 
-            <form th:action="@{/user/registration}" method="post" th:object="${user}">
+            <form th:action="@{/registration}" method="post" th:object="${user}">
                 <div class="form-group">
                     <label class="control-label" for="firstName"> First Name </label>
                     <input id="firstName" class="form-control" th:field="*{firstName}"
@@ -56,6 +44,13 @@
                         id="lastName" class="form-control" th:field="*{lastName}"
                         required autofocus="autofocus" />
                 </div>
+                
+                <div class="form-group">
+                    <label class="control-label" for="username"> Username </label> <input
+                        id="username" class="form-control" th:field="*{username}" required
+                        autofocus="autofocus" />
+                </div>
+                
                 <div class="form-group">
                     <label class="control-label" for="email"> Email </label> <input
                         id="email" class="form-control" th:field="*{email}" required
@@ -69,9 +64,13 @@
                 </div>
                 
                 <div class="form-group">
-                    <label class="control-label" for="confirmPassword"> Confirm password </label> <input
-                        id="password" class="form-control" type="password"
-                        th:field="*{password}" required autofocus="autofocus" />
+                	<label class="control-label" for="gender"> Male </label>
+                	<input type="radio" class="form-control" name="gender"
+                		value="false" checked="checked" th:field="*{gender}" required autofocus="autofocus"/>
+                	
+                	<label class="control-label" for="gender"> Female </label>
+                	<input type="radio" class="form-control" name="gender"
+                		value="true" th:field="*{gender}" required autofocus="autofocus"/>
                 </div>
                 
                 <div class="form-group">
@@ -82,6 +81,42 @@
                 	<label class="control-label" for="role"> Owner </label>
                 	<input type="radio" class="form-control" name="imgsel"
                 		value="true" th:field="*{role}" required autofocus="autofocus"/>
+                </div>
+                
+                <div class="form-group">
+                    <label class="control-label" for="phone"> Phone Number </label> <input
+                        id="phone" class="form-control" th:field="*{phone}" required
+                        autofocus="autofocus" />
+                </div>
+                
+                <div class="form-group">
+                    <label class="control-label" for="address"> Address </label> <input
+                        id="address" class="form-control" th:field="*{address}" required
+                        autofocus="autofocus" />
+                </div>
+                
+                <div class="form-group">
+                    <label class="control-label" for="city"> City </label> <input
+                        id="city" class="form-control" th:field="*{city}" required
+                        autofocus="autofocus" />
+                </div>
+                
+                <div class="form-group">
+                    <label class="control-label" for="country"> Country </label> <input
+                        id="country" class="form-control" th:field="*{country}" required
+                        autofocus="autofocus" />
+                </div>
+                
+                <div class="form-group">
+                    <label class="control-label" for="safeQuestion"> Safe Question </label> <input
+                        id="safeQuestion" class="form-control" th:field="*{safeQuestion}" required
+                        autofocus="autofocus" />
+                </div>
+                
+                <div class="form-group">
+                    <label class="control-label" for="safeAnswer"> Safe Answer </label> <input
+                        id="safeAnswer" class="form-control" th:field="*{safeAnswer}" required
+                        autofocus="autofocus" />
                 </div>
 
                 <div class="form-group">

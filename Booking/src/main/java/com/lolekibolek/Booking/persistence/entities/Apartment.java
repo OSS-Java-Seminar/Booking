@@ -26,9 +26,6 @@ public class Apartment {
 	private int id;
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "apartment")
-	private Set<PriceVariance> priceVariances;
-	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "apartment")
 	private Set<Reservation> reservations;
 	
 	@NotEmpty(message = "Apartment's name cannot be empty.")
@@ -120,14 +117,6 @@ public class Apartment {
 
 	public void setId(int id) {
 		this.id = id;
-	}
-
-	public Set<PriceVariance> getPriceVariances() {
-		return priceVariances;
-	}
-
-	public void setPriceVariances(Set<PriceVariance> priceVariances) {
-		this.priceVariances = priceVariances;
 	}
 
 	public Set<Reservation> getReservations() {
@@ -338,7 +327,7 @@ public class Apartment {
 		this.wifi = wifi;
 	}
 	
-	public Apartment(int id, Set<PriceVariance> priceVariances, Set<Reservation> reservations, String name, User owner,
+	public Apartment(int id, Set<Reservation> reservations, String name, User owner,
 			String country, String city, String address, float pricePerNight, int capacity, float size,
 			int bedroomNumber, Double rating, String description, String picture, boolean petsAllowed,
 			boolean smokingAllowed, boolean disabledAccessible, boolean balcony, boolean kitchen, boolean parking,
@@ -346,7 +335,6 @@ public class Apartment {
 			boolean heating, boolean wifi) {
 		super();
 		this.id = id;
-		this.priceVariances = priceVariances;
 		this.reservations = reservations;
 		this.name = name;
 		this.owner = owner;
