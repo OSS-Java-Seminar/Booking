@@ -80,8 +80,10 @@ public class ApartmentController {
 				byId.add(apartments.get(i));
 		}
 		
+		Boolean empty = false;
 		if (byId.isEmpty()) {
-			model.addAttribute("status", "Please add an apartment first.");
+			empty = true;
+			model.addAttribute("empty", empty);
 			//?????'dodatttttttttt
 		}
 		

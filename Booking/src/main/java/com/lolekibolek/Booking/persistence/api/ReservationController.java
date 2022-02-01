@@ -76,7 +76,11 @@ public class ReservationController {
 		}
 		
 		if (byId.isEmpty()) {
-			model.addAttribute("status", "Please make a reservation first.");
+			if (currentUser.getRole().equals(false)) {
+				model.addAttribute("status", "Please make a reservation first.");
+				return "notFound";
+			}
+			model.addAttribute("status", "Somebody will make a reservation soon.");
 			return "notFound";
 		}
 		

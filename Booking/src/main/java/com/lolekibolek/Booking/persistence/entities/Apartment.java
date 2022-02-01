@@ -66,7 +66,7 @@ public class Apartment {
 	@Column(nullable = false, length = 1500)
 	private String description;
 	
-	@Column(nullable = false, length = 1500)
+	@Column(nullable = false, length = 5000)
 	private String picture;
 	
 	@Column(nullable = false, columnDefinition = "boolean default false")
