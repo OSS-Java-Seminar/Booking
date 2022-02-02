@@ -200,6 +200,7 @@
 			<div th:each = "review: ${reviews}">
 			<table style="width:700px;">
 				<tr>
+					<td><small><a>Cleaness:</a><a th:text = "${review.cleanessRating}"></a></small></td>
 					<td><small><a>Comfort:</a><a th:text = "${review.comfortRating}"></a></small></td>
 					<td><small><a>Location:</a><a th:text = "${review.locationRating}"> </a></small></td>
 					<td><small><a>Host:</a><a th:text = "${review.hostRating}"></a> </small></td>

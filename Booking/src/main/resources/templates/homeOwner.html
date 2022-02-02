@@ -47,7 +47,8 @@
 			<div class = "container"  th:each = "reservation: ${reservations}" >
 				<a th:text = "${reservation.key.apartment.name}" style="font-size:200%" >Apartment name</a>
 				<br>
-				<a th:text = "${reservation.key.checkInDate}">check in date</a><br>
+				<a th:text = "${reservation.key.checkInDate}">check in date</a>
+				<a>-</a>
 				<a th:text = "${reservation.key.checkOutDate}">check out date</a>
 				<br>
 				<a th:text = "${reservation.value}">status</a>

@@ -15,6 +15,8 @@ import javax.persistence.OneToMany;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
+import com.lolekibolek.Booking.persistence.services.ReservationService;
+
 import lombok.Data;
 
 @Entity
