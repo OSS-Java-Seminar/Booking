@@ -42,11 +42,11 @@
 	<div class="container-fluid" style="width:80%; margin-top:100px; ">
 		<form class="form-inline my-2 my-lg-0" th:action="@{/reservations/reallyCancel}"  method="get">
 			<input type="hidden" id="reservationId" name="reservationId" th:attr="value = ${reservationId}"/>
-			<button class="btn btn-outline-info my-2 my-sm-0" style="font-size:24px;" type="submit">Proceed</button>
+			<button class="btn btn-outline-info my-2 my-sm-0" style="font-size:24px;" type="submit">Yes</button>
 		</form>
 		<br>
 		<form class="form-inline my-2 my-lg-0"  th:action="@{/reservations}"  method="get">
-			<button class="btn btn-outline-danger my-2 my-sm-0" style="display:right; font-size:18px;" type="submit">Cancel</button>
+			<button class="btn btn-outline-danger my-2 my-sm-0" style="display:right; font-size:18px;" type="submit">No</button>
 		</form>
 	</div>
 </div>	

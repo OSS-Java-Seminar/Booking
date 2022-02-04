@@ -211,7 +211,7 @@ public class ReservationController {
 		reservation.setTotalPrice(totalPrice);
 		reservation.setUser(currentUser);
 		
-		if (reservationService.checkIfAvailable(apartmentRepository.findById(apartmentId), checkInDate, checkOutDate))
+		if (reservationService.checkIfAvailable(apartmentRepository.findById(apartmentId), checkInDate, checkOutDate) && apartmentRepository.findById(apartmentId).getOpen() == true)
 			reservationRepository.save(reservation);
 		else {
 			model.addAttribute("error", "Sorry, someone just booked your apartment. Please try again.");

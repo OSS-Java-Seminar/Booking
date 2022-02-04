@@ -20,7 +20,7 @@
         <a class="nav-link" href="/reservations">Reservations</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="/user">Profile</a>
+        <a class="nav-link" href="/user">Profile <span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="/help">Help</a>
@@ -73,25 +73,53 @@
 				<th scope="col">Price per night</th>	
 				<th scope="col"></th>
 				<th scope="col"></th>
+				<th scope="col"></th>
 				
 		    </tr>
 		  </thead>
 		  
 		  <tbody>
 		    <tr th:each = "apartment: ${apartments}" >
-		      	<td th:text = "${apartment.name}" ></td>
+		    <span th:if="${apartment.open}">
+		    	<td th:text = "${apartment.name}" ></td>
 				<td th:text = "${apartment.address}" ></td>
 				<td th:text = "${apartment.city}" ></td>
 				<td th:text = "${apartment.country}" ></td>
-				<td th:text = "${apartment.pricePerNight}"><a>€ </a></td>
+				<td> <a th:text = "${apartment.pricePerNight}"></a><a>€ </a></td>
 				<td><form class="form-inline my-2 my-lg-0"  th:action="@{/apartments/details}"  method="get">
 					<input type="hidden" id="apartmentId" name="apartmentId" th:value="${apartment.id}"/>
 					<button class = "btn btn-outline-info my-2 my-sm-0"> details </button>
 				</form></td>
-				<td><form class="form-inline my-2 my-lg-0" th:action="@{/apartments/update(id = ${apartment.id})}"  method="get">
+				<td><form class="form-inline my-2 my-lg-0" th:action="@{/apartments/update}"  method="get">
 					<input type="hidden" id="id" name="id" th:value="${apartment.id}"/>
 					<button type="submit" class = "btn btn-outline-info my-2 my-sm-0"> edit </button>
 				</form></td>
+				<td><form class="form-inline my-2 my-lg-0" th:action="@{/apartments/close}"  method="post">
+					<input type="hidden" id="id" name="id" th:value="${apartment.id}"/>
+					<button type="submit" class = "btn btn-outline-danger my-2 my-sm-0"> close </button>
+				</form></td>
+		    </span>
+		    
+		    <span th:unless="${apartment.open}">
+		    	<td style="color:red;" th:text = "${apartment.name}" ></td>
+				<td class="text-muted" th:text = "${apartment.address}" ></td>
+				<td class="text-muted" th:text = "${apartment.city}" ></td>
+				<td class="text-muted" th:text = "${apartment.country}" ></td>
+				<td class="text-muted" th:text = "${apartment.pricePerNight}"><a>€ </a></td>
+				<td><form class="form-inline my-2 my-lg-0"  th:action="@{/apartments/details}"  method="get">
+					<input type="hidden" id="apartmentId" name="apartmentId" th:value="${apartment.id}"/>
+					<button class = "btn btn-outline-info my-2 my-sm-0"> details </button>
+				</form></td>
+				<td><form class="form-inline my-2 my-lg-0" th:action="@{/apartments/update}"  method="get">
+					<input type="hidden" id="id" name="id" th:value="${apartment.id}"/>
+					<button type="submit" class = "btn btn-outline-info my-2 my-sm-0"> edit </button>
+				</form></td>
+				<td><form class="form-inline my-2 my-lg-0" th:action="@{/apartments/open}"  method="post">
+					<input type="hidden" id="id" name="id" th:value="${apartment.id}"/>
+					<button type="submit" class = "btn btn-outline-info my-2 my-sm-0"> open </button>
+				</form></td>
+		    </span>
+		      	
 		    </tr>
 		  </tbody>
 		  

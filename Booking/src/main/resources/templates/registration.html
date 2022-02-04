@@ -29,6 +29,21 @@
                 <div class="alert alert-info">You've successfully registered
                     to our site. Book now!</div>
             </div>
+            
+            <div th:if="${param.error}">
+                <div class="alert alert-danger">Your input was invalid. Please try again.              	
+                </div>
+            </div>
+            
+            <div th:if="${param.usernameError}">
+                <div class="alert alert-danger">This username is already taken.           	
+                </div>
+            </div>
+            
+            <div th:if="${param.emailError}">
+                <div class="alert alert-danger">User with this email already exists.          	
+                </div>
+            </div>
 
             <h1>Registration</h1><br>
 
@@ -104,18 +119,6 @@
                 <div class="form-group">
                     <label class="control-label" for="country"> Country </label> <input
                         id="country" class="form-control" th:field="*{country}" required
-                        autofocus="autofocus" />
-                </div>
-                
-                <div class="form-group">
-                    <label class="control-label" for="safeQuestion"> Safe Question </label> <input
-                        id="safeQuestion" class="form-control" th:field="*{safeQuestion}" required
-                        autofocus="autofocus" />
-                </div>
-                
-                <div class="form-group">
-                    <label class="control-label" for="safeAnswer"> Safe Answer </label> <input
-                        id="safeAnswer" class="form-control" th:field="*{safeAnswer}" required
                         autofocus="autofocus" />
                 </div>
 

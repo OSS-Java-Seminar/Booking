@@ -50,20 +50,27 @@ public class Apartment {
 	@Column(length = 100, nullable = false)
 	private String address;
 	
+	@NotNull(message = "Must enter price per night.")
 	@Column(nullable = false)
 	private float pricePerNight;
 	
+	@NotNull(message = "Must enter capacity.")
 	@Column(nullable = false)
 	private int capacity;
 	
+	@NotNull(message = "Must enter size.")
 	@Column(nullable = false)
 	private float size;
 	
+	@NotNull(message = "Must enter bedroom number.")
 	@Column(nullable = false)
 	private int bedroomNumber;
 	
 	@Column(nullable = false)
 	private Double rating = 0.0;
+	
+	@Column(nullable = false, columnDefinition = "boolean default true")
+	private Boolean open;
 
 	@Column(nullable = false, length = 1500)
 	private String description;
@@ -329,12 +336,19 @@ public class Apartment {
 		this.wifi = wifi;
 	}
 	
-	public Apartment(int id, Set<Reservation> reservations, String name, User owner,
-			String country, String city, String address, float pricePerNight, int capacity, float size,
-			int bedroomNumber, Double rating, String description, String picture, boolean petsAllowed,
-			boolean smokingAllowed, boolean disabledAccessible, boolean balcony, boolean kitchen, boolean parking,
-			boolean seaView, boolean pool, boolean jacuzzi, boolean iron, boolean washingMachine, boolean ac,
-			boolean heating, boolean wifi) {
+
+
+	public Apartment(int id, Set<Reservation> reservations,
+			@NotEmpty(message = "Apartment's name cannot be empty.") String name, User owner,
+			@NotEmpty(message = "Country cannot be empty.") String country,
+			@NotEmpty(message = "City cannot be empty.") String city,
+			@NotEmpty(message = "Address cannot be empty.") String address,
+			@NotNull(message = "Must enter price per night.") float pricePerNight,
+			@NotNull(message = "Must enter capacity.") int capacity, @NotNull(message = "Must enter size.") float size,
+			@NotNull(message = "Must enter bedroom number.") int bedroomNumber, Double rating, Boolean open,
+			String description, String picture, boolean petsAllowed, boolean smokingAllowed, boolean disabledAccessible,
+			boolean balcony, boolean kitchen, boolean parking, boolean seaView, boolean pool, boolean jacuzzi,
+			boolean iron, boolean washingMachine, boolean ac, boolean heating, boolean wifi) {
 		super();
 		this.id = id;
 		this.reservations = reservations;
@@ -348,6 +362,7 @@ public class Apartment {
 		this.size = size;
 		this.bedroomNumber = bedroomNumber;
 		this.rating = rating;
+		this.open = open;
 		this.description = description;
 		this.picture = picture;
 		this.petsAllowed = petsAllowed;
@@ -378,5 +393,15 @@ public class Apartment {
 	public void setRating(Double rating) {
 		this.rating = rating;
 	}
+
+	public Boolean getOpen() {
+		return open;
+	}
+
+	public void setOpen(Boolean open) {
+		this.open = open;
+	}
+	
+	
 	
 }

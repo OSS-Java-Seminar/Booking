@@ -44,13 +44,13 @@ public class Review {
 	private int valueForMoneyRating;
 	
 	@Column(nullable = false)
-	private float averageRating;
+	private Double averageRating;
 	
 	@Column(length = 500)
 	private String review;
 
 	public Review(int id, Reservation reservation, int cleanessRating, int comfortRating, int locationRating,
-			int hostRating, int valueForMoneyRating, float averageRating, String review) {
+			int hostRating, int valueForMoneyRating, Double averageRating, String review) {
 		super();
 		this.id = id;
 		this.reservation = reservation;
@@ -124,18 +124,11 @@ public class Review {
 		this.valueForMoneyRating = valueForMoneyRating;
 	}
 
-	public float getAverageRating() {
-		int rating = 0;
-		rating += this.cleanessRating;
-		rating += this.comfortRating;
-		rating += this.locationRating;
-		rating += this.hostRating;
-		rating += this.valueForMoneyRating;
-		this.averageRating = rating/5;
+	public Double getAverageRating() {
 		return averageRating;
 	}
 
-	public void setAverageRating(float averageRating) {
+	public void setAverageRating(Double averageRating) {
 		this.averageRating = averageRating;
 	}
 

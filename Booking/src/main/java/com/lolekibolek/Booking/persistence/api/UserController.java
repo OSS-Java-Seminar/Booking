@@ -69,8 +69,6 @@ public class UserController {
 			for (int i = 0; i < allReservations.size(); i++) {
 				if (allReservations.get(i).getCheckInDate().isAfter(today) || allReservations.get(i).getCheckInDate().equals(today)) {
 					if (allReservations.get(i).getBooked().equals(true)) {
-						System.out.println("Check-in: " + allReservations.get(i).getCheckInDate());
-						System.out.println("Today " + LocalDate.now());
 						futureReservations.add(allReservations.get(i));
 					}
 				}
@@ -116,9 +114,33 @@ public class UserController {
 			Model model) {
 		model.addAttribute("user", user);
 		
+		System.out.println(result);
+		
 		if (result.hasErrors()) {
-            return "editUser";
+			return "redirect:/user/edit?error";
         }
+		
+		List<User> allUsers = userRepository.findAll();
+		Boolean uniqueUsername = true;
+		Boolean uniqueEmail = true;
+		if (allUsers.isEmpty() == false) {
+			for (int i = 0; i < allUsers.size(); i++) {
+				if(allUsers.get(i).getId() != user.getId()) {
+					System.out.println("uslo");
+					if (allUsers.get(i).getEmail().equals(user.getEmail()))
+						uniqueEmail = false;
+					if (allUsers.get(i).getUsername().equals(user.getUsername()))
+						uniqueUsername = false;
+				}
+			}
+		}
+		
+		if (uniqueUsername.equals(false) && uniqueEmail.equals(true))
+			return "redirect:/user/edit?usernameError";
+		if (uniqueUsername.equals(true) && uniqueEmail.equals(false))
+			return "redirect:/user/edit?emailError";
+		if (uniqueUsername.equals(false) && uniqueEmail.equals(false))
+			return "redirect:/user/edit?usernameError&emailError";
 		
 		User saveUser;
 		System.out.print(user.getId());

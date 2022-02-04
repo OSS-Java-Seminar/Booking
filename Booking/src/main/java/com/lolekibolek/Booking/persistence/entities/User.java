@@ -18,6 +18,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.AssertTrue;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
@@ -68,6 +69,7 @@ public class User {
 	private String lastName;
 	
 	@NotEmpty(message = "User's email cannot be empty.")
+	@Email
 	@Column(nullable = false, length = 50, unique = true)
 	private String email;
 	
@@ -81,14 +83,6 @@ public class User {
 	@NotEmpty(message = "Phone number cannot be empty.")
 	@Column(length = 30)
 	private String phone;
-	
-	@NotEmpty(message = "Safe question cannot be empty.")
-	@Column(length = 50)
-	private String safeQuestion;
-	
-	@NotEmpty(message = "Safe answer cannot be empty.")
-	@Column(length = 20)
-	private String safeAnswer;
 	
 	@NotEmpty(message = "Address cannot be empty.")
 	@Column(nullable = false, length = 50)
@@ -182,22 +176,6 @@ public class User {
 		this.phone = phone;
 	}
 
-	public String getSafeQuestion() {
-		return safeQuestion;
-	}
-
-	public void setSafeQuestion(String safeQuestion) {
-		this.safeQuestion = safeQuestion;
-	}
-
-	public String getSafeAnswer() {
-		return safeAnswer;
-	}
-
-	public void setSafeAnswer(String safeAnswer) {
-		this.safeAnswer = safeAnswer;
-	}
-
 	public Boolean getGender() {
 		return gender;
 	}
@@ -250,8 +228,6 @@ public class User {
 			@NotEmpty(message = "User's email cannot be empty.") String email,
 			@NotEmpty(message = "Username cannot be empty.") String username, String password,
 			@NotEmpty(message = "Phone number cannot be empty.") String phone,
-			@NotEmpty(message = "Safe question cannot be empty.") String safeQuestion,
-			@NotEmpty(message = "Safe answer cannot be empty.") String safeAnswer,
 			@NotEmpty(message = "Address cannot be empty.") String address,
 			@NotEmpty(message = "City cannot be empty.") String city,
 			@NotEmpty(message = "Country cannot be empty.") String country,
@@ -266,8 +242,6 @@ public class User {
 		this.username = username;
 		this.password = password;
 		this.phone = phone;
-		this.safeQuestion = safeQuestion;
-		this.safeAnswer = safeAnswer;
 		this.address = address;
 		this.city = city;
 		this.country = country;

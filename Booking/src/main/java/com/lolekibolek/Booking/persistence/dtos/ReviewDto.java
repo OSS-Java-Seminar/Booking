@@ -39,7 +39,7 @@ public class ReviewDto {
     
     @NotNull
     @NotEmpty  
-    private float averageRating;
+    private Double averageRating;
     
     @NotNull
     @NotEmpty  
@@ -47,7 +47,7 @@ public class ReviewDto {
 
 	public ReviewDto(@NotNull @NotEmpty int cleanessRating, @NotNull @NotEmpty int comfortRating,
 			@NotNull @NotEmpty int locationRating, @NotNull @NotEmpty int hostRating,
-			@NotNull @NotEmpty int valueForMoneyRating, @NotNull @NotEmpty float averageRating,
+			@NotNull @NotEmpty int valueForMoneyRating, @NotNull @NotEmpty Double averageRating,
 			@NotNull @NotEmpty String review) {
 		super();
 		this.cleanessRating = cleanessRating;
@@ -104,11 +104,11 @@ public class ReviewDto {
 		this.valueForMoneyRating = valueForMoneyRating;
 	}
 
-	public float getAverageRating() {
+	public Double getAverageRating() {
 		return averageRating;
 	}
 
-	public void setAverageRating(float averageRating) {
+	public void setAverageRating(Double averageRating) {
 		this.averageRating = averageRating;
 	}
 

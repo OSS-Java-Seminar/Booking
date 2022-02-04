@@ -231,6 +231,7 @@ public class MainController {
 				
 		for (int i = 0; i < apartmentsInCity.size(); i++) {
 			Boolean check = true;
+			if (apartmentsInCity.get(i).getOpen() == false) check = false;
 			if (petsAllowed == true && apartmentsInCity.get(i).isPetsAllowed() == false) check = false;
 			if (smokingAllowed == true && apartmentsInCity.get(i).isSmokingAllowed() == false) check = false;
 			if (disabledAccessible == true && apartmentsInCity.get(i).isDisabledAccessible() == false) check = false;

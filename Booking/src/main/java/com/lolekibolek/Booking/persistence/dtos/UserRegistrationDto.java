@@ -1,5 +1,6 @@
 package com.lolekibolek.Booking.persistence.dtos;
 
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
@@ -14,6 +15,7 @@ public class UserRegistrationDto {
     private String password;
     
     @NotEmpty
+    @Email
     private String email;
     
     @NotNull
@@ -27,12 +29,6 @@ public class UserRegistrationDto {
     
     @NotEmpty
     private String phone;
-    
-    @NotEmpty
-    private String safeQuestion;
-    
-    @NotEmpty
-    private String safeAnswer;
 
 	@NotEmpty
     private String address;
@@ -65,22 +61,6 @@ public class UserRegistrationDto {
 
 	public void setPhone(String phone) {
 		this.phone = phone;
-	}
-
-	public String getSafeQuestion() {
-		return safeQuestion;
-	}
-
-	public void setSafeQuestion(String safeQuestion) {
-		this.safeQuestion = safeQuestion;
-	}
-
-	public String getSafeAnswer() {
-		return safeAnswer;
-	}
-
-	public void setSafeAnswer(String safeAnswer) {
-		this.safeAnswer = safeAnswer;
 	}
 
 	public String getAddress() {
@@ -147,8 +127,8 @@ public class UserRegistrationDto {
 
 	public UserRegistrationDto(@NotEmpty String firstName, @NotEmpty String lastName, @NotEmpty String password,
 			@NotEmpty String email, @NotNull Boolean role, @NotNull Boolean gender, @NotEmpty String username,
-			@NotEmpty String phone, @NotEmpty String safeQuestion, @NotEmpty String safeAnswer,
-			@NotEmpty String address, @NotEmpty String city, @NotEmpty String country) {
+			@NotEmpty String phone,	@NotEmpty String address, @NotEmpty String city, @NotEmpty String country) {
+		
 		super();
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -158,8 +138,6 @@ public class UserRegistrationDto {
 		this.gender = gender;
 		this.username = username;
 		this.phone = phone;
-		this.safeQuestion = safeQuestion;
-		this.safeAnswer = safeAnswer;
 		this.address = address;
 		this.city = city;
 		this.country = country;

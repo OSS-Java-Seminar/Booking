@@ -35,8 +35,8 @@ public class UserService implements IUserService{
 	@Override
 	public User save(UserRegistrationDto userDto) {
 		User user = new User(userDto.getRole(), userDto.getGender(), userDto.getFirstName(), userDto.getLastName(),
-				userDto.getEmail(), userDto.getUsername(), passwordEncoder.encode(userDto.getPassword()), userDto.getPhone(), userDto.getSafeQuestion(),
-				userDto.getSafeAnswer(), userDto.getAddress(), userDto.getCity(), userDto.getCountry(), Arrays.asList(new Role("ROLE_USER")));
+				userDto.getEmail(), userDto.getUsername(), passwordEncoder.encode(userDto.getPassword()), userDto.getPhone(), 
+				userDto.getAddress(), userDto.getCity(), userDto.getCountry(), Arrays.asList(new Role("ROLE_USER")));
 		
 		return userRepository.save(user);
 	}

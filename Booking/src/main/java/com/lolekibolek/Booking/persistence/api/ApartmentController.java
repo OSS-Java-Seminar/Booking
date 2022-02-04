@@ -103,6 +103,7 @@ public class ApartmentController {
 		model.addAttribute("user", currentUser);
 		
 		Apartment apartment =  new Apartment();
+		apartment.setOpen(true);
 		model.addAttribute("apartment", apartment);
 		
 		return "newApartment";
@@ -126,8 +127,6 @@ public class ApartmentController {
 			Model model) {
 		User currentUser = reservationService.getUser();
 		model.addAttribute("user", currentUser);
-		
-		//model.addAttribute("apartment", apartment);
 		
 		if (result.hasErrors()) {
             return "newApartment";
@@ -165,6 +164,7 @@ public class ApartmentController {
 		saveApartment.setAc(apartment.isAc());
 		saveApartment.setHeating(apartment.isHeating());
 		saveApartment.setWifi(apartment.isWifi());
+		saveApartment.setOpen(apartment.getOpen());
 		
 		apartmentRepository.save(saveApartment);
 		
@@ -225,6 +225,24 @@ public class ApartmentController {
 		
 		return "apartmentDetails";
     }
+	
+	@PostMapping("/close")
+	public String close(@RequestParam int id, Model model) {
+		Apartment apartment = apartmentRepository.findById(id);
+		apartment.setOpen(false);
+		apartmentRepository.save(apartment);
+		
+		return "redirect:/apartments";
+	}
+	
+	@PostMapping("/open")
+	public String open(@RequestParam int id, Model model) {
+		Apartment apartment = apartmentRepository.findById(id);
+		apartment.setOpen(true);
+		apartmentRepository.save(apartment);
+		
+		return "redirect:/apartments";
+	}
 
 	public List<Apartment> findByCity(String city) {
 		// TODO Auto-generated method stub
