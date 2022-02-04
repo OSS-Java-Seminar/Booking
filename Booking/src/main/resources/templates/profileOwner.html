@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" 
 	integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" 
 	crossorigin="anonymous">
+<link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
 </head>
 <body>
 
@@ -39,41 +40,180 @@
 
 
 	
-	<div style="padding: 20px; width: 250px; float:right; margin:40px;">
-		<form class="form-inline my-2 my-lg-0" th:action="@{/apartments}"  method="get">
-			&nbsp;<button class="btn btn-outline-info my-2 my-sm-0" type="submit">Update apartments</button>	
-		</form>
+<main>
+
+	<div class="jumbotron" style="background-color:#d6ebf5; height:240px;">
+        <div class="container">
+			<h3>Hi <a th:text = "${user.firstName}">!</a></h3><br>
+			<h6> Here you can see some data about your reservations.</h6>
+			<h6> You can also edit information about yourself.</h6>
+			
+			<div style=" float:right;">
+				<form class="form-inline my-2 my-lg-0" th:action="@{/apartments}"  method="get">
+					&nbsp;<button class="btn btn-outline-info my-2 my-sm-0" type="submit">Update apartments</button>	
+				</form>
+			</div>
+			
+		</div>
+		
 	</div>
-	<div style="padding: 20px; width: 250px; float:left; margin:40px;">
+
+	
+	
+
+	
+	
+	<div style="width: 250px; float:left; margin-left:40px;">
 		<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" fill="currentColor" class="bi bi-person" viewBox="0 0 16 16">
 		  <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"/>
 		</svg><br><br>
-	<ul class="list-group list-group-flush">
-		<li class="list-group-item"><a th:text = "${user.firstName}"></a></li>
-		<li class="list-group-item"><a th:text = "${user.LastName}"></a></li>
-		<li class="list-group-item"><a th:text = "${user.username}"></a></li>
-		<li class="list-group-item"><a th:text = "${user.email}"></a></li>
-		<li class="list-group-item"><a th:text = "${user.phone}"></a></li>
-		<li class="list-group-item">
-			<form class="form-inline my-2 my-lg-0" th:action="@{/user/edit}"  method="get">
-					<button type="submit" class = "btn btn-outline-info my-2 my-sm-0"> Edit </button>
-				</form></li>
-	</ul>
+		<ul class="list-group list-group-flush">
+			<li class="list-group-item"><a th:text = "${user.firstName}"></a></li>
+			<li class="list-group-item"><a th:text = "${user.LastName}"></a></li>
+			<li class="list-group-item"><a th:text = "${user.username}"></a></li>
+			<li class="list-group-item"><a th:text = "${user.email}"></a></li>
+			<li class="list-group-item"><a th:text = "${user.phone}"></a></li>
+			<li class="list-group-item">
+				<form class="form-inline my-2 my-lg-0" th:action="@{/user/edit}"  method="get">
+						<button type="submit" class = "btn btn-outline-info my-2 my-sm-0"> Edit </button>
+					</form></li>
+		</ul>
 		
 	</div>
 	
-	
-	
-	<div class = "container" style = "overflow: auto; border-radius:25px;">
-	<br><br><br>
-		<h1>Welcome <a th:text = "${user.firstName}"></a>&nbsp;<a th:text = "${user.lastName}"></a>!</h1>
-		<br><br><br>
-		<h3>Would you consider traveling somewhere for a change? </h3>
-		<br><br>
-		<h4><a class="nav-link" href="/logout">Logout</a></h4>
 
-	</div>
 	
+	
+<div class = "container" style = "overflow: auto; border-radius:25px; width:80%;">
+
+	<div class="container">
+		<div class="row text-center">
+			<div class="col">
+			
+		        <div class="card-body" style="text-align:left">
+					<div class="row">
+						<div class="col-auto">
+						    <svg xmlns="http://www.w3.org/2000/svg" width="40px" height="40px" fill="currentColor" class="bi bi-bookmark-heart" viewBox="0 0 16 16">
+								<path fill-rule="evenodd" d="M8 4.41c1.387-1.425 4.854 1.07 0 4.277C3.146 5.48 6.613 2.986 8 4.412z"/>
+								<path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5V2zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1H4z"/>
+							</svg>
+					    </div>
+					    <div class="col">
+					        <h5 class="card-title text-uppercase text-muted mb-0">RESERVATIONS MADE</h5>
+					        <span class="h2 font-weight-bold mb-0">2,356</span>
+					    </div>
+					</div>
+						<p class="mt-3 mb-0 text-sm">
+						    <span class="text-success mr-2"><i class="fa fa-arrow-up"></i> 3.48%</span>
+						    <span class="text-nowrap">Since last month</span>
+						</p>
+				</div>
+				<br>
+	         	<div class="card-body" style="text-align:left">
+					<div class="row">
+						<div class="col-auto">
+						    <svg xmlns="http://www.w3.org/2000/svg" width="40px" height="40px" fill="currentColor" class="bi bi-calendar-week" viewBox="0 0 16 16">
+								<path d="M11 6.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm-3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm-5 3a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1z"/>
+								<path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"/>
+							</svg>
+					    </div>
+					    <div class="col">
+					        <h5 class="card-title text-uppercase text-muted mb-0">MONTHLY INCOME</h5>
+					        <span class="h2 font-weight-bold mb-0">2,356</span>
+					    </div>
+					</div>
+						<p class="mt-3 mb-0 text-sm">
+						    <span class="text-success mr-2"><i class="fa fa-arrow-up"></i> 3.48%</span>
+						    <span class="text-nowrap">Since last month</span>
+						</p>
+				</div>
+				
+	         </div>
+	         
+	         <div class="col">
+	         
+	          	<div class="card-body" style="text-align:left">
+					<div class="row">
+						<div class="col-auto">
+						    <svg xmlns="http://www.w3.org/2000/svg" width="40px" height="40px" fill="currentColor" class="bi bi-award" viewBox="0 0 16 16">
+								<path d="M9.669.864 8 0 6.331.864l-1.858.282-.842 1.68-1.337 1.32L2.6 6l-.306 1.854 1.337 1.32.842 1.68 1.858.282L8 12l1.669-.864 1.858-.282.842-1.68 1.337-1.32L13.4 6l.306-1.854-1.337-1.32-.842-1.68L9.669.864zm1.196 1.193.684 1.365 1.086 1.072L12.387 6l.248 1.506-1.086 1.072-.684 1.365-1.51.229L8 10.874l-1.355-.702-1.51-.229-.684-1.365-1.086-1.072L3.614 6l-.25-1.506 1.087-1.072.684-1.365 1.51-.229L8 1.126l1.356.702 1.509.229z"/>
+								<path d="M4 11.794V16l4-1 4 1v-4.206l-2.018.306L8 13.126 6.018 12.1 4 11.794z"/>
+							</svg>
+					    </div>
+					    <div class="col">
+					        <h5 class="card-title text-uppercase text-muted mb-0">OVERALL REVIEWS</h5>
+					        <span class="h2 font-weight-bold mb-0">2,356</span>
+					    </div>
+					</div>
+						<p class="mt-3 mb-0 text-sm">
+						    <span class="text-success mr-2"><i class="fa fa-arrow-up"></i> 3.48%</span>
+						    <span class="text-nowrap">Since last month</span>
+						</p>
+				</div>
+				<br>
+	         	<div class="card-body" style="text-align:left">
+					<div class="row">
+						<div class="col-auto">
+						    <svg xmlns="http://www.w3.org/2000/svg" width="40px" height="40px" fill="currentColor" class="bi bi-calendar-check" viewBox="0 0 16 16">
+								<path d="M10.854 7.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7.5 9.793l2.646-2.647a.5.5 0 0 1 .708 0z"/>
+								<path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"/>
+							</svg>
+					    </div>
+					    <div class="col">
+					        <h5 class="card-title text-uppercase text-muted mb-0">YEARLY INCOME</h5>
+					        <span class="h2 font-weight-bold mb-0">2,356</span>
+					    </div>
+					</div>
+						<p class="mt-3 mb-0 text-sm">
+						    <span class="text-success mr-2"><i class="fa fa-arrow-up"></i> 3.48%</span>
+						    <span class="text-nowrap">Since last month</span>
+						</p>
+				</div>
+				
+	         </div>
+		</div>
+	</div>
+
+</div>
+	
+
+
+<br><br><br><br><br><br><br><br>
+<br><br><br><br>
+        <hr>
+	</main>
+
+
+
+<footer class="container">
+
+     <div class="container">
+      	<div class="row">
+      		<div class="col-md-2">
+      			<p><a  href="#" role="button">About Booking </a></p>
+      		</div>
+        	<div class="col-md-2">
+	      		<p><a  href="#" >Contact us </a></hp>
+	      	</div>
+	      	<div class="col-md-3">
+				<p><a  href="#" role="button">Terms and Conditions </a></p>
+			</div>
+			<div class="col-md-1">
+				<p><a  href="#" role="button">FAQ </a></p>
+			</div>
+			<div class="col-md-2">
+				<p><a  href="#" role="button">Become a partner </a></p>
+			</div>
+		</div>
+		<br>
+		<div class="col-md-18">
+	      	<p>All reservations must be cancelled at least 2 days prior.&nbsp; Reviews can be written up to 3 months after your stay.
+	    	<br> &copy; Ivana Zeljić, Kate Violić </p>
+      	</div>
+      </div>
+
+</footer>
+
 
 </body>
 </html>
