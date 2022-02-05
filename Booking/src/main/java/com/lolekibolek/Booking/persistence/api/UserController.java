@@ -1,5 +1,7 @@
 package com.lolekibolek.Booking.persistence.api;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -107,17 +109,16 @@ public class UserController {
 		
 		LocalDate todayDate = LocalDate.now();
 		
-		//1.1. do 1.2. koliko check outa = rez?
-		int reservationCard = 0;
 		Double reviewCard = 0.0;
-
-		
-		
+		int reservationCard = 0;
 		Double monthlyCard = 0.0;
-		
+		Double yearlyCard = 0.0;
+		Double reviewPreviousMonth = 0.0;
+		int reservationPreviousMonth = 0;
+		Double previousMonthly = 0.0;
+		Double previousYearly = 0.0;
 		LocalDate monthStart = LocalDate.of(todayDate.getYear(), todayDate.getMonth(), 01);
 		LocalDate previousMonth;
-		Double previousMonthly = 0.0;
 		
 		if (monthStart.getMonthValue() - 1 == 0)
 			previousMonth = LocalDate.of(todayDate.getYear()-1, 12, 01);
@@ -126,29 +127,33 @@ public class UserController {
 		
 		for (int i = 0; i < ownerReservations.size(); i++) {
 			if (ownerReservations.get(i).getCheckOutDate().isAfter(monthStart) && ownerReservations.get(i).getCheckOutDate().isBefore(todayDate)
-					&& ownerReservations.get(i).ifBooked().equals(true))
+					&& ownerReservations.get(i).ifBooked().equals(true)) {
 				monthlyCard+= ownerReservations.get(i).getTotalPrice();
+				reviewCard+= ownerReservations.get(i).getApartment().getRating();
+				reservationCard++;
+			}
 		}
 		for (int i = 0; i < ownerReservations.size(); i++) {
 			if (ownerReservations.get(i).getCheckOutDate().isAfter(previousMonth) && ownerReservations.get(i).getCheckOutDate().isBefore(monthStart)
-					&& ownerReservations.get(i).ifBooked().equals(true))
+					&& ownerReservations.get(i).ifBooked().equals(true)) {
 				previousMonthly+= ownerReservations.get(i).getTotalPrice();
+				reviewPreviousMonth+= ownerReservations.get(i).getApartment().getRating();
+				reservationPreviousMonth++;
+			}
 		}
 		Double monthlyIncrease = (monthlyCard - previousMonthly) / previousMonthly * 100;
-		if (monthlyCard < previousMonthly)
-			model.addAttribute("redMonthlyCard", "red");
-		else if (previousMonthly == 0.0)
-			model.addAttribute("redMonthlyCard", "no");
-		else if (monthlyCard > previousMonthly)
-			model.addAttribute("redMonthlyCard", "green");
+			monthlyIncrease = ReservationService.round(monthlyIncrease, 2);
+		model.addAttribute("redMonthlyCard", redCard(monthlyCard, previousMonthly));
 		
+		int reservationIncrease = reservationCard - reservationPreviousMonth;
+		model.addAttribute("redReservationCard", redCard(Double.valueOf(reservationCard), (Double.valueOf(reservationPreviousMonth))));		
 		
-		
-		Double yearlyCard = 0.0;
-		
+		Double reviewIncrease = (reviewCard - reviewPreviousMonth) / reviewPreviousMonth * 100;
+			reviewIncrease = ReservationService.round(reviewIncrease, 2);
+		model.addAttribute("redReviewCard", redCard(reviewCard, reviewPreviousMonth));
+
 		LocalDate yearStart = LocalDate.of(todayDate.getYear(), 01, 01);
 		LocalDate previousYear = LocalDate.of(todayDate.getYear() - 1, 01, 01);
-		Double previousYearly = 0.0;
 		
 		for (int i = 0; i < ownerReservations.size(); i++) {
 			if (ownerReservations.get(i).getCheckOutDate().isAfter(yearStart) && ownerReservations.get(i).getCheckOutDate().isBefore(todayDate)
@@ -161,24 +166,31 @@ public class UserController {
 				previousYearly+= ownerReservations.get(i).getTotalPrice();
 		}
 		Double yearlyIncrease = (yearlyCard - previousYearly) / previousYearly * 100;
-		if (yearlyCard < previousYearly)
-			model.addAttribute("redYearlyCard", "red");
-		else if (previousYearly == 0.0)
-			model.addAttribute("redYearlyCard", "no");
-		else if (yearlyCard > previousYearly)
-			model.addAttribute("redYearlyCard", "green");
-			
+			yearlyIncrease = ReservationService.round(yearlyIncrease, 2);
+		model.addAttribute("redYearlyCard", redCard(yearlyCard, previousYearly));
+		
 		
 		model.addAttribute("reservationCard", reservationCard);
-		
+		model.addAttribute("reservationIncrease", reservationIncrease);
 		model.addAttribute("reviewCard", reviewCard);
-		
+		model.addAttribute("reviewIncrease", reviewIncrease);
 		model.addAttribute("monthlyCard", monthlyCard);
 		model.addAttribute("monthlyIncrease", monthlyIncrease);
 		model.addAttribute("yearlyCard", yearlyCard);
 		model.addAttribute("yearlyIncrease", yearlyIncrease);
 		
 		return "profileOwner";
+	}
+	
+	public String redCard(Double month, Double previousMonth) {
+		if (month < previousMonth)
+		return "red";
+		else if (previousMonth == 0.0)
+			return "no";
+		else if (month > previousMonth)
+			return "green";
+		//else if (month == previousMonth)
+		return "same";
 	}
 	
 	@GetMapping("/edit") 
@@ -246,8 +258,6 @@ public class UserController {
 		model.addAttribute("message", "Your changes have been saved! ");
 		return "success";
 	}
-	
-	
 	
 	
 }

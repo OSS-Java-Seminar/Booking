@@ -1,5 +1,7 @@
 package com.lolekibolek.Booking.persistence.services;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -94,6 +96,16 @@ public class ReservationService {
 			check = false;
 	
 		return check;
+	}
+	
+	public static double round(double value, int places) {
+		if (value == 0.0 || value == Float.POSITIVE_INFINITY || value == Float.NEGATIVE_INFINITY)
+			return 0.0;
+	    if (places < 0) throw new IllegalArgumentException();
+
+	    BigDecimal bd = BigDecimal.valueOf(value);
+	    bd = bd.setScale(places, RoundingMode.HALF_UP);
+	    return bd.doubleValue();
 	}
 	
 }

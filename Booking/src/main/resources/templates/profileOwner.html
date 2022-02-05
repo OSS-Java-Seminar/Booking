@@ -104,8 +104,22 @@
 					    </div>
 					</div>
 						<p class="mt-3 mb-0 text-sm">
-						    <span class="text-success mr-2"><i class="fa fa-arrow-up"></i> 3.48%</span>
-						    <span class="text-nowrap">Since last month</span>
+						    <div th:switch="${redReservationCard}">
+								<span th:case="'red'">
+							    	<span class="text-danger mr-2"><i class="fa fa-arrow-down"></i>&nbsp;<a th:text="${reservationIncrease}"></a></span>
+							    	<span class="text-nowrap">Since last month</span>
+							    </span>
+								<span th:case="'green'">
+							    	<span class="text-success mr-2"><i class="fa fa-arrow-up"></i>&nbsp;<a th:text="${reservationIncrease}"></a>+</span>
+							    	<span class="text-nowrap">Since last month</span>
+							    </span>
+							    <span th:case="'no'">
+							    	<span class="text-warning mr-2"><i class="fa fa-arrow-up"></i>&nbsp;This is your first month. </span>
+							    </span>
+							    <span th:case="'same'">
+							    	<span class="text-primary mr-2"><i class="fa fa-arrow-right"></i>&nbsp;No change since last month. </span>
+							    </span>
+						    </div>
 						</p>
 				</div>
 				<br>
@@ -129,11 +143,14 @@
 							    	<span class="text-nowrap">Since last month</span>
 							    </span>
 								<span th:case="'green'">
-							    	<span class="text-success mr-2"><i class="fa fa-arrow-up"></i><a th:text="${monthlyIncrease}"></a>%</span>
+							    	<span class="text-success mr-2"><i class="fa fa-arrow-up"></i>&nbsp;<a th:text="${monthlyIncrease}"></a>%</span>
 							    	<span class="text-nowrap">Since last month</span>
 							    </span>
 							    <span th:case="'no'">
-							    	<span class="text-success mr-2"><i class="fa fa-arrow-up"></i>This is your first year. </span>
+							    	<span class="text-warning mr-2"><i class="fa fa-arrow-up"></i>&nbsp;This is your first month. </span>
+							    </span>
+							    <span th:case="'same'">
+							    	<span class="text-primary mr-2"><i class="fa fa-arrow-right"></i>&nbsp;No change since last month. </span>
 							    </span>
 						    </div>
 						</p>
@@ -157,8 +174,22 @@
 					    </div>
 					</div>
 						<p class="mt-3 mb-0 text-sm">
-						    <span class="text-success mr-2"><i class="fa fa-arrow-up"></i> 3.48%</span>
-						    <span class="text-nowrap">Since last month</span>
+						    <div th:switch="${redReviewCard}">
+								<span th:case="'red'">
+							    	<span class="text-danger mr-2"><i class="fa fa-arrow-down"></i>&nbsp;<a th:text="${reviewIncrease}"></a>%</span>
+							    	<span class="text-nowrap">Since last year</span>
+							    </span>
+								<span th:case="'green'">
+							    	<span class="text-success mr-2"><i class="fa fa-arrow-up"></i>&nbsp;<a th:text="${reviewIncrease}"></a>%</span>
+							    	<span class="text-nowrap">Since last year</span>
+							    </span>
+							    <span th:case="'no'">
+							    	<span class="text-warning mr-2"><i class="fa fa-arrow-up"></i>&nbsp;This is your first month. </span>
+							    </span>
+							    <span th:case="'same'">
+							    	<span class="text-primary mr-2"><i class="fa fa-arrow-right"></i>&nbsp;No change since last month. </span>
+							    </span>
+						    </div>
 						</p>
 				</div>
 				<br>
@@ -182,11 +213,14 @@
 							    	<span class="text-nowrap">Since last year</span>
 							    </span>
 								<span th:case="'green'">
-							    	<span class="text-success mr-2"><i class="fa fa-arrow-up"></i><a th:text="${yearlyIncrease}"></a>%</span>
+							    	<span class="text-success mr-2"><i class="fa fa-arrow-up"></i>&nbsp;<a th:text="${yearlyIncrease}"></a>%</span>
 							    	<span class="text-nowrap">Since last year</span>
 							    </span>
 							    <span th:case="'no'">
-							    	<span class="text-success mr-2"><i class="fa fa-arrow-up"></i>This is your first year. </span>
+							    	<span class="text-warning mr-2"><i class="fa fa-arrow-up"></i>&nbsp;This is your first year. </span>
+							    </span>
+							    <span th:case="'same'">
+							    	<span class="text-primary mr-2"><i class="fa fa-arrow-right"></i>&nbsp;No change since last year. </span>
 							    </span>
 						    </div>
 						</p>
