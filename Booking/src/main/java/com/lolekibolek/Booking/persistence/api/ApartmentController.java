@@ -84,7 +84,6 @@ public class ApartmentController {
 		if (byId.isEmpty()) {
 			empty = true;
 			model.addAttribute("empty", empty);
-			//?????'dodatttttttttt
 		}
 		
 		model.addAttribute("apartments", byId);

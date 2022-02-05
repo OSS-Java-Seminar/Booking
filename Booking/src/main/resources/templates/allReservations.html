@@ -125,9 +125,9 @@
 				<td th:text = "${reservation.checkOutDate}" ></td>
 				<td th:if = "${reservation.booked}"><p> booked </p></td>
 				<td th:unless="${reservation.booked}"><p> cancelled </p></td>
-				<td th:text = "${reservation.totalPrice}" >€ </td>
+				<td th:text = "${reservation.totalPrice}" > € </td>
 				<td><form class="form-inline my-2 my-lg-0"  th:action="@{/reservations/{reservationId}(reservationId=${reservation.id})}"  method="get">
-				<button class = "btn btn-outline-info my-2 my-sm-0"> details </button> </a></form></td>
+				<button class = "btn btn-outline-info my-2 my-sm-0"> details </button></form></td>
 		    </tr>
 		  </tbody>
 		  

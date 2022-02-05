@@ -98,6 +98,86 @@ public class UserController {
 			return "profileUser";
 		}
 		
+		List<Reservation> allReservations = reservationRepository.findAll();
+		List<Reservation> ownerReservations = new ArrayList<>();
+		for (int i = 0; i < allReservations.size(); i++) {
+			if(currentUser.getId() == allReservations.get(i).getApartment().getOwner().getId())
+				ownerReservations.add(allReservations.get(i));
+		}
+		
+		LocalDate todayDate = LocalDate.now();
+		
+		//1.1. do 1.2. koliko check outa = rez?
+		int reservationCard = 0;
+		Double reviewCard = 0.0;
+
+		
+		
+		Double monthlyCard = 0.0;
+		
+		LocalDate monthStart = LocalDate.of(todayDate.getYear(), todayDate.getMonth(), 01);
+		LocalDate previousMonth;
+		Double previousMonthly = 0.0;
+		
+		if (monthStart.getMonthValue() - 1 == 0)
+			previousMonth = LocalDate.of(todayDate.getYear()-1, 12, 01);
+		else
+			previousMonth = LocalDate.of(todayDate.getYear(), todayDate.getMonthValue() - 1, 01);
+		
+		for (int i = 0; i < ownerReservations.size(); i++) {
+			if (ownerReservations.get(i).getCheckOutDate().isAfter(monthStart) && ownerReservations.get(i).getCheckOutDate().isBefore(todayDate)
+					&& ownerReservations.get(i).ifBooked().equals(true))
+				monthlyCard+= ownerReservations.get(i).getTotalPrice();
+		}
+		for (int i = 0; i < ownerReservations.size(); i++) {
+			if (ownerReservations.get(i).getCheckOutDate().isAfter(previousMonth) && ownerReservations.get(i).getCheckOutDate().isBefore(monthStart)
+					&& ownerReservations.get(i).ifBooked().equals(true))
+				previousMonthly+= ownerReservations.get(i).getTotalPrice();
+		}
+		Double monthlyIncrease = (monthlyCard - previousMonthly) / previousMonthly * 100;
+		if (monthlyCard < previousMonthly)
+			model.addAttribute("redMonthlyCard", "red");
+		else if (previousMonthly == 0.0)
+			model.addAttribute("redMonthlyCard", "no");
+		else if (monthlyCard > previousMonthly)
+			model.addAttribute("redMonthlyCard", "green");
+		
+		
+		
+		Double yearlyCard = 0.0;
+		
+		LocalDate yearStart = LocalDate.of(todayDate.getYear(), 01, 01);
+		LocalDate previousYear = LocalDate.of(todayDate.getYear() - 1, 01, 01);
+		Double previousYearly = 0.0;
+		
+		for (int i = 0; i < ownerReservations.size(); i++) {
+			if (ownerReservations.get(i).getCheckOutDate().isAfter(yearStart) && ownerReservations.get(i).getCheckOutDate().isBefore(todayDate)
+					&& ownerReservations.get(i).ifBooked().equals(true))
+				yearlyCard+= ownerReservations.get(i).getTotalPrice();
+		}
+		for (int i = 0; i < ownerReservations.size(); i++) {
+			if (ownerReservations.get(i).getCheckOutDate().isAfter(previousYear) && ownerReservations.get(i).getCheckOutDate().isBefore(yearStart)
+					&& ownerReservations.get(i).ifBooked().equals(true))
+				previousYearly+= ownerReservations.get(i).getTotalPrice();
+		}
+		Double yearlyIncrease = (yearlyCard - previousYearly) / previousYearly * 100;
+		if (yearlyCard < previousYearly)
+			model.addAttribute("redYearlyCard", "red");
+		else if (previousYearly == 0.0)
+			model.addAttribute("redYearlyCard", "no");
+		else if (yearlyCard > previousYearly)
+			model.addAttribute("redYearlyCard", "green");
+			
+		
+		model.addAttribute("reservationCard", reservationCard);
+		
+		model.addAttribute("reviewCard", reviewCard);
+		
+		model.addAttribute("monthlyCard", monthlyCard);
+		model.addAttribute("monthlyIncrease", monthlyIncrease);
+		model.addAttribute("yearlyCard", yearlyCard);
+		model.addAttribute("yearlyIncrease", yearlyIncrease);
+		
 		return "profileOwner";
 	}
 	
