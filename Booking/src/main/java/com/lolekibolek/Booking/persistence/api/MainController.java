@@ -73,11 +73,17 @@ public class MainController {
 			return "homeUser";
 		
 		List<Reservation> reservations = reservationRepository.findAll();
+		List<Reservation> byId = new ArrayList<>();
+		
+		for (int i = 0; i < reservations.size(); i++) {
+			if(currentUser.getId() == reservations.get(i).getApartment().getOwner().getId())
+				byId.add(reservations.get(i));
+		}
 		
 		Map<Reservation, String> todaysReservations = new HashMap<>();
 		
-		for (int i = 0; i < reservations.size(); i++) {
-			reservationService.checkIfToday(reservations.get(i), todaysReservations);
+		for (int i = 0; i < byId.size(); i++) {
+			reservationService.checkIfToday(byId.get(i), todaysReservations);
 		}
 		model.addAttribute("reservations", todaysReservations);
 		
@@ -181,6 +187,10 @@ public class MainController {
 		model.addAttribute("ac", ac);
 		model.addAttribute("heating", heating);
 		model.addAttribute("wifi", wifi);
+		model.addAttribute("sortBy", sortBy);
+		model.addAttribute("maxPrice", maxPrice);
+		model.addAttribute("minCapacity", minCapacity);
+		model.addAttribute("minBedroomNumber", minBedroomNumber);
 		return "searchApartments";
 	}
 	

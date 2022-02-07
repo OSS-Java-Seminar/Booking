@@ -133,6 +133,7 @@ public class UserController {
 				reservationCard++;
 			}
 		}
+		reviewCard = ReservationService.round(reviewCard/reservationCard, 2);
 		for (int i = 0; i < ownerReservations.size(); i++) {
 			if (ownerReservations.get(i).getCheckOutDate().isAfter(previousMonth) && ownerReservations.get(i).getCheckOutDate().isBefore(monthStart)
 					&& ownerReservations.get(i).ifBooked().equals(true)) {
@@ -141,6 +142,7 @@ public class UserController {
 				reservationPreviousMonth++;
 			}
 		}
+		reviewPreviousMonth = reviewPreviousMonth / reservationPreviousMonth;
 		Double monthlyIncrease = (monthlyCard - previousMonthly) / previousMonthly * 100;
 			monthlyIncrease = ReservationService.round(monthlyIncrease, 2);
 		model.addAttribute("redMonthlyCard", redCard(monthlyCard, previousMonthly));

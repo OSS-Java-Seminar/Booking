@@ -58,9 +58,11 @@
 			<label for="pricePerNight">Price per night</label>&nbsp;&nbsp;&nbsp;&nbsp;		
 				<input type="number" id="pricePerNight" name="pricePerNight" placeholder="100" th:field="*{pricePerNight}"/><br><br>
 			<label for="capacity">Guest number</label>&nbsp;&nbsp;&nbsp;&nbsp;
-				<input type="number" id="capacity" name="capacity" placeholder="4" th:field="*{capacity}"/><br><br>
+				<input type="number" id="capacity" name="capacity" placeholder="4" th:field="*{capacity}"/>
+				<p th:if="${#fields.hasErrors('capacity')}" th:errorclass="error" th:errors="*{capacity}" style="color:red;" /><br><br>
 			<label for="bedroomNumber">Bedroom number</label>&nbsp;&nbsp;&nbsp;&nbsp;
-				<input type="number" id="bedroomNumber" name="bedroomNumber" placeholder="2" th:field="*{bedroomNumber}"/><br><br>
+				<input type="number" id="bedroomNumber" name="bedroomNumber" placeholder="2" th:field="*{bedroomNumber}"/>
+				<p th:if="${#fields.hasErrors('bedroomNumber')}" th:errorclass="error" th:errors="*{bedroomNumber}" style="color:red;" /><br><br>
 			<label for="size">Size of the apartment</label>&nbsp;&nbsp;&nbsp;&nbsp;
 				<input type="number" id="size" name="size" placeholder="50" th:field="*{size}"/><br><br>
 		</div>

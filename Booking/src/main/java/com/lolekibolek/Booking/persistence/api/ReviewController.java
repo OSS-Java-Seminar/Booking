@@ -106,9 +106,9 @@ public class ReviewController {
 		Double previousRating = apartment.getRating();
 		if (previousRating != 0.0) {
 			Set<Reservation> temp = apartment.getReservations();
-			List<Reservation> allReservations = new ArrayList<>(temp);
 			int numberOfReviews = 0;
-			if (allReservations.isEmpty() == false) {
+			if (temp.isEmpty() == false && temp != null) {
+				List<Reservation> allReservations = new ArrayList<>(temp);
 				for (int i = 0; i < allReservations.size(); i++) {
 					review = reviewRepository.findByReservation_id(allReservations.get(i).getId());
 					if (review != null)
@@ -116,13 +116,16 @@ public class ReviewController {
 				}
 			}
 			
+			
 			Double totalRating = (previousRating * numberOfReviews) + rating;
 			totalRating = totalRating / (numberOfReviews + 1);
+			totalRating = ReservationService.round(totalRating, 1);
 			
 			apartment.setRating(totalRating);
 		}
 		
 		else {
+			rating = ReservationService.round(rating, 1);
 			apartment.setRating(rating);
 		}
 		

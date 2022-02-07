@@ -127,6 +127,11 @@ public class ApartmentController {
 		User currentUser = reservationService.getUser();
 		model.addAttribute("user", currentUser);
 		
+		System.out.println(apartment.getPricePerNight());
+		System.out.println(apartment.getBedroomNumber());
+		System.out.println(apartment.getCapacity());
+		System.out.println(apartment.getSize());
+		
 		if (result.hasErrors()) {
             return "newApartment";
         }

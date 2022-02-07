@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
@@ -55,6 +56,7 @@ public class Apartment {
 	private float pricePerNight;
 	
 	@NotNull(message = "Must enter capacity.")
+	@Min(value = 1, message = "Must be suitable for at least one person.")
 	@Column(nullable = false)
 	private int capacity;
 	
@@ -63,6 +65,7 @@ public class Apartment {
 	private float size;
 	
 	@NotNull(message = "Must enter bedroom number.")
+	@Min(value = 1, message = "Must have at least one room.")
 	@Column(nullable = false)
 	private int bedroomNumber;
 	
@@ -75,7 +78,8 @@ public class Apartment {
 	@Column(nullable = false, length = 1500)
 	private String description;
 	
-	@Column(nullable = false, length = 5000)
+	@NotEmpty
+	@Column(nullable = false, length = 10000)
 	private String picture;
 	
 	@Column(nullable = false, columnDefinition = "boolean default false")

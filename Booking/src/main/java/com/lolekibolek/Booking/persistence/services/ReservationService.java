@@ -98,8 +98,9 @@ public class ReservationService {
 		return check;
 	}
 	
-	public static double round(double value, int places) {
-		if (value == 0.0 || value == Float.POSITIVE_INFINITY || value == Float.NEGATIVE_INFINITY)
+	public static Double round(Double value, int places) {
+		if (value.isInfinite() || value.isNaN() || value.equals(0.0) || 
+				value == Double.POSITIVE_INFINITY || value == Double.NEGATIVE_INFINITY)
 			return 0.0;
 	    if (places < 0) throw new IllegalArgumentException();
 

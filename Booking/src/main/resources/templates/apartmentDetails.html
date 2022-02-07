@@ -43,7 +43,7 @@
 	<div>
 	<img th:src="${apartment.picture}" style="height:400px; width:500px; float:left;" class="rounded float-left"/>
 	</div>
-	<div>
+	<div style="padding-top:500px">
 	<div class="mapouter"><div  th:inline="text" class="gmap_canvas"><iframe width="500" height="200" id="gmap_canvas" th:src="@{${'https://maps.google.com/maps?q=' + apartment.address + ','+ apartment.city + ',' + apartment.country + '&t=&z=13&ie=UTF8&iwloc=&output=embed'}}" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe>
 		<a href="https://putlocker-is.org">putlocker</a><br><style>.mapouter{position:relative;text-align:right;height:200px;width:500px;}</style><a href="https://www.embedgooglemap.net">embedgooglemap.net</a>
 		<style>.gmap_canvas {overflow:hidden;background:none!important;height:200px;width:500px;}</style></div>
@@ -51,7 +51,7 @@
 </div>	
 
 
-<div class="column" style="margin:20px">	
+<div class="column" style="margin:20px; width:50%">	
 	<div class="container">
 	<h3 th:text = "${apartment.name}">Ime</h3><br>
 		<table  class="table table-bordered">

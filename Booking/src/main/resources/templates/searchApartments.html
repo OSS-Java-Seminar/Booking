@@ -48,7 +48,7 @@
 
 <div class="container" >
 <div class="row">
-<div class="container" style="border-radius: 25px; background-color:#d9ebf2; padding: 20px; width: 250px;">
+<div class="container" style="border-radius: 25px; background-color:#d9ebf2; padding: 20px; width: 250px; height: 1000px">
 	<table>
 		<form class="form-inline my-2 my-lg-0" th:object="${search}" th:action="@{/search}"  method="get">
 			<input type="hidden" id="city" name="city" th:attr="value = ${city}"/>
@@ -56,12 +56,40 @@
 			<input type="hidden" id="checkOutDate" name="checkOutDate" th:attr="value = ${checkOutDate}"/>
 
 			<h5>Sort by</h5>	
-				&nbsp;<input type="radio" id="PriceMax" name="sortBy" value="PriceMax"/>
-				&nbsp;<label for="PriceMax">Price max</label><br>
-				&nbsp;<input type="radio" id="PriceMin" name="sortBy" value="PriceMin"/>
-				&nbsp;<label for="PriceMin">Price min</label><br>
-				&nbsp;<input type="radio" id="Rating" name="sortBy" value="Rating"/>
-				&nbsp;<label for="Rating">Best rated</label><br>
+				<div th:switch="${sortBy}">
+					<span th:case="'PriceMax'">
+						&nbsp;<input type="radio" id="PriceMax" name="sortBy" value="PriceMax" th:checked="true"/>
+						&nbsp;<label for="PriceMax">Price max</label><br>
+						&nbsp;<input type="radio" id="PriceMin" name="sortBy" value="PriceMin" />
+						&nbsp;<label for="PriceMin">Price min</label><br>
+						&nbsp;<input type="radio" id="Rating" name="sortBy" value="Rating"/>
+						&nbsp;<label for="Rating">Best rated</label><br>
+					</span>
+					<span th:case="'PriceMin'">
+						&nbsp;<input type="radio" id="PriceMax" name="sortBy" value="PriceMax"/>
+						&nbsp;<label for="PriceMax">Price max</label><br>
+						&nbsp;<input type="radio" id="PriceMin" name="sortBy" value="PriceMin" th:checked="true"/>
+						&nbsp;<label for="PriceMin">Price min</label><br>
+						&nbsp;<input type="radio" id="Rating" name="sortBy" value="Rating"/>
+						&nbsp;<label for="Rating">Best rated</label><br>
+					</span>
+					<span th:case="'Rating'">
+						&nbsp;<input type="radio" id="PriceMax" name="sortBy" value="PriceMax"/>
+						&nbsp;<label for="PriceMax">Price max</label><br>
+						&nbsp;<input type="radio" id="PriceMin" name="sortBy" value="PriceMin" />
+						&nbsp;<label for="PriceMin">Price min</label><br>
+						&nbsp;<input type="radio" id="Rating" name="sortBy" value="Rating" th:checked="true"/>
+						&nbsp;<label for="Rating">Best rated</label><br>
+					</span>
+					<span th:case="*">
+						&nbsp;<input type="radio" id="PriceMax" name="sortBy" value="PriceMax"/>
+						&nbsp;<label for="PriceMax">Price max</label><br>
+						&nbsp;<input type="radio" id="PriceMin" name="sortBy" value="PriceMin" />
+						&nbsp;<label for="PriceMin">Price min</label><br>
+						&nbsp;<input type="radio" id="Rating" name="sortBy" value="Rating"/>
+						&nbsp;<label for="Rating">Best rated</label><br>
+					</span>
+				</div>
 			<br>	
 			<h5>Filter by</h5>	
 			
